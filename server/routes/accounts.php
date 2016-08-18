@@ -15,3 +15,13 @@ $app->get("/accounts", function($request, $response){
 
 	return $response;
 });
+
+$app->get("/accounts/{id}", function($request, $response, $args){
+	$query = $_GET;
+
+	$account = Account::findById($args["id"]);
+
+	$response = $response->withJson($account);
+
+	return $response;
+});
