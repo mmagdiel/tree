@@ -2,7 +2,11 @@
 
 require "models/Account.php";
 
-$app->get("/accounts", function($request, $response){
+/*
+ * Get a list of all accounts
+ */
+$app->get("/accounts", function($request, $response)
+{
 	$query = $_GET;
 
 	$filter = [
@@ -16,7 +20,11 @@ $app->get("/accounts", function($request, $response){
 	return $response;
 });
 
-$app->get("/accounts/{id}", function($request, $response, $args){
+/*
+ * Get a detailed information of a specific account
+ */
+$app->get("/accounts/{id}", function($request, $response, $args)
+{
 	$query = $_GET;
 
 	$account = Account::findById($args["id"]);

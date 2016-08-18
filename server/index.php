@@ -11,5 +11,6 @@ $app->get("/", function($request, $response){
 
 include "routes/users.php";
 include "routes/accounts.php";
+include "routes/locations.php";
 
 $app->run();
