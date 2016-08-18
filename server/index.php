@@ -10,5 +10,6 @@ $app->get("/", function($request, $response){
 });
 
 include "routes/users.php";
+include "routes/accounts.php";
 
 $app->run();
