@@ -6,16 +6,20 @@ Class Response
 {
 	protected static $attributes = [
 		"id",
-		"username",
-		"access_token",
-		"password",
-		"password_token",
-		"role",
-		"name_photo",
-		"path_photo",
-		"create_at",
-		"update_at",
-		"user_id"
+		"success",
+		"message",
+		"code",
+		"reference",
+		"voucher",
+		"ordernumber",
+		"sequence",
+		"approval",
+		"late",
+		"deferred",
+		"datetime",
+		"amount",
+		"responsecode_id",
+		"ticket_id"
 	];
 
 	public static function getAttributes()
@@ -32,7 +36,7 @@ Class Response
 
 		global $database;
 
-		return $database->select("account", "*", [
+		return $database->select("response", "*", [
 			"id" => $id
 		]);
 	}
@@ -41,6 +45,6 @@ Class Response
 	{
 		global $database;
 
-		return $database->select("account", "*", $filter);
+		return $database->select("response", "*", $filter);
 	}
 }
