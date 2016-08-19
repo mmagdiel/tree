@@ -2,7 +2,7 @@
 
 require "database.php";
 
-Class Account
+Class Response
 {
 	protected static $attributes = [
 		"id",
