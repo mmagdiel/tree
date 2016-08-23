@@ -8,9 +8,9 @@ Class ActiveRecord
 
 	protected $error = [];
 
-	public function __construct($data)
+	public function __construct($data = null)
 	{
-		if(isset($data))
+		if($data)
 		{
 			$this->setData($data);
 		}
