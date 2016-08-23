@@ -33,7 +33,7 @@ Class User extends ActiveRecord
 		];
 	}
 
-	public function model($className = __CLASS__)
+	public static function model($className = __CLASS__)
 	{
 		return Parent::model($className);
 	}
