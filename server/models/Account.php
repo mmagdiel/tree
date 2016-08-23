@@ -1,10 +1,15 @@
 <?php
 
-require "database.php";
+require_once "lib/ActiveRecord.php";
 
-Class Account
+Class Account extends ActiveRecord
 {
-	protected static $attributes = [
+	public function tableName()
+	{
+		return "account";
+	}
+
+	protected $attributes = [
 		"id",
 		"username",
 		"access_token",
@@ -18,29 +23,26 @@ Class Account
 		"user_id"
 	];
 
-	public static function getAttributes()
+	public function rules()
 	{
-		return Self::$attributes;
+		return [
+			"username" => [
+				"required" => true,
+				"message" => "username field is required"
+			],
+			"password" => [
+				"required" => true,
+				"message" => "password field is required"
+			],
+			"user_id" => [
+				"required" => true,
+				"message" => "user_id field is required"
+			]
+		];
 	}
 
-	public static function findById($id)
+	public static function model($className = __CLASS__)
 	{
-		if(!isset($id))
-		{
-			throw new Error("$id is undefined");
-		}
-
-		global $database;
-
-		return $database->select("account", "*", [
-			"id" => $id
-		]);
-	}
-
-	public static function findAll($filter = [])
-	{
-		global $database;
-
-		return $database->select("account", "*", $filter);
+		return Parent::model($className);
 	}
 }

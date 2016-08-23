@@ -1,10 +1,15 @@
 <?php
 
-require "database.php";
+require_once "lib/ActiveRecord.php";
 
-Class Amount
+Class Amount extends ActiveRecord
 {
-	protected static $attributes = [
+	public function tableName()
+	{
+		return "amount";
+	}
+
+	protected $attributes = [
 		"id",
 		"name",
 		"number",
@@ -12,29 +17,22 @@ Class Amount
 		"update_at"
 	];
 
-	public static function getAttributes()
+	public function rules()
 	{
-		return Self::$attributes;
+		return [
+			"name" => [
+				"required" => true,
+				"message" => "message field is required"
+			],
+			"number" => [
+				"required" => true,
+				"message" => "number field is required"
+			]
+		];
 	}
 
-	public static function findById($id)
+	public static function model($className = __CLASS__)
 	{
-		if(!isset($id))
-		{
-			throw new Error("$id is undefined");
-		}
-
-		global $database;
-
-		return $database->select("amount", "*", [
-			"id" => $id
-		]);
-	}
-
-	public static function findAll($filter = [])
-	{
-		global $database;
-
-		return $database->select("amount", "*", $filter);
+		return Parent::model($className);
 	}
 }

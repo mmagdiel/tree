@@ -1,10 +1,15 @@
 <?php
 
-require "database.php";
+require_once "lib/ActiveRecord.php";
 
-Class Bill
+Class Bill extends ActiveRecord
 {
-	protected static $attributes = [
+	public function tableName()
+	{
+		return "bill";
+	}
+
+	protected $attributes = [
 		"id",
 		"account_id",
 		"ticket_id",
@@ -12,29 +17,26 @@ Class Bill
 		"create_at"
 	];
 
-	public static function getAttributes()
+	public function rules()
 	{
-		return Self::$attributes;
+		return [
+			"account_id" => [
+				"required" => true,
+				"message" => "account_id field is required"
+			],
+			"ticket_id" => [
+				"required" => true,
+				"message" => "ticket_id field is required"
+			],
+			"ammount_id" => [
+				"required" => true,
+				"message" => "ammount_id field is required"
+			]
+		];
 	}
 
-	public static function findById($id)
+	public static function model($className = __CLASS__)
 	{
-		if(!isset($id))
-		{
-			throw new Error("$id is undefined");
-		}
-
-		global $database;
-
-		return $database->select("bill", "*", [
-			"id" => $id
-		]);
-	}
-
-	public static function findAll($filter = [])
-	{
-		global $database;
-
-		return $database->select("bill", "*", $filter);
+		return Parent::model($className);
 	}
 }

@@ -1,37 +1,31 @@
 <?php
 
-require "database.php";
+require_once "lib/ActiveRecord.php";
 
-Class Responsecode
+Class Responsecode extends ActiveRecord
 {
-	protected static $attributes = [
+	public function tableName()
+	{
+		return "responsecode";
+	}
+
+	protected $attributes = [
 		"id",
 		"motivo"
 	];
 
-	public static function getAttributes()
+	public function rules()
 	{
-		return Self::$attributes;
+		return [
+			"motivo" => [
+				"required" => true,
+				"message" => "motivo field is required"
+			]
+		];
 	}
 
-	public static function findById($id)
+	public static function model($className = __CLASS__)
 	{
-		if(!isset($id))
-		{
-			throw new Error("$id is undefined");
-		}
-
-		global $database;
-
-		return $database->select("responsecode", "*", [
-			"id" => $id
-		]);
-	}
-
-	public static function findAll($filter = [])
-	{
-		global $database;
-
-		return $database->select("responsecode", "*", $filter);
+		return Parent::model($className);
 	}
 }

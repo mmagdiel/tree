@@ -1,39 +1,37 @@
 <?php
 
-require "database.php";
+require_once "lib/ActiveRecord.php";
 
-Class documents
+Class documents extends ActiveRecord
 {
-	protected static $attributes = [
+	public function tableName()
+	{
+		return "documents";
+	}
+
+	protected $attributes = [
 		"id",
 		"name",
 		"path",
 		"create_at"
 	];
 
-	public static function getAttributes()
+	public function rules()
 	{
-		return Self::$attributes;
+		return [
+			"name" => [
+				"required" => true,
+				"message" => "name field is required"
+			],
+			"path" => [
+				"required" => true,
+				"message" => "path field is required"
+			]
+		];
 	}
 
-	public static function findById($id)
+	public static function model($className = __CLASS__)
 	{
-		if(!isset($id))
-		{
-			throw new Error("$id is undefined");
-		}
-
-		global $database;
-
-		return $database->select("documents", "*", [
-			"id" => $id
-		]);
-	}
-
-	public static function findAll($filter = [])
-	{
-		global $database;
-
-		return $database->select("documents", "*", $filter);
+		return Parent::model($className);
 	}
 }

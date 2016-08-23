@@ -1,10 +1,15 @@
 <?php
 
-require "database.php";
+require_once "lib/ActiveRecord.php";
 
-Class Ticket
+Class Ticket extends ActiveRecord
 {
-	protected static $attributes = [
+	public function tableName()
+	{
+		return "ticket";
+	}
+
+	protected $attributes = [
 		"id",
 		"description",
 		"amount",
@@ -16,29 +21,34 @@ Class Ticket
 		"amount_id"
 	];
 
-	public static function getAttributes()
+	public function rules()
 	{
-		return Self::$attributes;
+		return [
+			"amount" => [
+				"required" => true,
+				"message" => "amount field is required"
+			],
+			"status_id" => [
+				"required" => true,
+				"message" => "status_id field is required"
+			],
+			"ip" => [
+				"required" => true,
+				"message" => "ip field is required"
+			],
+			"account_id" => [
+				"required" => true,
+				"message" => "account_id field is required"
+			],
+			"amount_id" => [
+				"required" => true,
+				"message" => "amount field is required"
+			]
+		];
 	}
 
-	public static function findById($id)
+	public static function model($className = __CLASS__)
 	{
-		if(!isset($id))
-		{
-			throw new Error("$id is undefined");
-		}
-
-		global $database;
-
-		return $database->select("ticket", "*", [
-			"id" => $id
-		]);
-	}
-
-	public static function findAll($filter = [])
-	{
-		global $database;
-
-		return $database->select("ticket", "*", $filter);
+		return Parent::model($className);
 	}
 }

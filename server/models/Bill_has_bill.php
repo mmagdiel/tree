@@ -1,38 +1,40 @@
 <?php
 
-require "database.php";
+require_once "lib/ActiveRecord.php";
 
-Class Bill_has_bill
+Class Bill_has_bill extends ActiveRecord
 {
-	protected static $attributes = [
+	public function tableName()
+	{
+		return "bill_has_bill";
+	}
+
+	protected $attributes = [
 		"ancestor",
 		"descendant",
 		"length"
 	];
 
-	public static function getAttributes()
+	public function rules()
 	{
-		return Self::$attributes;
+		return [
+			"ancestor" => [
+				"required" => true,
+				"message" => "ancestor field is required"
+			],
+			"descendant" => [
+				"required" => true,
+				"message" => "descendant field is required"
+			],
+			"length" => [
+				"required" => true,
+				"message" => "length field is required"
+			]
+		];
 	}
 
-	public static function findById($id)
+	public static function model($className = __CLASS__)
 	{
-		if(!isset($id))
-		{
-			throw new Error("$id is undefined");
-		}
-
-		global $database;
-
-		return $database->select("bill_has_bill", "*", [
-			"id" => $id
-		]);
-	}
-
-	public static function findAll($filter = [])
-	{
-		global $database;
-
-		return $database->select("bill_has_bill", "*", $filter);
+		return Parent::model($className);
 	}
 }

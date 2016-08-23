@@ -1,10 +1,15 @@
 <?php
 
-require "database.php";
+require_once "lib/ActiveRecord.php";
 
-Class User
+Class User extends ActiveRecord
 {
-	protected static $attributes = [
+	public function tableName()
+	{
+		return "user";
+	}
+
+	protected $attributes = [
 		"id",
 		"first_name",
 		"last_name",
@@ -18,29 +23,18 @@ Class User
 		"city_id"
 	];
 
-	public static function getAttributes()
+	public function rules()
 	{
-		return Self::$attributes;
+		return [
+			"email" => [
+				"required" => true,
+				"message" => "email field is required"
+			]
+		];
 	}
 
-	public static function findById($id)
+	public function model($className = __CLASS__)
 	{
-		if(!isset($id))
-		{
-			throw new Error("$id is undefined");
-		}
-
-		global $database;
-
-		return $database->select("user", "*", [
-			"id" => $id
-		]);
-	}
-
-	public static function findAll($filter = [])
-	{
-		global $database;
-
-		return $database->select("user", "*", $filter);
+		return Parent::model($className);
 	}
 }
