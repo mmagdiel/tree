@@ -7,9 +7,15 @@ require "models/User.php";
  */
 $app->get("/users", function($request, $response)
 {
-	$users = User::findAll(["LIMIT" => 10]);
+	$query = $_GET;
 
-	$response = $response->withJson($users);
+	$filter = [
+		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
+	];
+
+	$model = User::model()->findAll($filter);
+
+	$response = $response->withJson($model);
 
 	return $response;
 });
@@ -19,9 +25,9 @@ $app->get("/users", function($request, $response)
  */
 $app->get("/users/{id}", function($request, $response, $args)
 {
-	$user = User::findById($args["id"]);
+	$model = User::model()->findById($args["id"]);
 
-	$response = $response->withJson($user);
+	$response = $response->withJson($model);
 
 	return $response;
 });

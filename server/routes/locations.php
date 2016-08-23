@@ -14,9 +14,9 @@ $app->get("/locations/cities", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$cities = City::findAll($filter);
+	$model = City::model()->findAll($filter);
 
-	$response = $response->withJson($cities);
+	$response = $response->withJson($model);
 
 	return $response;
 });
@@ -26,7 +26,7 @@ $app->get("/locations/cities", function($request, $response)
  */
 $app->get("/locations/cities/{id}", function($request, $response, $args)
 {
-	$city = City::findById($args["id"]);
+	$city = City::model()->findById($args["id"]);
 
 	$response = $response->withJson($city);
 
@@ -44,9 +44,9 @@ $app->get("/locations/states", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$states = State::findAll($filter);
+	$model = State::model()->findAll($filter);
 
-	$response = $response->withJson($states);
+	$response = $response->withJson($model);
 
 	return $response;
 });
@@ -56,7 +56,7 @@ $app->get("/locations/states", function($request, $response)
  */
 $app->get("/locations/states/{id}", function($request, $response, $args)
 {
-	$state = State::findById($args["id"]);
+	$state = State::model()->findById($args["id"]);
 
 	$response = $response->withJson($state);
 

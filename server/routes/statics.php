@@ -10,18 +10,18 @@ $app->get("/statics", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$data = Amount::findAll($filter);
+	$model = Statics::model()->findAll($filter);
 
-	$response = $response->withJson($data);
+	$response = $response->withJson($model);
 
 	return $response;
 });
 
 $app->get("/statics/{id}", function($request, $response, $args)
 {
-	$data = Amount::findById($args["id"]);
+	$model = Statics::model()->findById($args["id"]);
 
-	$response = $response->withJson($data);
+	$response = $response->withJson($model);
 
 	return $response;
 });

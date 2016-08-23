@@ -10,18 +10,18 @@ $app->get("/bills", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$bills = Bill::findAll($filter);
+	$model = Bill::model()->findAll($filter);
 
-	$response = $response->withJson($bills);
+	$response = $response->withJson($model);
 
 	return $response;
 });
 
 $app->get("/bills/{id}", function($request, $response, $args)
 {
-	$bill = Bill::findById($args["id"]);
+	$model = Bill::model()->findById($args["id"]);
 
-	$response = $response->withJson($bill);
+	$response = $response->withJson($model);
 
 	return $response;
 });

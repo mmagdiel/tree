@@ -10,16 +10,16 @@ $app->get("/advertisements", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$advertisements = Advertisements::findAll($filter);
+	$model = Advertisements::model()->findAll($filter);
 
-	$response = $response->withJson($advertisements);
+	$response = $response->withJson($model);
 
 	return $response;
 });
 
 $app->get("/advertisements/{id}", function($request, $response, $args)
 {
-	$advertisement = Advertisements::findbyId($args["id"]);
+	$advertisement = Advertisements::model()->findbyId($args["id"]);
 
 	$response = $response->withJson($advertisement);
 

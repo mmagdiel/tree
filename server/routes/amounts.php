@@ -10,18 +10,18 @@ $app->get("/amounts", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$data = Amount::findAll($filter);
+	$model = Amount::model()->findAll($filter);
 
-	$response = $response->withJson($data);
+	$response = $response->withJson($model);
 
 	return $response;
 });
 
 $app->get("/amounts/{id}", function($request, $response, $args)
 {
-	$data = Amount::findById($args["id"]);
+	$model = Amount::model()->findById($args["id"]);
 
-	$response = $response->withJson($data);
+	$response = $response->withJson($model);
 
 	return $response;
 });
