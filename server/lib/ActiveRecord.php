@@ -134,4 +134,20 @@ Class ActiveRecord
 		return !$this->hasErrors();
 	}
 
+	public function save()
+	{
+		if($this->validate())
+		{
+			global $database;
+
+			$id = $database->insert($this->tableName(), $this->data);
+
+			return $this->findById($id);
+		}
+
+		else
+		{
+			return null;
+		}
+	}
 }
