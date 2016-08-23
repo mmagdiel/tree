@@ -29,6 +29,14 @@ Class User extends ActiveRecord
 			"email" => [
 				"required" => true,
 				"message" => "email field is required"
+			],
+			"state_id" => [
+				"required" => true,
+				"message" => "state_id field is required"
+			],
+			"city_id" => [
+				"required" => true,
+				"message" => "city_id field is required"
 			]
 		];
 	}
