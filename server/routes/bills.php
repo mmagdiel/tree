@@ -25,3 +25,23 @@ $app->get("/bills/{id}", function($request, $response, $args)
 
 	return $response;
 });
+
+$app->post("/bills", function($request, $response)
+{
+	$data = $request->getParsedBody();
+
+	$model = new Bill($data);
+
+	if($row = $model->save())
+	{
+		$data = $row;
+	}
+
+	$response = $response->withJson([
+		"passed" => !$model->hasErrors(),
+		"errors" => $model->getErrors(),
+		"data" => $data
+	]);
+
+	return $response;
+});

@@ -31,3 +31,26 @@ $app->get("/users/{id}", function($request, $response, $args)
 
 	return $response;
 });
+
+/*
+ * Save a new user into database
+ */
+$app->post("/users", function($request, $response)
+{
+	$data = $request->getParsedBody();
+
+	$model = new User($data);
+
+	if($row = $model->save())
+	{
+		$data = $row;
+	}
+
+	$response = $response->withJson([
+		"passed" => !$model->hasErrors(),
+		"errors" => $model->getErrors(),
+		"data" => $data
+	]);
+
+	return $response;
+});

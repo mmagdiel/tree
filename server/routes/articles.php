@@ -25,3 +25,23 @@ $app->get("/articles/{id}", function($request, $response, $args)
 
 	return $response;
 });
+
+$app->post("/articles", function($request, $response)
+{
+	$data = $request->getParsedBody();
+
+	$model = new Article($data);
+
+	if($row = $model->save())
+	{
+		$data = $row;
+	}
+
+	$response = $response->withJson([
+		"passed" => !$model->hasErrors(),
+		"errors" => $model->getErrors(),
+		"data" => $data
+	]);
+
+	return $response;
+});

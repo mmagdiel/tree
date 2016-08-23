@@ -33,3 +33,26 @@ $app->get("/accounts/{id}", function($request, $response, $args)
 
 	return $response;
 });
+
+/*
+ * Save a new account into database
+ */
+$app->post("/accounts", function($request, $response)
+{
+	$data = $request->getParsedBody();
+
+	$model = new Account($data);
+
+	if($row = $model->save())
+	{
+		$data = $row;
+	}
+
+	$response = $response->withJson([
+		"passed" => !$model->hasErrors(),
+		"errors" => $model->getErrors(),
+		"data" => $data
+	]);
+
+	return $response;
+});
