@@ -2,6 +2,9 @@
 
 require "models/Bill.php";
 
+/*
+ * Get a list of all bills
+ */
 $app->get("/bills", function($request, $response)
 {
 	$query = $_GET;
@@ -17,6 +20,9 @@ $app->get("/bills", function($request, $response)
 	return $response;
 });
 
+/*
+ * Get a detailed information about a specific bill
+ */
 $app->get("/bills/{id}", function($request, $response, $args)
 {
 	$model = Bill::model()->findById($args["id"]);
@@ -26,6 +32,9 @@ $app->get("/bills/{id}", function($request, $response, $args)
 	return $response;
 });
 
+/*
+ * Save a new bill into database
+ */
 $app->post("/bills", function($request, $response)
 {
 	$data = $request->getParsedBody();
@@ -34,7 +43,7 @@ $app->post("/bills", function($request, $response)
 
 	if($row = $model->save())
 	{
-		$data = $row;
+		$data = $row[0];
 	}
 
 	$response = $response->withJson([

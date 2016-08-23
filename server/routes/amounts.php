@@ -2,6 +2,9 @@
 
 require "models/Amount.php";
 
+/*
+ * Get a list of all amounts
+ */
 $app->get("/amounts", function($request, $response)
 {
 	$query = $_GET;
@@ -17,6 +20,9 @@ $app->get("/amounts", function($request, $response)
 	return $response;
 });
 
+/*
+ * Get a defailed information about a specific amount
+ */
 $app->get("/amounts/{id}", function($request, $response, $args)
 {
 	$model = Amount::model()->findById($args["id"]);
@@ -26,6 +32,9 @@ $app->get("/amounts/{id}", function($request, $response, $args)
 	return $response;
 });
 
+/*
+ * Save a new amount into database
+ */
 $app->post("/amounts", function($request, $response)
 {
 	$data = $request->getParsedBody();
@@ -34,7 +43,7 @@ $app->post("/amounts", function($request, $response)
 
 	if($row = $model->save())
 	{
-		$data = $row;
+		$data = $row[0];
 	}
 
 	$response = $response->withJson([

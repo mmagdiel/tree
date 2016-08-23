@@ -2,6 +2,9 @@
 
 require "models/Advertisements.php";
 
+/*
+ * Get a list of all advertisements
+ */
 $app->get("/advertisements", function($request, $response)
 {
 	$query = $_GET;
@@ -17,6 +20,9 @@ $app->get("/advertisements", function($request, $response)
 	return $response;
 });
 
+/*
+ * Get a detailed information about a specific advertisement
+ */
 $app->get("/advertisements/{id}", function($request, $response, $args)
 {
 	$advertisement = Advertisements::model()->findbyId($args["id"]);
@@ -26,6 +32,9 @@ $app->get("/advertisements/{id}", function($request, $response, $args)
 	return $response;
 });
 
+/*
+ * Save a new advertisement into database
+ */
 $app->post("/advertisements", function($request, $response)
 {
 	$data = $request->getParsedBody();
@@ -34,7 +43,7 @@ $app->post("/advertisements", function($request, $response)
 
 	if($row = $model->save())
 	{
-		$data = $row;
+		$data = $row[0];
 	}
 
 	$response = $response->withJson([

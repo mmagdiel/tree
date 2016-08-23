@@ -2,6 +2,9 @@
 
 require "models/Static.php";
 
+/*
+ *	Get a list of all statics
+ */
 $app->get("/statics", function($request, $response)
 {
 	$query = $_GET;
@@ -17,6 +20,9 @@ $app->get("/statics", function($request, $response)
 	return $response;
 });
 
+/*
+ *	Get a detailed information about a specific static
+ */
 $app->get("/statics/{id}", function($request, $response, $args)
 {
 	$model = Statics::model()->findById($args["id"]);
@@ -26,6 +32,9 @@ $app->get("/statics/{id}", function($request, $response, $args)
 	return $response;
 });
 
+/*
+ * Save a new static into database
+ */
 $app->post("/statics", function($request, $response)
 {
 	$data = $request->getParsedBody();
@@ -34,7 +43,7 @@ $app->post("/statics", function($request, $response)
 
 	if($row = $model->save())
 	{
-		$data = $row;
+		$data = $row[0];
 	}
 
 	$response = $response->withJson([

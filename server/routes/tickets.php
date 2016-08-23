@@ -2,6 +2,9 @@
 
 require "models/Ticket.php";
 
+/*
+ * Get a list of all tickets
+ */
 $app->get("/tickets", function($request, $response)
 {
 	$query = $_GET;
@@ -17,6 +20,9 @@ $app->get("/tickets", function($request, $response)
 	return $response;
 });
 
+/*
+ * Get a detailed information about a specific ticket
+ */
 $app->get("/tickets/{id}", function($request, $response, $args)
 {
 	$model = Amount::model()->findById($args["id"]);
@@ -26,6 +32,9 @@ $app->get("/tickets/{id}", function($request, $response, $args)
 	return $response;
 });
 
+/*
+ * Save a new ticket into database
+ */
 $app->post("/tickets", function($request, $response)
 {
 	$data = $request->getParsedBody();
@@ -34,7 +43,7 @@ $app->post("/tickets", function($request, $response)
 
 	if($row = $model->save())
 	{
-		$data = $row;
+		$data = $row[0];
 	}
 
 	$response = $response->withJson([
