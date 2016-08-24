@@ -4,20 +4,23 @@ require_once "database.php";
 
 Class ActiveRecord
 {
-	protected $data = [];
-
-	protected $error = [];
+	private $new = true;
+	private $data = [];
+	private $error = [];
+	private $className;
 
 	/**
 	 * Construct model with data instance
 	 * @param Array $data The form data from request
 	 */
-	public function __construct($data = null)
+	public function __construct($data = null, $className = null)
 	{
 		if($data)
 		{
 			$this->setData($data);
 		}
+
+		$this->className = $className;
 	}
 
 	/**
@@ -27,7 +30,12 @@ Class ActiveRecord
 	 */
 	public static function model($className = __CLASS__)
 	{
-		return new $className();
+		return new $className(null, $className);
+	}
+
+	public function isNewRecord()
+	{
+		return $this->new;
 	}
 
 	/**
@@ -99,7 +107,27 @@ Class ActiveRecord
 
 		else
 		{
-			$this->data = $form;
+			// Remove id if is new record
+			if(isset($form->id) && $this->new)
+			{
+				unset($form->id);
+			}
+
+			// Remove create timestamp
+			if(isset($form->create_at))
+			{
+				unset($form->create_at);
+			}
+
+			// Remove update timestmap
+			if(isset($form->update_at))
+			{
+				unset($form->update_at);
+			}
+
+			foreach ($form as $key => $value) {
+				$this->$key = $value;
+			}
 		}
 	}
 
@@ -126,7 +154,15 @@ Class ActiveRecord
 	 */
 	public function getData()
 	{
-		return $this->data;
+		$attributes = $this->getAttributes();
+
+		(Object) $data = [];
+
+		foreach ($attributes as $key) {
+			$data[$key] = $this->$key;
+		}
+
+		return $data;
 	}
 
 	/**
@@ -170,7 +206,10 @@ Class ActiveRecord
 			$data = (Object) $data;
 		}
 
-		return $data;
+		$this->new = false;
+		$this->setData($data);
+
+		return $this;
 	}
 
 	/**
@@ -181,14 +220,12 @@ Class ActiveRecord
 	{
 		$rules = $this->rules();
 
-		$data = [];
 
 		foreach ($rules as $key => $value)
 		{
 			if(isset($value["required"]) && $value["required"] == true)
 			{
-				$is_valid = isset($this->data[$key]);
-				$data[$key] = $is_valid;
+				$is_valid = isset($this->$key);
 
 				if(!$is_valid)
 				{
@@ -210,9 +247,26 @@ Class ActiveRecord
 		{
 			global $database;
 
-			$id = $database->insert($this->tableName(), $this->data);
+			if($this->new)
+			{
+				$id = $database->insert($this->tableName(), $this->data);
 
-			return $this->findById($id);
+				return $this->findById($id);
+			}
+
+			else
+			{
+				$data = $this->getData();
+
+				// Remove id property
+				unset($data->id);
+
+				$database->update($this->tableName(), $data,[
+					"id" => $this->id
+				]);
+
+				return $this->findById($this->id);
+			}
 		}
 
 		else
