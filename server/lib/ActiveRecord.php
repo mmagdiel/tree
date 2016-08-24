@@ -9,6 +9,8 @@ Class ActiveRecord
 	private $error = [];
 	private $className;
 
+	private $_database;
+
 	/**
 	 * Construct model with data instance
 	 * @param Array $data The form data from request
@@ -19,6 +21,10 @@ Class ActiveRecord
 		{
 			$this->setData($data);
 		}
+
+		global $database;
+
+		$this->_database = $database;
 
 		$this->className = $className;
 	}
@@ -94,6 +100,14 @@ Class ActiveRecord
 		return $this->error;
 	}
 
+	public function getQueryLogs()
+	{
+		return [
+			"log" => $this->_database->log(),
+			"error" => $this->_database->error()
+		];
+	}
+
 	/**
 	 * Stores data form for the instance, used for validation and saving into database
 	 * @param Array    $form  Array-Object form data
@@ -127,6 +141,11 @@ Class ActiveRecord
 				{
 					unset($form->update_at);
 				}
+			}
+
+			else
+			{
+				$form->id = intval($form->id);
 			}
 
 			foreach ($form as $key => $value) {
@@ -176,9 +195,8 @@ Class ActiveRecord
 	 */
 	public function findAll($filter = [])
 	{
-		global $database;
 
-		return $database->select($this->tableName(), "*", $filter);
+		return $this->_database->select($this->tableName(), "*", $filter);
 	}
 
 	/**
@@ -193,9 +211,9 @@ Class ActiveRecord
 			throw new Error("$id is undefined");
 		}
 
-		global $database;
+		$id = intval($id);
 
-		$data = $database->select($this->tableName(), "*", [
+		$data = $this->_database->select($this->tableName(), "*", [
 			"id" => $id
 		]);
 
@@ -224,7 +242,6 @@ Class ActiveRecord
 	{
 		$rules = $this->rules();
 
-
 		foreach ($rules as $key => $value)
 		{
 			if(isset($value["required"]) && $value["required"] == true)
@@ -249,11 +266,9 @@ Class ActiveRecord
 	{
 		if($this->validate())
 		{
-			global $database;
-
 			if($this->new)
 			{
-				$id = $database->insert($this->tableName(), $this->data);
+				$id = $this->_database->insert($this->tableName(), $this->data);
 
 				return $this->findById($id);
 			}
@@ -265,7 +280,7 @@ Class ActiveRecord
 				// Remove id property
 				unset($data->id);
 
-				$database->update($this->tableName(), $data,[
+				$this->_database->update($this->tableName(), $data,[
 					"id" => $this->id
 				]);
 
@@ -276,6 +291,26 @@ Class ActiveRecord
 		else
 		{
 			return null;
+		}
+	}
+
+	/**
+	 * Deletes a record in database, the record must not be new, otherwise it throws error
+	 * @return Boolean Whether deletion was successful or not
+	 * @throws Error   Throws error only if the record is new
+	 */
+	public function delete()
+	{
+		if(!$this->new)
+		{
+			return $this->_database->delete($this->tableName(), [
+				"id" => $this->id
+			]) > 0; //Turn integer into boolean as it returns only the number of affected rows
+		}
+
+		else
+		{
+			throw new Error("This record cannot be deleted because it's new");
 		}
 	}
 }
