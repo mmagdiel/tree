@@ -85,6 +85,58 @@ $app->put("/users/{id}", function($request, $response, $args)
 });
 
 /*
+ *	Delete the whole information for a specific user
+ */
+$app->delete("/users/{id}", function($request, $response, $args)
+{
+	$model = User::model()->findById($args["id"]);
+
+	$result = [
+		"passed" => false,
+		"errors" => []
+	];
+
+	if(!Helper::isEmpty($model))
+	{
+		try
+		{
+			if($model->delete())
+			{
+				$result["passed"] = true;
+			}
+
+			else
+			{
+				$result["errors"] = [
+					"row" => "Record id " . $args["id"] . " unabled to delete"
+				];
+			}
+
+		}
+
+		catch(Error $e)
+		{
+			$result["errors"] = [
+				"message" => $e->getMessage()
+			];
+		}
+	}
+
+	else
+	{
+		$result["errors"] = [
+			"row" => "No row found with id " . $args["id"]
+		];
+
+		$response = $response->withStatus(404);
+	}
+
+	$response = $response->withJson($result);
+
+	return $response;
+});
+
+/*
  * Save a new user into database
  */
 $app->post("/users", function($request, $response)
