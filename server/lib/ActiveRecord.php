@@ -96,9 +96,10 @@ Class ActiveRecord
 
 	/**
 	 * Stores data form for the instance, used for validation and saving into database
-	 * @param Array $form Array-Object form data
+	 * @param Array    $form  Array-Object form data
+	 * @param Boolean  $force Whether force overwriting to the instance
 	 */
-	public function setData($form)
+	public function setData($form, $force = false)
 	{
 		if(!isset($form))
 		{
@@ -107,22 +108,25 @@ Class ActiveRecord
 
 		else
 		{
-			// Remove id if is new record
-			if(isset($form->id) && $this->new)
+			if(!$force)
 			{
-				unset($form->id);
-			}
+				// Remove id
+				if(isset($form->id))
+				{
+					unset($form->id);
+				}
 
-			// Remove create timestamp
-			if(isset($form->create_at))
-			{
-				unset($form->create_at);
-			}
+				// Remove create_at timestamp
+				if(isset($form->create_at))
+				{
+					unset($form->create_at);
+				}
 
-			// Remove update timestmap
-			if(isset($form->update_at))
-			{
-				unset($form->update_at);
+				// Remove update_at timestamp
+				if(isset($form->update_at))
+				{
+					unset($form->update_at);
+				}
 			}
 
 			foreach ($form as $key => $value) {
@@ -207,7 +211,7 @@ Class ActiveRecord
 		}
 
 		$this->new = false;
-		$this->setData($data);
+		$this->setData($data, true);
 
 		return $this;
 	}
