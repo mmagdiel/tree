@@ -155,9 +155,22 @@ Class ActiveRecord
 
 		global $database;
 
-		return $database->select($this->tableName(), "*", [
+		$data = $database->select($this->tableName(), "*", [
 			"id" => $id
 		]);
+
+		// Turn Array-List into Array-Object
+		if(count($data) > 0)
+		{
+			$data = (Object) $data[0];
+		}
+
+		else
+		{
+			$data = (Object) $data;
+		}
+
+		return $data;
 	}
 
 	/**

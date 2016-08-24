@@ -45,7 +45,7 @@ $app->post("/accounts", function($request, $response)
 
 	if($row = $model->save())
 	{
-		$data = $row[0];
+		$data = $row;
 	}
 
 	$response = $response->withJson([
