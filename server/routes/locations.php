@@ -62,3 +62,34 @@ $app->get("/locations/states/{id}", function($request, $response, $args)
 
 	return $response;
 });
+
+/*
+ * Show the allowed connection settings to state resources
+ */
+$app->options("/locations/state[/{id}]", function($request, $response, $args)
+{
+	// Set CORS headers
+	$response = $response->withHeader("Access-Control-Allow-Origin", "*");
+	$response = $response->withHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+	$response = $response->withHeader("Access-Control-Max-Age", "86400"); // 24hrs for preflight cache
+
+	$response = $response->withStatus(204);
+
+	return $response;
+});
+
+/*
+ * Show the allowed connection settings to state city
+ */
+$app->options("/locations/city[/{id}]", function($request, $response, $args)
+{
+	// Set CORS headers
+	$response = $response->withHeader("Access-Control-Allow-Origin", "*");
+	$response = $response->withHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+	$response = $response->withHeader("Access-Control-Max-Age", "86400"); // 24hrs for preflight cache
+
+	$response = $response->withStatus(204);
+
+	return $response;
+});
+

@@ -158,3 +158,31 @@ $app->post("/advertisements", function($request, $response)
 
 	return $response;
 });
+
+/*
+ * Show the allowed connection settings to resources
+ */
+$app->options("/advertisements[/{id}]", function($request, $response, $args)
+{
+	// Set CORS headers
+	$response = $response->withHeader("Access-Control-Allow-Origin", "*");
+
+	// Set allowed methods for a sigle resource
+	if($args)
+	{
+		$response = $response->withHeader("Access-Control-Allow-Methods", "PUT, DELETE, GET, OPTIONS");
+	}
+
+	// Set allowed methods for a list resource
+	else
+	{
+		$response = $response->withHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+	}
+
+	$response = $response->withHeader("Access-Control-Allow-Headers", "Content-Type"); // Allow content-type other than defaults
+	$response = $response->withHeader("Access-Control-Max-Age", "86400"); // 24hrs for preflight cache
+
+	$response = $response->withStatus(204);
+
+	return $response;
+});
