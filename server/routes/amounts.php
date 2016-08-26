@@ -15,7 +15,7 @@ $app->get("/amounts", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$model = Amount::model()->findAll($filter);
+	$model = Amount::model()->findAll($filter, "batch");
 
 	$response = $response->withJson($model);
 

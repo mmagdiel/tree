@@ -15,7 +15,7 @@ $app->get("/users", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$model = User::model()->findAll($filter);
+	$model = User::model()->findAll($filter, "batch");
 
 	$response = $response->withJson($model);
 
@@ -27,7 +27,7 @@ $app->get("/users", function($request, $response)
  */
 $app->get("/users/{id}", function($request, $response, $args)
 {
-	$model = User::model()->findById($args["id"]);
+	$model = User::model()->findById($args["id"], "detail");
 
 	$response = $response->withJson($model);
 

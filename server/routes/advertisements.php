@@ -15,7 +15,7 @@ $app->get("/advertisements", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$model = Advertisements::model()->findAll($filter);
+	$model = Advertisements::model()->findAll($filter, "batch");
 
 	$response = $response->withJson($model);
 

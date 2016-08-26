@@ -47,6 +47,17 @@ Class Ticket extends ActiveRecord
 		];
 	}
 
+	public function scopes()
+	{
+		return [
+			"batch" => [
+				"id",
+				"ip",
+				"amount"
+			]
+		];
+	}
+
 	public static function model($className = __CLASS__)
 	{
 		return Parent::model($className);

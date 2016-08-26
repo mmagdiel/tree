@@ -14,7 +14,7 @@ $app->get("/locations/cities", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$model = City::model()->findAll($filter);
+	$model = City::model()->findAll($filter, "batch");
 
 	$response = $response->withJson($model);
 
