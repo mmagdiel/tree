@@ -15,7 +15,7 @@ $app->get("/bills", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$model = Bill::model()->findAll($filter);
+	$model = Bill::model()->findAll($filter, "batch");
 
 	$response = $response->withJson($model);
 

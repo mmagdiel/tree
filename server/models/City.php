@@ -29,6 +29,16 @@ Class City extends ActiveRecord
 		];
 	}
 
+	public function scopes()
+	{
+		return [
+			"batch" => [
+				"id",
+				"name"
+			]
+		];
+	}
+
 	public static function model($className = __CLASS__)
 	{
 		return Parent::model($className);
