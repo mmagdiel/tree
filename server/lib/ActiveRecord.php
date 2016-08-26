@@ -8,7 +8,7 @@ Class ActiveRecord
 	private $new = true;
 	private $data = [];
 	private $error = [];
-	private $_scopes = [];
+	private $_scopes = ["default" => "*"];
 	private $className;
 	private $_database;
 
@@ -30,7 +30,7 @@ Class ActiveRecord
 		{
 			$this->setData($data);
 		}
-	
+
 		// Set the scopes instance if Model Class has scope function
 		if(method_exists($this, "scopes"))
 		{
@@ -110,11 +110,6 @@ Class ActiveRecord
 			}
 		}
 
-		if(!$found && $scope == "default")
-		{
-			$this->_scopes["default"] = "*";
-		}
-
 		return $found;
 	}
 
@@ -175,22 +170,12 @@ Class ActiveRecord
 	{
 		if(is_object($scopes))
 		{
-			if(!isset($scopes->default))
-			{
-				$scopes->default = $this->getAttributes();
-			}
-
-			$this->_scopes = (Array) $scopes;
+			$this->_scopes = array_replace($this->_scopes, (Array) $scopes);
 		}
 
 		if(is_array($scopes))
 		{
-			if(!isset($scopes["default"]))
-			{
-				$scopes["default"] = $this->getAttributes();
-			}
-
-			$this->_scopes = $scopes;
+			$this->_scopes = array_replace($this->_scopes, $scopes);
 		}
 	}
 
@@ -322,7 +307,6 @@ Class ActiveRecord
 	 */
 	public function findAll($filter = [], $scope = "default")
 	{
-
 		return $this->_database->select($this->tableName(), $this->getScope($scope), $filter);
 	}
 
