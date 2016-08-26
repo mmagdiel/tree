@@ -93,7 +93,7 @@ Class Response extends ActiveRecord
 		];
 	}
 
-	public function scope()
+	public function scopes()
 	{
 		return [
 			"batch" => [
