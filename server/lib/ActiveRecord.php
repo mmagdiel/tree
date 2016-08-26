@@ -1,6 +1,7 @@
 <?php
 
 require_once "database.php";
+require_once "lib/Helper.php";
 
 Class ActiveRecord
 {
@@ -13,6 +14,7 @@ Class ActiveRecord
 
 	/**
 	 * Construct model with data instance
+	 * 
 	 * @param Array $data The form data from request
 	 */
 	public function __construct($data = null, $className = null)
@@ -31,6 +33,7 @@ Class ActiveRecord
 
 	/**
 	 * Model static instance for static access
+	 * 
 	 * @param  String $className The name of the model to instantiate
 	 * @return Object            The instance of the model stored in static variable
 	 */
@@ -39,6 +42,11 @@ Class ActiveRecord
 		return new $className(null, $className);
 	}
 
+	/**
+	 * Checks if the current instance is a new Record, should return false when data is gathered from Database
+	 * 
+	 * @return boolean Whether the instance is new
+	 */
 	public function isNewRecord()
 	{
 		return $this->new;
@@ -46,6 +54,7 @@ Class ActiveRecord
 
 	/**
 	 * Checks if there is an specific error stored in errors list
+	 * 
 	 * @param  String  $attribute The name of the attribute form
 	 * @return Boolean            Whether the attribute has an error
 	 */
@@ -55,7 +64,19 @@ Class ActiveRecord
 	}
 
 	/**
+	 * Checks if there is a defined attribute in Model Class
+	 * 
+	 * @param  String  $attribute The name of the attribute in Model Class
+	 * @return boolean            Whether the attribute is defined in Model Class
+	 */
+	public function hasAttribute($attribute)
+	{
+		return in_array($attribute, $this->getAttributes());
+	}
+
+	/**
 	 * Checks if there is any error stored in errors list
+	 * 
 	 * @return Boolean Whether there is an error set
 	 */
 	public function hasErrors()
@@ -65,6 +86,7 @@ Class ActiveRecord
 
 	/**
 	 * Sets an error in errors list
+	 * 
 	 * @param String $attribute The name of the attribute that has an error
 	 * @param String $message   The error description, inherited from model if arguement is missing
 	 */
@@ -93,6 +115,7 @@ Class ActiveRecord
 
 	/**
 	 * Gets the whole list of errors
+	 * 
 	 * @return Array Array-Object with all stored errors
 	 */
 	public function getErrors()
@@ -110,6 +133,7 @@ Class ActiveRecord
 
 	/**
 	 * Stores data form for the instance, used for validation and saving into database
+	 * 
 	 * @param Array    $form  Array-Object form data
 	 * @param Boolean  $force Whether force overwriting to the instance
 	 */
@@ -156,6 +180,7 @@ Class ActiveRecord
 
 	/**
 	 * Gets all list of all attributes from the model class
+	 * 
 	 * @return Array A list of all attributes
 	 */
 	public function getAttributes()
@@ -173,6 +198,7 @@ Class ActiveRecord
 
 	/**
 	 * Gets the data stored from $this->setData()
+	 * 
 	 * @return Array The data store in the model instance
 	 */
 	public function getData()
@@ -190,6 +216,7 @@ Class ActiveRecord
 
 	/**
 	 * Fetches a list of records from the database
+	 * 
 	 * @param  Array  $filter The filter to pass into SQL
 	 * @return Array          All the rows found within the filter
 	 */
@@ -200,7 +227,39 @@ Class ActiveRecord
 	}
 
 	/**
+	 * Fetches all records that matches with the attribute criteria
+	 * 
+	 * @param  Array        $attributes The criteria to use in database
+	 * @return Array|Object             The result of the criteria search
+	 */
+	public function findByAttributes($attributes = [])
+	{
+		// Turn array attributes into object stdObject
+		$attributes = (Object) $attributes;
+
+		$attr = [];
+
+		foreach ($attributes as $key => $value)
+		{
+			if($this->hasAttribute($key))
+			{
+				$attr[$key] = $value;
+			}
+		}
+
+		$data = $this->_database->select($this->tableName(), "*", $attr);
+
+		if(count($data) <= 1)
+		{
+			$data = (Object) $data;
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Fetches a single record from the database with a given Id
+	 * 
 	 * @param  Integer $id The id of the record
 	 * @return Array       The array record found in database
 	 */
@@ -236,6 +295,7 @@ Class ActiveRecord
 
 	/**
 	 * Validates the whole data set in the instance with the rules from the model
+	 * 
 	 * @return Boolean Whether the validation passes
 	 */
 	public function validate()
@@ -260,6 +320,7 @@ Class ActiveRecord
 
 	/**
 	 * Saves data into database, validation is triggered first before the save
+	 * 
 	 * @return Array|Null The data stored from the database, null if validation failes
 	 */
 	public function save()
@@ -296,6 +357,7 @@ Class ActiveRecord
 
 	/**
 	 * Deletes a record in database, the record must not be new, otherwise it throws error
+	 * 
 	 * @return Boolean Whether deletion was successful or not
 	 * @throws Error   Throws error only if the record is new
 	 */
