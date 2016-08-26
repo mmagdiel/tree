@@ -307,7 +307,7 @@ Class ActiveRecord
 
 		if($this->hasScope($scope))
 		{
-			$data = $this->scopes()[$scope];
+			$data = $this->_scopes[$scope];
 		}
 
 		return $data;
