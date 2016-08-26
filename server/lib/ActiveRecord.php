@@ -110,6 +110,11 @@ Class ActiveRecord
 			}
 		}
 
+		if(!$found && $scope == "default")
+		{
+			$this->_scopes["default"] = "*";
+		}
+
 		return $found;
 	}
 
