@@ -311,22 +311,24 @@ Class ActiveRecord
 	/**
 	 * Fetches a list of records from the database
 	 * 
-	 * @param  Array  $filter The filter to pass into SQL
-	 * @return Array          All the rows found within the filter
+	 * @param  Array   $filter The filter to pass into SQL
+	 * @param  String  $scope  The scope filter for attribute selection
+	 * @return Array           All the rows found within the filter
 	 */
 	public function findAll($filter = [], $scope = "default")
 	{
 
-		return $this->_database->select($this->tableName(), "*", $filter);
+		return $this->_database->select($this->tableName(), $this->getScope($scope), $filter);
 	}
 
 	/**
 	 * Fetches all records that matches with the attribute criteria
 	 * 
 	 * @param  Array        $attributes The criteria to use in database
+	 * @param  String       $scope      The scope filter for attribute selection
 	 * @return Array|Object             The result of the criteria search
 	 */
-	public function findByAttributes($attributes = [])
+	public function findByAttributes($attributes = [], $scope = "default")
 	{
 		// Turn array attributes into object stdObject
 		$attributes = (Object) $attributes;
@@ -341,7 +343,7 @@ Class ActiveRecord
 			}
 		}
 
-		$data = $this->_database->select($this->tableName(), "*", $attr);
+		$data = $this->_database->select($this->tableName(), $this->getScope($scope), $attr);
 
 		if(count($data) <= 1)
 		{
@@ -354,10 +356,11 @@ Class ActiveRecord
 	/**
 	 * Fetches a single record from the database with a given Id
 	 * 
-	 * @param  Integer $id The id of the record
-	 * @return Array       The array record found in database
+	 * @param  Integer $id    The id of the record
+	 * @param  String  $scope The scope filter for attribute selection
+	 * @return Array          The array record found in database
 	 */
-	public function findById($id)
+	public function findById($id, $scope = "default")
 	{
 		if(!isset($id))
 		{
@@ -366,7 +369,7 @@ Class ActiveRecord
 
 		$id = intval($id);
 
-		$data = $this->_database->select($this->tableName(), "*", [
+		$data = $this->_database->select($this->tableName(), $this->getScope($scope), [
 			"id" => $id
 		]);
 
