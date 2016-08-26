@@ -8,9 +8,10 @@ Class ActiveRecord
 	private $new = true;
 	private $data = [];
 	private $error = [];
+	private $_scopes = [];
 	private $className;
-
 	private $_database;
+
 
 	/**
 	 * Construct model with data instance
@@ -19,16 +20,22 @@ Class ActiveRecord
 	 */
 	public function __construct($data = null, $className = null)
 	{
-		if($data)
-		{
-			$this->setData($data);
-		}
-
 		global $database;
 
 		$this->_database = $database;
 
 		$this->className = $className;
+
+		if($data)
+		{
+			$this->setData($data);
+		}
+	
+		// Set the scopes instance if Model Class has scope function
+		if(method_exists($this, "scopes"))
+		{
+			$this->setScopes($this->scopes());
+		}
 	}
 
 	/**
@@ -85,6 +92,28 @@ Class ActiveRecord
 	}
 
 	/**
+	 * Checks if there is any scope name as specified
+	 * 
+	 * @param  String  $scope The name of the scope
+	 * @return boolean        Whether the scope is defined
+	 */
+	public function hasScope(String $scope)
+	{
+		$found = false;
+
+		foreach ($this->_scopes as $key => $value) {
+			if($key == $scope)
+			{
+				$found = true;
+
+				break;
+			}
+		}
+
+		return $found;
+	}
+
+	/**
 	 * Sets an error in errors list
 	 * 
 	 * @param String $attribute The name of the attribute that has an error
@@ -110,6 +139,53 @@ Class ActiveRecord
 		else
 		{
 			$this->error[$attribute] = $message;
+		}
+	}
+
+	/**
+	 * Sets scope value for the instance
+	 * 
+	 * @param String       $name  The name of the scope
+	 * @param Array|Object $value The values to set into the scope
+	 */
+	public function setScope(String $name, $value)
+	{
+		if(is_object($value))
+		{
+			$this->_scopes[$name] = (Array) $value;
+		}
+
+		if(is_array($value))
+		{
+			$this->_scopes[$name] = $value;
+		}
+	}
+
+	/**
+	 * Sets scopes for the instance
+	 * 
+	 * @param Array|Object $scopes The list of all scopes with their value
+	 */
+	public function setScopes($scopes)
+	{
+		if(is_object($scopes))
+		{
+			if(!isset($scopes->default))
+			{
+				$scopes->default = $this->getAttributes();
+			}
+
+			$this->_scopes = (Array) $scopes;
+		}
+
+		if(is_array($scopes))
+		{
+			if(!isset($scopes["default"]))
+			{
+				$scopes["default"] = $this->getAttributes();
+			}
+
+			$this->_scopes = $scopes;
 		}
 	}
 
@@ -215,12 +291,30 @@ Class ActiveRecord
 	}
 
 	/**
+	 * Gets a list of all attributes set by the scope
+	 * 
+	 * @param  String $scope The name of the scope
+	 * @return Array         The list of all attributes set by the scope 
+	 */
+	public function getScope(String $scope)
+	{
+		$data = [];
+
+		if($this->hasScope($scope))
+		{
+			$data = $this->scopes()[$scope];
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Fetches a list of records from the database
 	 * 
 	 * @param  Array  $filter The filter to pass into SQL
 	 * @return Array          All the rows found within the filter
 	 */
-	public function findAll($filter = [])
+	public function findAll($filter = [], $scope = "default")
 	{
 
 		return $this->_database->select($this->tableName(), "*", $filter);
