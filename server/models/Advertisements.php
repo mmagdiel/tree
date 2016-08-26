@@ -1,39 +1,37 @@
 <?php
 
-require "database.php";
+require_once "lib/ActiveRecord.php";
 
-Class Advertisements
+Class Advertisements extends ActiveRecord
 {
-	protected static $attributes = [
+	public function tableName()
+	{
+		return "Advertisements";
+	}
+
+	protected $attributes = [
 		"id",
 		"name",
 		"content",
 		"create_at"
 	];
 
-	public static function getAttributes()
+	public function rules()
 	{
-		return Self::$attributes;
+		return [
+			"name" => [
+				"required" => true,
+				"message" => "name field is required"
+			],
+			"content" => [
+				"required" => true,
+				"message" => "content field is required"
+			]
+		];
 	}
 
-	public static function findById($id)
+	public static function model($className = __CLASS__)
 	{
-		if(!isset($id))
-		{
-			throw new Error("$id is undefined");
-		}
-
-		global $database;
-
-		return $database->select("Advertisements", "*", [
-			"id" => $id
-		]);
-	}
-
-	public static function findAll($filter = [])
-	{
-		global $database;
-
-		return $database->select("Advertisements", "*", $filter);
+		return Parent::model($className);
 	}
 }
