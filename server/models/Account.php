@@ -41,6 +41,25 @@ Class Account extends ActiveRecord
 		];
 	}
 
+	public function scopes()
+	{
+		return [
+			"batch" => [
+				"id",
+				"username",
+				"role"
+			],
+			"detail" => [
+				"id",
+				"username",
+				"role",
+				"create_at",
+				"update_at",
+				"user_id"
+			]
+		];
+	}
+
 	public static function model($className = __CLASS__)
 	{
 		return Parent::model($className);

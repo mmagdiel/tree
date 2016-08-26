@@ -93,6 +93,17 @@ Class Response extends ActiveRecord
 		];
 	}
 
+	public function scope()
+	{
+		return [
+			"batch" => [
+				"id",
+				"success",
+				"code"
+			]
+		];
+	}
+
 	public static function model($className = __CLASS__)
 	{
 		return Parent::model($className);
