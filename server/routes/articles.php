@@ -15,7 +15,7 @@ $app->get("/articles", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$model = Article::model()->findAll($filter);
+	$model = Article::model()->findAll($filter, "batch");
 
 	$response = $response->withJson($model);
 

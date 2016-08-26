@@ -15,7 +15,7 @@ $app->get("/accounts", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$model = Account::model()->findAll($filter);
+	$model = Account::model()->findAll($filter, "batch");
 
 	$response = $response->withJson($model);
 
@@ -29,7 +29,7 @@ $app->get("/accounts/{id}", function($request, $response, $args)
 {
 	$query = $_GET;
 
-	$account = Account::model()->findById($args["id"]);
+	$account = Account::model()->findById($args["id"], "detail");
 
 	$response = $response->withJson($account);
 

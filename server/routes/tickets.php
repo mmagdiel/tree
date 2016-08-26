@@ -15,7 +15,7 @@ $app->get("/tickets", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
-	$model = Ticket::model()->findAll($filter);
+	$model = Ticket::model()->findAll($filter, "batch");
 
 	$response = $response->withJson($model);
 
