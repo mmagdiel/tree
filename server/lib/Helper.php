@@ -45,4 +45,35 @@ Class Helper
 			return array_merge($var1, $var2);
 		}
 	}
+
+	/**
+	 * Removes null data on the Object or Array
+	 * 
+	 * @param  Array|Object $var The value to flush
+	 * @return Array|Object      The result of the flush process
+	 */
+	public static function flush($var)
+	{
+		if(is_object($var))
+		{
+			foreach ($var as $key => $value) {
+				if($value == null)
+				{
+					unset($var->$key);
+				}
+			}
+		}
+
+		if(is_array($var))
+		{
+			foreach ($var as $key => $value) {
+				if($value == null)
+				{
+					unset($var[$key]);
+				}
+			}
+		}
+
+		return $var;
+	}
 }
