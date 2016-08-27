@@ -12,6 +12,8 @@ Class ActiveRecord
 	private $className;
 	private $_database;
 
+	public $_dbLog;
+	public $_dbError;
 
 	/**
 	 * Construct model with data instance
@@ -274,10 +276,13 @@ Class ActiveRecord
 		(Object) $data = [];
 
 		foreach ($attributes as $key) {
-			$data[$key] = $this->$key;
+			if(isset($this->$key))
+			{
+				$data[$key] = $this->$key;
+			}
 		}
 
-		return $data;
+		return Helper::flush($data);
 	}
 
 	/**
@@ -413,17 +418,20 @@ Class ActiveRecord
 	{
 		if($this->validate())
 		{
+			$data = (Array) $this->getData();
+
 			if($this->new)
 			{
-				$id = $this->_database->insert($this->tableName(), $this->data);
+				$id = $this->_database->insert($this->tableName(), $data);
+
+				$this->_dbError = $this->_database->error();
+				$this->_dbLog = $this->_database->log();
 
 				return $this->findById($id);
 			}
 
 			else
 			{
-				$data = $this->getData();
-
 				// Remove id property
 				unset($data->id);
 
