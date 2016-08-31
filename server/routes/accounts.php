@@ -188,3 +188,101 @@ $app->options("/accounts[/{id}]", function($request, $response, $args)
 
 	return $response;
 });
+
+/////////////////////////////
+///	Tickets route related ///
+/////////////////////////////
+
+/*
+ * Show all the tickets related to an account
+ */
+$app->get("/accounts/{id}/tickets", function($request, $response, $args)
+{
+	$model = Ticket::model()->findByAttributes([
+		"account_id" => $args["id"]
+	], "batch");
+
+	$response = $response->withJson($model);
+
+	return $response;
+});
+
+/*
+ * Show detailed information from a ticket related to an account
+ */
+$app->get("/accounts/{account_id}/tickets/{ticket_id}", function($request, $response, $args)
+{
+	$model = Ticket::model()->findByAttributes([
+		"account_id" => $args["account_id"],
+		"id" => $args["ticket_id"]
+	]);
+
+	// Select the only row found as the result is always an Array
+	if(count($model)){
+		$model = $model[0];
+	}
+
+	$response = $response->withJson($model);
+
+	return $response;
+});
+
+$app->get("/accounts/{account_id}/tickets/{ticket_id}/responses", function($request, $response, $args)
+{
+	$res = [];
+
+	$ticket = Ticket::model()->findByAttributes([
+		"account_id" => $args["account_id"],
+		"id" => $args["ticket_id"]
+	]);
+
+	if($ticket)
+	{
+		$res = Response::model()->findByAttributes([
+			"ticket_id" => $args["ticket_id"]
+		]);
+	}
+
+	$response = $response->withJson($res);
+
+	return $response;
+});
+
+/////////////////////////////
+///	Bills route related ///
+/////////////////////////////
+
+/*
+ * Show all bills related to an account
+ */
+$app->get("/accounts/{account_id}/bills", function($request, $response, $args)
+{
+	$model = Bill::model()->findByAttributes([
+		"account_id" => $args["account_id"]
+	], "batch");
+
+	$response = $response->withJson($model);
+
+	return $response;
+});
+
+/*
+ * Show detailed information from a bill related to an account
+ */
+$app->get("/accounts/{account_id}/bills/{bill_id}", function($request, $response, $args)
+{
+	$model = Bill::model()->findByAttributes([
+		"account_id" => $args["account_id"],
+		"id" => $args["bill_id"]
+	]);
+
+	// Select the only row found as the result is always an Array
+	if(count($model))
+	{
+		$model = $model[0];
+	}
+
+	$response = $response->withJson($model);
+
+	return $response;
+});
