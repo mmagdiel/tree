@@ -11,10 +11,7 @@ Class ActiveRecord
 	private $_scopes = ["default" => "*"];
 	private $className;
 	private $_database;
-
-	public $_dbLog;
-	public $_dbError;
-
+	
 	/**
 	 * Construct model with data instance
 	 * 
