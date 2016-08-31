@@ -11,7 +11,7 @@ Class ActiveRecord
 	private $_scopes = ["default" => "*"];
 	private $className;
 	private $_database;
-	
+
 	/**
 	 * Construct model with data instance
 	 * 
@@ -334,13 +334,20 @@ Class ActiveRecord
 			}
 		}
 
-		$data = $this->_database->select($this->tableName(), $this->getScope($scope), $attr);
+		$data = $this->_database->select(
+			$this->tableName(),
+			$this->getScope($scope),
+			[ "AND" => $attr ]
+		);
 
+		// TODO: Check if this is necessary
+		/*
 		if(count($data) <= 1)
 		{
 			$data = (Object) $data;
 		}
-
+		*/
+	
 		return $data;
 	}
 
