@@ -23,10 +23,41 @@ $app->add(function($request, $response, $next)
 		$methods = ["GET, POST", "OPTIONS"];
 	}
 
+	// Check for access as long as the current route is not login
+	if($route->getName() != "/login")
+	{
+		include_once "models/Account.php";
+
+		$token = $request->getHeaderLine("X-Access-Token");
+
+		// X-Access-Token is not defined, return unauthorized
+		if(!$token)
+		{
+			$response = $response->withStatus(401);
+
+			return $response;
+		}
+
+		else
+		{
+			$data = Account::model()->findByAttributes([
+				"access_token" => $token
+			]);
+
+			// provided token is not found, return unauthorized
+			if(!$data)
+			{
+				$response = $response->withStatus(401);
+
+				return $response;
+			}
+		}
+	}
+
 	// Set CORS headers
 	$response = $response->withHeader("Access-Control-Allow-Origin", "*");
 	$response = $response->withHeader("Access-Control-Allow-Methods", implode(", ", $methods));
-	$response = $response->withHeader("Access-Control-Allow-Headers", "Content-Type"); // Allow content-type other than defaults
+	$response = $response->withHeader("Access-Control-Allow-Headers", "Content-Type, X-Access-Token"); // Allow content-type other than defaults
 	$response = $response->withHeader("Access-Control-Max-Age", "86400"); // 24hrs for preflight cache
 
 	return $next($request, $response);
