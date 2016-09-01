@@ -42,5 +42,6 @@ include "routes/articles.php";
 include "routes/responses.php";
 include "routes/statics.php";
 include "routes/tickets.php";
+include "routes/login.php";
 
 $app->run();
