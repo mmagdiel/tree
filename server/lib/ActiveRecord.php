@@ -389,6 +389,42 @@ Class ActiveRecord
 	}
 
 	/**
+	 * Finds records in database with given query object criteria
+	 * 
+	 * @param  String       $table   The name of the table where to make que query
+	 * @param  Array|String $columns The columns to select on the query
+	 * @param  Array        $where   The conditionals to set on the query
+	 * @param  Array        $join    OPTIONAL: either set the join conditions for the query
+	 * @return Array                 The data found on the query
+	 */
+	public function findByQuery($table = null, $columns, $where, $join = null)
+	{
+		$data = [];
+
+		if(count(func_get_args()) < 3)
+		{
+			throw new Error("Missing arguments on function query");
+		}
+
+		else
+		{
+			$table = $table ? $table : $this->tableName();
+
+			if($join)
+			{
+				$data = $this->_database->select($table, $join, $columns, $where);
+			}
+
+			else
+			{
+				$data = $this->_database->select($table, $columns, $where);
+			}
+		} 
+
+		return $data;
+	}
+
+	/**
 	 * Validates the whole data set in the instance with the rules from the model
 	 * 
 	 * @return Boolean Whether the validation passes
