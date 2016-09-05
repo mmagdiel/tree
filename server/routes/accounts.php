@@ -1,6 +1,7 @@
 <?php
 
-require "models/Account.php";
+require_once "models/Account.php";
+require_once "models/Bill_has_bill.php";
 
 require_once "lib/Helper.php";
 
@@ -281,6 +282,26 @@ $app->get("/accounts/{account_id}/bills/{bill_id}", function($request, $response
 	{
 		$model = $model[0];
 	}
+
+	$response = $response->withJson($model);
+
+	return $response;
+});
+
+/*
+ * Show all bills heriarchy related to an account
+ */
+$app->get("/accounts/{account_id}/billsHeriarchy", function($request, $response, $args)
+{
+	$model = Bill_has_bill::model()->findByQuery(null,[
+			"bill_has_bill.ancestor",
+			"bill_has_bill.descendant",
+			"bill_has_bill.length"
+		],[
+		"bill.account_id" => $args["account_id"]
+	], [
+		"[>]bill" => ["ancestor" => "id"]
+	]);
 
 	$response = $response->withJson($model);
 
