@@ -4,7 +4,7 @@
 
     // Pass the usersValidator to the app
     angular
-        .module('tree')
+        .module('y')
         .run(usersValidator);
 
 

@@ -4,7 +4,7 @@
 
     // Pass the usersShowCtrl to the app
     angular
-        .module('tree')
+        .module('y')
         .controller('usersShowCtrl', usersShowCtrl);
 
 

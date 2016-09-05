@@ -1,2 +1,4 @@
 /server/vendor/
+node_modules/
+src/assets/bower_components
 composer.phar

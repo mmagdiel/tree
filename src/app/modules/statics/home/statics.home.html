@@ -1,2 +1,57 @@
-<h1>{{::staticsHome.title}}</h1>
-<h4>{{::staticsHome.content}}</h4>
+<md-toolbar md-whiteframe="4" layout="row">
+	<div class="md-toolbar-tools" layout-align="space-around center">
+       <div>
+          {{::staticsHome.title}}
+       </div>
+       
+       <div>
+         <md-input-container>
+              <label>Username</label>
+              <md-icon class="fa fa-user"></md-icon>
+              <input ng-model="login.username" type="text" placeholder="Username">
+         </md-input-container>
+         <md-input-container>
+              <label>Password</label>
+              <md-icon class="fa fa-key"></md-icon>
+              <input ng-model="login.password" type="text" placeholder="Password">
+         </md-input-container>
+         <md-button class="md-raised md-accent">Login</md-button>
+         <md-button class="md-raised md-warn">Register</md-button>
+      </div>
+	</div>
+</md-toolbar>
+
+<section layout="row" flex>
+   <md-sidenav 
+      class="md-sidenav-left sideNav"
+      md-component-id="left"
+      md-is-locked-open="$mdMedia('gt-md')"
+      md-whiteframe="4">
+      <div layout="column" layout-padding class="all">
+         <md-button class="md-raised">Accounts</md-button>
+         <md-button class="md-raised">Advertisements</md-button>
+         <md-button class="md-raised">Articles</md-button>
+         <md-button class="md-raised">Bills</md-button>
+         <md-button class="md-raised">Documents</md-button>
+         <md-button class="md-raised">Tickets</md-button>
+         <md-button class="md-raised">User</md-button>
+         <md-button class="md-raised">Static</md-button>
+         <md-button class="md-raised">Vouchers</md-button>
+      </div>
+   </md-sidenav>
+   <md-content flex layout-fill>
+      <img src="http://placehold.it/700x400">
+      
+   </md-content>   
+</section>
+
+<md-toolbar md-whiteframe="4" layout="row">
+   <div class="md-toolbar-tools" layout-align="space-around center">
+      <md-button class="md-fab md-primary">
+         <md-icon class="fa fa-twitter fa-2x"></md-icon>
+      </md-button>
+      <md-button class="md-fab md-primary">
+         <md-icon class="fa fa-facebook fa-2x"></md-icon>
+      </md-button>
+   </div>
+</md-toolbar>

@@ -2,26 +2,26 @@
 
   'use strict';
 
-    // Pass the usersStoreCtrl to the app
+    // Pass the adminsShowCtrl to the app
     angular
         .module('y')
-        .controller('usersStoreCtrl', usersStoreCtrl);
+        .controller('adminsShowCtrl', adminsShowCtrl);
 
 
-    // Define the usersStoreCtrl
-    function usersStoreCtrl(usersFactory) {
+    // Define the adminsShowCtrl
+    function adminsShowCtrl(adminsFactory, $stateParams) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define usersStore as this for ControllerAs and auto-$scope
-        var usersStore = this;
+        // Define adminsShow as this for ControllerAs and auto-$scope
+        var adminsShow = this;
 
 
-        // Define the usersStore functions and objects that will be passed to the view
-        usersStore.store = store;                                           // Store a resource
+        // Define the adminsShow functions and objects that will be passed to the view
+        adminsShow.admin = {};                                                // Object for show the admin
 
 
         /*
@@ -35,6 +35,7 @@
 
 
         initLog();
+        show($stateParams.id);
 
 
         /*
@@ -42,7 +43,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the usersStoreCtrl
+        | Declaring all functions used in the adminsShowCtrl
         |
         */
 
@@ -50,17 +51,21 @@
         // Sample for init function
         function initLog() {
 
-            console.log('usersStoreCtrl init');
+            console.log('adminsShowCtrl init');
         }
 
 
-        // Delete a resource
-        function store(data) {
+        // Get the admin
+        function show(id) {
 
-            return usersFactory.store(data).then(function(data) {
+            return adminsFactory.show(id).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            adminsShow.admin = data;
+	            return adminsShow.admin;
 
             }, function(data) {
 

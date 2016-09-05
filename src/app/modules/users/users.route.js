@@ -4,7 +4,7 @@
 
     // Pass the usersRoute to the app
 	angular
-	    .module('tree')
+	    .module('y')
 	    .run(usersRoute);
 
 

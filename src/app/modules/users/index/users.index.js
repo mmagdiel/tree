@@ -4,7 +4,7 @@
 
     // Pass the usersIndexCtrl to the app
     angular
-        .module('tree')
+        .module('y')
         .controller('usersIndexCtrl', usersIndexCtrl);
 
 

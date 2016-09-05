@@ -2,26 +2,26 @@
 
   'use strict';
 
-    // Pass the usersStoreCtrl to the app
+    // Pass the adminsStoreCtrl to the app
     angular
         .module('y')
-        .controller('usersStoreCtrl', usersStoreCtrl);
+        .controller('adminsStoreCtrl', adminsStoreCtrl);
 
 
-    // Define the usersStoreCtrl
-    function usersStoreCtrl(usersFactory) {
+    // Define the adminsStoreCtrl
+    function adminsStoreCtrl(adminsFactory) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define usersStore as this for ControllerAs and auto-$scope
-        var usersStore = this;
+        // Define adminsStore as this for ControllerAs and auto-$scope
+        var adminsStore = this;
 
 
-        // Define the usersStore functions and objects that will be passed to the view
-        usersStore.store = store;                                           // Store a resource
+        // Define the adminsStore functions and objects that will be passed to the view
+        adminsStore.store = store;                                           // Store a resource
 
 
         /*
@@ -42,7 +42,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the usersStoreCtrl
+        | Declaring all functions used in the adminsStoreCtrl
         |
         */
 
@@ -50,14 +50,14 @@
         // Sample for init function
         function initLog() {
 
-            console.log('usersStoreCtrl init');
+            console.log('adminsStoreCtrl init');
         }
 
 
         // Delete a resource
         function store(data) {
 
-            return usersFactory.store(data).then(function(data) {
+            return adminsFactory.store(data).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);

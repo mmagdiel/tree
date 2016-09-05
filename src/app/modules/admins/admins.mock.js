@@ -2,22 +2,22 @@
 
 //   'use strict';
 
-//     // Pass the usersMock to the app
+//     // Pass the adminsMock to the app
 // 	angular
 // 	    .module('y')
-// 	    .run(usersMock);
+// 	    .run(adminsMock);
 
 
-// 	// Define the usersMock
-//     function usersMock(mockHelper) {
+// 	// Define the adminsMock
+//     function adminsMock(mockHelper) {
 
 
 //         // Inject with ng-annotate
 //         "ngInject";
 
 
-//         // Object for user's mock
-//         var users = {};
+//         // Object for admin's mock
+//         var admins = {};
 
 
 //         /*
@@ -30,7 +30,7 @@
 //         */
 
 
-//     	setUsers();															            // Set the list of user
+//     	setAdmins();															            // Set the list of admin
 //     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
 
 
@@ -40,12 +40,12 @@
 // 	    | Functions
 // 	    |--------------------------------------------------------------------------
 // 	    |
-// 	    | Declaring all functions used in the usersMock
+// 	    | Declaring all functions used in the adminsMock
 // 	    |
 // 	    */
 
 
-// 		// Function for destroy users API
+// 		// Function for destroy admins API
 // 		function destroyRespond(method, url, data, headers, params) {
 
 //             // Get the id param from url
@@ -57,30 +57,30 @@
 // 			// If the result will be 200, execute the operation
 // 			if(header == 200) {
 
-//                 // Delete user by id from user's array
-//                 for(var i = 0; i <= users.length - 1; i++) {
+//                 // Delete admin by id from admin's array
+//                 for(var i = 0; i <= admins.length - 1; i++) {
 
-//                     // If user exists
-//                     if(users[i].id == id) {
+//                     // If admin exists
+//                     if(admins[i].id == id) {
 
-//                         // Delete  user
-//                         users.splice(i, 1);
+//                         // Delete  admin
+//                         admins.splice(i, 1);
 
 //                         // Return the success header
-//                         return [header, {data: 'User removed'}];
+//                         return [header, {data: 'Admin removed'}];
 //                     }
 //                 }
 
 // 				// Return the error header
-//                 return [header, {error: 'User not found'}];
+//                 return [header, {error: 'Admin not found'}];
 // 			}
 
 // 			// Return the error header
-// 			return [header, {error:'Error in user removing'}];
+// 			return [header, {error:'Error in admin removing'}];
 // 		}
 
 
-// 		// Function for index users API
+// 		// Function for index admins API
 // 		function indexRespond(method, url, data, headers, params) {
 
 // 			// Get a random header
@@ -90,15 +90,15 @@
 // 			if(header == 200) {
 
 // 				// Return the success header
-//                 return [header, {data: users}];
+//                 return [header, {data: admins}];
 // 			}
 
 // 			// Return the error header
-// 			return [header, {error:'Error while listing users'}];
+// 			return [header, {error:'Error while listing admins'}];
 // 		}
 
 
-// 		// Function for show users API
+// 		// Function for show admins API
 // 		function showRespond(method, url, data, headers, params) {
 
 //             // Get the id param from url
@@ -110,27 +110,27 @@
 // 			// If the result will be 200, execute the operation
 // 			if(header == 200) {
 
-//                 // Get user by id from user's array
-//                 for(var i = 0; i <= users.length - 1; i++) {
+//                 // Get admin by id from admin's array
+//                 for(var i = 0; i <= admins.length - 1; i++) {
 
-//                     // If user exists
-//                     if(users[i].id == id) {
+//                     // If admin exists
+//                     if(admins[i].id == id) {
 
 //                         // Return the success header
-//                         return [header, {data: users[i]}];
+//                         return [header, {data: admins[i]}];
 //                     }
 //                 }
 
 //                 // Return the error header
-//     			return [header, {error:'User not found'}];
+//     			return [header, {error:'Admin not found'}];
 // 			}
 
 // 			// Return the error header
-// 			return [header, {error:'Error showing user'}];
+// 			return [header, {error:'Error showing admin'}];
 // 		}
 
 
-// 		// Function for store users API
+// 		// Function for store admins API
 // 		function storeRespond(method, url, data, headers, params) {
 
 // 			// Get a random header
@@ -139,22 +139,22 @@
 //             // If the result will be 200, execute the operation
 // 			if(header == 200) {
 
-//                 // Assisgn user id - override if inserted
-//                 data.id = users.length;
+//                 // Assisgn admin id - override if inserted
+//                 data.id = admins.length;
 
-//                 // Insert the new user
-//                 users.push(data);
+//                 // Insert the new admin
+//                 admins.push(data);
 
 //                 // Return the success header
-//                 return [header, {data: 'User stored'}];
+//                 return [header, {data: 'Admin stored'}];
 //             }
 
 // 			// Return the error header
-// 			return [header, {error:'Error storing the user'}];
+// 			return [header, {error:'Error storing the admin'}];
 // 		}
 
 
-// 		// Function for update users API
+// 		// Function for update admins API
 // 		function updateRespond(method, url, data, headers, params) {
 
 //             // Get the id param from url
@@ -166,26 +166,26 @@
 // 			// If the result will be 200, execute the operation
 // 			if(header == 200) {
 
-//                 // Get user by id from user's array
-//                 for(var i = 0; i <= users.length - 1; i++) {
+//                 // Get admin by id from admin's array
+//                 for(var i = 0; i <= admins.length - 1; i++) {
 
-//                     // If user exists
-//                     if(users[i].id == id) {
+//                     // If admin exists
+//                     if(admins[i].id == id) {
 
-//                         // Override the user
-//                         users[i] = data;
+//                         // Override the admin
+//                         admins[i] = data;
 
 //                         // Return the success header
-//                         return [header, {data: 'User updated'}];
+//                         return [header, {data: 'Admin updated'}];
 //                     }
 //                 }
 
 //                 // Return the error header
-//     			return [header, {error:'User not found'}];
+//     			return [header, {error:'Admin not found'}];
 // 			}
 
 // 			// Return the error header
-// 			return [header, {error:'Error updating user'}];
+// 			return [header, {error:'Error updating admin'}];
 // 		}
 
 
@@ -220,7 +220,7 @@
 
 // 				label: 'destroy',
 // 			    method: 'DELETE',
-// 			    url: /\/api\/users\/(d*)/,
+// 			    url: /\/api\/admins\/(d*)/,
 // 			    params: ['id'],
 // 			    respond: destroyRespond
 
@@ -228,14 +228,14 @@
 
 // 				label: 'index',
 // 			    method: 'GET',
-// 			    url: '/api/users/',
+// 			    url: '/api/admins/',
 // 			    respond: indexRespond
 
 // 			},{
 
 // 				label: 'show',
 // 			    method: 'GET',
-// 			    url: /\/api\/users\/(d*)/,
+// 			    url: /\/api\/admins\/(d*)/,
 // 			    params: ['id'],
 // 			    respond: showRespond
 
@@ -243,14 +243,14 @@
 
 // 				label: 'store',
 // 			    method: 'POST',
-// 			    url: '/api/users/',
+// 			    url: '/api/admins/',
 // 			    respond: storeRespond
 
 // 			},{
 
 // 				label: 'update',
 // 			    method: 'PUT',
-// 			    url: /\/api\/users\/(d*)/,
+// 			    url: /\/api\/admins\/(d*)/,
 // 			    params: ['id'],
 // 			    respond: updateRespond
 // 			}];
@@ -258,24 +258,9 @@
 
 
 // 		// Function for set the array
-// 		function setUsers() {
+// 		function setAdmins() {
 
-//             users = [{
-
-//                 "id": 1,
-//                 "name": "Mario",
-//                 "surname": "Rossi"
-//             },
-//             {
-//                 "id": 2,
-//                 "name": "Luigi",
-//                 "surname": "Verdi"
-//             },
-//             {
-//                 "id": 3,
-//                 "name": "Furio",
-//                 "surname": "Bianchi"
-//             }];
+//             admins = [];
 // 		}
 // 	}
 

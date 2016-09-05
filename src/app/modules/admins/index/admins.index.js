@@ -2,26 +2,26 @@
 
   'use strict';
 
-    // Pass the usersStoreCtrl to the app
+    // Pass the adminsIndexCtrl to the app
     angular
         .module('y')
-        .controller('usersStoreCtrl', usersStoreCtrl);
+        .controller('adminsIndexCtrl', adminsIndexCtrl);
 
 
-    // Define the usersStoreCtrl
-    function usersStoreCtrl(usersFactory) {
+    // Define the adminsIndexCtrl
+    function adminsIndexCtrl(adminsFactory) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define usersStore as this for ControllerAs and auto-$scope
-        var usersStore = this;
+        // Define adminsIndex as this for ControllerAs and auto-$scope
+        var adminsIndex = this;
 
 
-        // Define the usersStore functions and objects that will be passed to the view
-        usersStore.store = store;                                           // Store a resource
+        // Define the adminsIndex functions and objects that will be passed to the view
+        adminsIndex.admins = [];                                              // Array for list of admins
 
 
         /*
@@ -35,14 +35,14 @@
 
 
         initLog();
-
+        index();
 
         /*
         |--------------------------------------------------------------------------
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the usersStoreCtrl
+        | Declaring all functions used in the adminsIndexCtrl
         |
         */
 
@@ -50,17 +50,21 @@
         // Sample for init function
         function initLog() {
 
-            console.log('usersStoreCtrl init');
+            console.log('adminsIndexCtrl init');
         }
 
 
-        // Delete a resource
-        function store(data) {
+        // Get all admins.
+        function index() {
 
-            return usersFactory.store(data).then(function(data) {
+            return adminsFactory.index().then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            adminsIndex.admins = data.data;
+	            return adminsIndex.admins;
 
             }, function(data) {
 

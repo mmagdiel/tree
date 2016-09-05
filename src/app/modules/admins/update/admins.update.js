@@ -2,27 +2,27 @@
 
   'use strict';
 
-    // Pass the usersUpdateCtrl to the app
+    // Pass the adminsUpdateCtrl to the app
     angular
         .module('y')
-        .controller('usersUpdateCtrl', usersUpdateCtrl);
+        .controller('adminsUpdateCtrl', adminsUpdateCtrl);
 
 
-    // Define the usersUpdateCtrl
-    function usersUpdateCtrl(usersFactory, $stateParams) {
+    // Define the adminsUpdateCtrl
+    function adminsUpdateCtrl(adminsFactory, $stateParams) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define usersUpdate as this for ControllerAs and auto-$scope
-        var usersUpdate = this;
+        // Define adminsUpdate as this for ControllerAs and auto-$scope
+        var adminsUpdate = this;
 
 
-        // Define the usersUpdate functions and objects that will be passed to the view
-        usersUpdate.user = {};                                                  // Object for show the user
-        usersUpdate.update = update;                                            // Update a resource
+        // Define the adminsUpdate functions and objects that will be passed to the view
+        adminsUpdate.admin = {};                                                  // Object for show the admin
+        adminsUpdate.update = update;                                            // Update a resource
 
 
         /*
@@ -44,7 +44,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the usersUpdateCtrl
+        | Declaring all functions used in the adminsUpdateCtrl
         |
         */
 
@@ -52,14 +52,14 @@
         // Sample for init function
         function initLog() {
 
-            console.log('usersUpdateCtrl init');
+            console.log('adminsUpdateCtrl init');
         }
 
 
         // Delete a resource
         function update(id, data) {
 
-            return usersFactory.update(id, data).then(function(data) {
+            return adminsFactory.update(id, data).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
@@ -73,17 +73,17 @@
         }
 
 
-        // Get the user
+        // Get the admin
         function show(id) {
 
-            return usersFactory.show(id).then(function(data) {
+            return adminsFactory.show(id).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
                 // Assign data to array and return them
-                usersUpdate.user = data;
-                return usersUpdate.user;
+                adminsUpdate.admin = data;
+                return adminsUpdate.admin;
 
             }, function(data) {
 

@@ -2,27 +2,27 @@
 
   'use strict';
 
-    // Pass the usersUpdateCtrl to the app
+    // Pass the adminsDestroyCtrl to the app
     angular
         .module('y')
-        .controller('usersUpdateCtrl', usersUpdateCtrl);
+        .controller('adminsDestroyCtrl', adminsDestroyCtrl);
 
 
-    // Define the usersUpdateCtrl
-    function usersUpdateCtrl(usersFactory, $stateParams) {
+    // Define the adminsDestroyCtrl
+    function adminsDestroyCtrl(adminsFactory, $stateParams) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define usersUpdate as this for ControllerAs and auto-$scope
-        var usersUpdate = this;
+        // Define adminsDestroy as this for ControllerAs and auto-$scope
+        var adminsDestroy = this;
 
 
-        // Define the usersUpdate functions and objects that will be passed to the view
-        usersUpdate.user = {};                                                  // Object for show the user
-        usersUpdate.update = update;                                            // Update a resource
+        // Define the adminsDestroy functions and objects that will be passed to the view
+        adminsDestroy.admin = {};                                                 // Object for show the admin
+        adminsDestroy.destroy = destroy;                                         // Delete a resource
 
 
         /*
@@ -44,7 +44,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the usersUpdateCtrl
+        | Declaring all functions used in the adminsDestroyCtrl
         |
         */
 
@@ -52,38 +52,38 @@
         // Sample for init function
         function initLog() {
 
-            console.log('usersUpdateCtrl init');
+            console.log('adminsDestroyCtrl init');
         }
 
 
         // Delete a resource
-        function update(id, data) {
+        function destroy(id) {
 
-            return usersFactory.update(id, data).then(function(data) {
+            return adminsFactory.destroy(id).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
             }, function(data) {
 
-                // Custom function for error handling
+            	// Custom function for error handling
                 console.log('Result form API with ERROR', data);
 
             });
         }
 
 
-        // Get the user
+        // Get the admin
         function show(id) {
 
-            return usersFactory.show(id).then(function(data) {
+            return adminsFactory.show(id).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
                 // Assign data to array and return them
-                usersUpdate.user = data;
-                return usersUpdate.user;
+                adminsDestroy.admin = data;
+                return adminsDestroy.admin;
 
             }, function(data) {
 

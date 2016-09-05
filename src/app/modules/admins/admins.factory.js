@@ -2,26 +2,26 @@
 
   'use strict';
 
-    // Pass the usersFactory to the app
+    // Pass the adminsFactory to the app
     angular
         .module('y')
-        .factory('usersFactory', usersFactory);
+        .factory('adminsFactory', adminsFactory);
 
 
-    // Define the usersFactory
-    function usersFactory($http) {
+    // Define the adminsFactory
+    function adminsFactory($http) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for user user
-        var userBase = '/api/users/';
+        // Define base URI for admin admin
+        var adminBase = '/api/admins/';
 
 
-        // Define the user factory object to return
-        var usersFactory = {
+        // Define the admin factory object to return
+        var adminsFactory = {
 
             index: index,
             show: show,
@@ -32,8 +32,8 @@
         };
 
 
-        // Return the user factory
-        return usersFactory;
+        // Return the admin factory
+        return adminsFactory;
 
 
         /*
@@ -41,47 +41,47 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the usersFactory
+        | Declaring all functions used in the adminsFactory
         |
         */
 
 
-        // Display a listing of users.
+        // Display a listing of admins.
         function index() {
 
-            return $http.get(userBase)
+            return $http.get(adminBase)
                         .then(function(data){ return data; });
         }
 
 
-        // Display a specified user.
+        // Display a specified admin.
         function show(id) {
 
-            return $http.get(userBase + id)
+            return $http.get(adminBase + id)
                         .then(function(data){ return data.data; });
         }
 
 
-        // Store a newly created user in storage.
+        // Store a newly created admin in storage.
         function store(data) {
 
-            return $http.post(userBase, data)
+            return $http.post(adminBase, data)
                         .then(function(data){ return data.data; });
         }
 
 
-        // Update the specified user in storage.
+        // Update the specified admin in storage.
         function update(id, data) {
 
-            return $http.put(userBase + id, data)
+            return $http.put(adminBase + id, data)
                         .then(function(data){ return data.data; });
         }
 
 
-        // Remove the specified user from storage.
+        // Remove the specified admin from storage.
         function destroy(id) {
 
-            return $http.delete(userBase + id)
+            return $http.delete(adminBase + id)
                         .then(function(data){ return data.data; });
         }
 

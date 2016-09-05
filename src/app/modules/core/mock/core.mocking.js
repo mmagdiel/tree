@@ -1,69 +1,69 @@
-(function(){
+// (function(){
 
-	'use strict';
+// 	'use strict';
 
-	// Pass the mockHelperProvider to the app
-	angular
-		.module('core.mocking')
-		.provider('mockHelper', mockHelperProvider);
-
-
-    // Define the mockHelperProvider
-	function mockHelperProvider() {
+// 	// Pass the mockHelperProvider to the app
+// 	angular
+// 		.module('core.mocking')
+// 		.provider('mockHelper', mockHelperProvider);
 
 
-		// Holds the service factory function
-		this.$get = MockHelper;
+//     // Define the mockHelperProvider
+// 	function mockHelperProvider() {
 
 
-		// Define the mockHelperProvider
-		function MockHelper($httpBackend) {
+// 		// Holds the service factory function
+// 		this.$get = MockHelper;
 
 
-			// Inject with ng-annotate
-			"ngInject";
+// 		// Define the mockHelperProvider
+// 		function MockHelper($httpBackend) {
 
 
-			// Pass through this extension
-			$httpBackend.whenGET(/\.html$/).passThrough();
-			$httpBackend.whenGET(/\.png$/).passThrough();
-			$httpBackend.whenGET(/\.svg$/).passThrough();
-			$httpBackend.whenGET(/\.jpg$/).passThrough();
-			$httpBackend.whenGET(/\.jpeg$/).passThrough();
-			$httpBackend.whenGET(/\.css$/).passThrough();
+// 			// Inject with ng-annotate
+// 			"ngInject";
 
 
-			// Define the object to return
-			var service = {
-
-				configureMocks: configureMocks,		// Configure all the states for the route
-			};
-
-
-			// Return the object
-			return service;
+// 			// Pass through this extension
+// 			$httpBackend.whenGET(/\.html$/).passThrough();
+// 			$httpBackend.whenGET(/\.png$/).passThrough();
+// 			$httpBackend.whenGET(/\.svg$/).passThrough();
+// 			$httpBackend.whenGET(/\.jpg$/).passThrough();
+// 			$httpBackend.whenGET(/\.jpeg$/).passThrough();
+// 			$httpBackend.whenGET(/\.css$/).passThrough();
 
 
-	        /*
-	        |--------------------------------------------------------------------------
-	        | Functions
-	        |--------------------------------------------------------------------------
-	        |
-	        | Declaring all functions used in the MockHelper
-	        |
-	        */
+// 			// Define the object to return
+// 			var service = {
+
+// 				configureMocks: configureMocks,		// Configure all the states for the route
+// 			};
 
 
-			// Configure all the mocks for the route
-			function configureMocks(mocks) {
+// 			// Return the object
+// 			return service;
 
-				// Foreach mocks, create a fake backend interaction
-				mocks.forEach(function(mock){
 
-					$httpBackend.when(mock.method, mock.url).respond(mock.respond);
-				});
-			}
-		}
-	}
+// 	        /*
+// 	        |--------------------------------------------------------------------------
+// 	        | Functions
+// 	        |--------------------------------------------------------------------------
+// 	        |
+// 	        | Declaring all functions used in the MockHelper
+// 	        |
+// 	        */
 
-})();
+
+// 			// Configure all the mocks for the route
+// 			function configureMocks(mocks) {
+
+// 				// Foreach mocks, create a fake backend interaction
+// 				// mocks.forEach(function(mock){
+
+// 				// 	$httpBackend.when(mock.method, mock.url).respond(mock.respond);
+// 				// });
+// 			}
+// 		}
+// 	}
+
+// })();

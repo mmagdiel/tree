@@ -4,7 +4,7 @@
 
     // Pass the usersDestroyCtrl to the app
     angular
-        .module('tree')
+        .module('y')
         .controller('usersDestroyCtrl', usersDestroyCtrl);
 
 

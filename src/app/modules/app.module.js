@@ -3,6 +3,6 @@
 	'use strict';
 
 	// Define angular app module
-	angular.module('tree', ['core.routing', 'core.mocking', 'core.validator', 'ui.router']);
+	angular.module('y', ['core.rest','core.routing','core.theming','core.validator','ngMaterial','ui.router','ngRestful']);
 
 })();

@@ -4,7 +4,7 @@
 
     // Pass the staticsRoute to the app
 	angular
-	    .module('tree')
+	    .module('y')
 	    .run(staticsRoute);
 
 
