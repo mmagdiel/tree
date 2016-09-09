@@ -1,0 +1,23 @@
+{
+  "name": "tree",
+  "description": "A simple AngularJS Boilerplate based on John Papa's style guide",
+  "main": "src/index.html",
+  "authors": [
+    "Oscar Reyes <oscarr.reyes17@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/magdielikari/tree",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/assets/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.1.1",
+    "font-awesome": "^4.6.3"
+  }
+}
