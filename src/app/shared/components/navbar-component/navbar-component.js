@@ -37,9 +37,19 @@
     }
 
     // Define directive controller
-    function navbarDirectiveController() {
+    function navbarDirectiveController(userService) {
+        var self = this;
+        self.title = "Tree";
+        self.guest = userService.isGuest;
 
-        this.title = "Tree app";
+        self.login = function(){
+            userService.login(self.form, function(err, success){
+                if(err){
+                    console.error(err);
+                }
+
+                self.guest = !success;
+            });
+        };
     }
-
 })();

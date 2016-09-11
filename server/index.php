@@ -13,6 +13,10 @@ $app->add(function($request, $response, $next)
 
 	$methods = [];
 
+	// return $response->withJson((Object) [
+	// 	"path" => $request->getUri()->getPath()
+	// ]);
+
 	if($route && $route->getArguments())
 	{
 		$methods = ["GET", "PUT", "DELETE", "OPTIONS"];
@@ -24,7 +28,7 @@ $app->add(function($request, $response, $next)
 	}
 
 	// Check for access as long as the current route is not login
-	if($request->getUri()->getPath() != "/login")
+	if($request->getUri()->getPath() != "login")
 	{
 		include_once "models/Account.php";
 
