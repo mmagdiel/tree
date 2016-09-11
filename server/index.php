@@ -13,7 +13,7 @@ $app->add(function($request, $response, $next)
 
 	$methods = [];
 
-	if(count($route->getArguments()) > 0)
+	if($route && $route->getArguments())
 	{
 		$methods = ["GET", "PUT", "DELETE", "OPTIONS"];
 	}
@@ -24,7 +24,7 @@ $app->add(function($request, $response, $next)
 	}
 
 	// Check for access as long as the current route is not login
-	if($route->getName() != "/login")
+	if($request->getUri()->getPath() != "/login")
 	{
 		include_once "models/Account.php";
 

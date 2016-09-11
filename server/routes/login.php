@@ -27,3 +27,8 @@ $app->post("/login", function($request, $response)
 
 	return $response;
 });
+
+$app->options("/login", function($request, $response)
+{
+	return $response->withHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+});
