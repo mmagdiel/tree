@@ -1,25 +1,4 @@
-<md-toolbar md-whiteframe="4" layout="row">
-	<div class="md-toolbar-tools" layout-align="space-around center">
-       <div>
-          {{::staticsHome.title}}
-       </div>
-       
-       <div>
-         <md-input-container>
-              <label>Username</label>
-              <md-icon class="fa fa-user"></md-icon>
-              <input ng-model="login.username" type="text" placeholder="Username">
-         </md-input-container>
-         <md-input-container>
-              <label>Password</label>
-              <md-icon class="fa fa-key"></md-icon>
-              <input ng-model="login.password" type="text" placeholder="Password">
-         </md-input-container>
-         <md-button class="md-raised md-accent">Login</md-button>
-         <md-button class="md-raised md-warn">Register</md-button>
-      </div>
-	</div>
-</md-toolbar>
+<navbar-directive></navbar-directive>
 
 <section layout="row" flex>
    <md-sidenav 
@@ -28,20 +7,18 @@
       md-is-locked-open="$mdMedia('gt-md')"
       md-whiteframe="4">
       <div layout="column" layout-padding class="all">
-         <md-button class="md-raised">Accounts</md-button>
-         <md-button class="md-raised">Advertisements</md-button>
-         <md-button class="md-raised">Articles</md-button>
-         <md-button class="md-raised">Bills</md-button>
-         <md-button class="md-raised">Documents</md-button>
-         <md-button class="md-raised">Tickets</md-button>
-         <md-button class="md-raised">User</md-button>
-         <md-button class="md-raised">Static</md-button>
+         <md-button class="md-raised" ui-sref="accounts-index">Accounts</md-button>
+         <md-button class="md-raised" ui-sref="advertisements-index">Advertisements</md-button>
+         <md-button class="md-raised" ui-sref="articles-index">Articles</md-button>
+         <md-button class="md-raised" ui-sref="bills-index">Bills</md-button>
+         <md-button class="md-raised" ui-sref="documents-index">Documents</md-button>
+         <md-button class="md-raised" ui-sref="tickets-index">Tickets</md-button>
+         <md-button class="md-raised" ui-sref="users-index">User</md-button>
+         <md-button class="md-raised" ui-sref="statics-index">Static</md-button>
          <md-button class="md-raised">Vouchers</md-button>
       </div>
    </md-sidenav>
    <md-content flex layout-fill>
-      <img src="http://placehold.it/700x400">
-      
    </md-content>   
 </section>
 

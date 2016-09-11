@@ -39,7 +39,7 @@
     // Define directive controller
     function navbarDirectiveController() {
 
-        // Do stuff...
+        this.title = "Tree app";
     }
 
 })();

@@ -2962,26 +2962,26 @@
 
   'use strict';
 
-    // Pass the adminsFactory to the app
+    // Pass the staticsFactory to the app
     angular
         .module('y')
-        .factory('adminsFactory', adminsFactory);
+        .factory('staticsFactory', staticsFactory);
 
 
-    // Define the adminsFactory
-    function adminsFactory($http) {
+    // Define the staticsFactory
+    function staticsFactory($http) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for admin admin
-        var adminBase = '/api/admins/';
+        // Define base URI for static static
+        var staticBase = '/api/statics/';
 
 
-        // Define the admin factory object to return
-        var adminsFactory = {
+        // Define the static factory object to return
+        var staticsFactory = {
 
             index: index,
             show: show,
@@ -2992,8 +2992,8 @@
         };
 
 
-        // Return the admin factory
-        return adminsFactory;
+        // Return the static factory
+        return staticsFactory;
 
 
         /*
@@ -3001,47 +3001,47 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the adminsFactory
+        | Declaring all functions used in the staticsFactory
         |
         */
 
 
-        // Display a listing of admins.
+        // Display a listing of statics.
         function index() {
 
-            return $http.get(adminBase)
+            return $http.get(staticBase)
                         .then(function(data){ return data; });
         }
 
 
-        // Display a specified admin.
+        // Display a specified static.
         function show(id) {
 
-            return $http.get(adminBase + id)
+            return $http.get(staticBase + id)
                         .then(function(data){ return data.data; });
         }
 
 
-        // Store a newly created admin in storage.
+        // Store a newly created static in storage.
         function store(data) {
 
-            return $http.post(adminBase, data)
+            return $http.post(staticBase, data)
                         .then(function(data){ return data.data; });
         }
 
 
-        // Update the specified admin in storage.
+        // Update the specified static in storage.
         function update(id, data) {
 
-            return $http.put(adminBase + id, data)
+            return $http.put(staticBase + id, data)
                         .then(function(data){ return data.data; });
         }
 
 
-        // Remove the specified admin from storage.
+        // Remove the specified static from storage.
         function destroy(id) {
 
-            return $http.delete(adminBase + id)
+            return $http.delete(staticBase + id)
                         .then(function(data){ return data.data; });
         }
 
@@ -3053,22 +3053,22 @@
 
 //   'use strict';
 
-//     // Pass the adminsMock to the app
+//     // Pass the staticsMock to the app
 // 	angular
 // 	    .module('y')
-// 	    .run(adminsMock);
+// 	    .run(staticsMock);
 
 
-// 	// Define the adminsMock
-//     function adminsMock(mockHelper) {
+// 	// Define the staticsMock
+//     function staticsMock(mockHelper) {
 
 
 //         // Inject with ng-annotate
 //         "ngInject";
 
 
-//         // Object for admin's mock
-//         var admins = {};
+//         // Object for static's mock
+//         var statics = {};
 
 
 //         /*
@@ -3081,7 +3081,7 @@
 //         */
 
 
-//     	setAdmins();															            // Set the list of admin
+//     	setstatics();															            // Set the list of static
 //     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
 
 
@@ -3091,12 +3091,12 @@
 // 	    | Functions
 // 	    |--------------------------------------------------------------------------
 // 	    |
-// 	    | Declaring all functions used in the adminsMock
+// 	    | Declaring all functions used in the staticsMock
 // 	    |
 // 	    */
 
 
-// 		// Function for destroy admins API
+// 		// Function for destroy statics API
 // 		function destroyRespond(method, url, data, headers, params) {
 
 //             // Get the id param from url
@@ -3108,30 +3108,30 @@
 // 			// If the result will be 200, execute the operation
 // 			if(header == 200) {
 
-//                 // Delete admin by id from admin's array
-//                 for(var i = 0; i <= admins.length - 1; i++) {
+//                 // Delete static by id from static's array
+//                 for(var i = 0; i <= statics.length - 1; i++) {
 
-//                     // If admin exists
-//                     if(admins[i].id == id) {
+//                     // If static exists
+//                     if(statics[i].id == id) {
 
-//                         // Delete  admin
-//                         admins.splice(i, 1);
+//                         // Delete  static
+//                         statics.splice(i, 1);
 
 //                         // Return the success header
-//                         return [header, {data: 'Admin removed'}];
+//                         return [header, {data: 'static removed'}];
 //                     }
 //                 }
 
 // 				// Return the error header
-//                 return [header, {error: 'Admin not found'}];
+//                 return [header, {error: 'static not found'}];
 // 			}
 
 // 			// Return the error header
-// 			return [header, {error:'Error in admin removing'}];
+// 			return [header, {error:'Error in static removing'}];
 // 		}
 
 
-// 		// Function for index admins API
+// 		// Function for index statics API
 // 		function indexRespond(method, url, data, headers, params) {
 
 // 			// Get a random header
@@ -3141,15 +3141,15 @@
 // 			if(header == 200) {
 
 // 				// Return the success header
-//                 return [header, {data: admins}];
+//                 return [header, {data: statics}];
 // 			}
 
 // 			// Return the error header
-// 			return [header, {error:'Error while listing admins'}];
+// 			return [header, {error:'Error while listing statics'}];
 // 		}
 
 
-// 		// Function for show admins API
+// 		// Function for show statics API
 // 		function showRespond(method, url, data, headers, params) {
 
 //             // Get the id param from url
@@ -3161,27 +3161,27 @@
 // 			// If the result will be 200, execute the operation
 // 			if(header == 200) {
 
-//                 // Get admin by id from admin's array
-//                 for(var i = 0; i <= admins.length - 1; i++) {
+//                 // Get static by id from static's array
+//                 for(var i = 0; i <= statics.length - 1; i++) {
 
-//                     // If admin exists
-//                     if(admins[i].id == id) {
+//                     // If static exists
+//                     if(statics[i].id == id) {
 
 //                         // Return the success header
-//                         return [header, {data: admins[i]}];
+//                         return [header, {data: statics[i]}];
 //                     }
 //                 }
 
 //                 // Return the error header
-//     			return [header, {error:'Admin not found'}];
+//     			return [header, {error:'static not found'}];
 // 			}
 
 // 			// Return the error header
-// 			return [header, {error:'Error showing admin'}];
+// 			return [header, {error:'Error showing static'}];
 // 		}
 
 
-// 		// Function for store admins API
+// 		// Function for store statics API
 // 		function storeRespond(method, url, data, headers, params) {
 
 // 			// Get a random header
@@ -3190,22 +3190,22 @@
 //             // If the result will be 200, execute the operation
 // 			if(header == 200) {
 
-//                 // Assisgn admin id - override if inserted
-//                 data.id = admins.length;
+//                 // Assisgn static id - override if inserted
+//                 data.id = statics.length;
 
-//                 // Insert the new admin
-//                 admins.push(data);
+//                 // Insert the new static
+//                 statics.push(data);
 
 //                 // Return the success header
-//                 return [header, {data: 'Admin stored'}];
+//                 return [header, {data: 'static stored'}];
 //             }
 
 // 			// Return the error header
-// 			return [header, {error:'Error storing the admin'}];
+// 			return [header, {error:'Error storing the static'}];
 // 		}
 
 
-// 		// Function for update admins API
+// 		// Function for update statics API
 // 		function updateRespond(method, url, data, headers, params) {
 
 //             // Get the id param from url
@@ -3217,26 +3217,26 @@
 // 			// If the result will be 200, execute the operation
 // 			if(header == 200) {
 
-//                 // Get admin by id from admin's array
-//                 for(var i = 0; i <= admins.length - 1; i++) {
+//                 // Get static by id from static's array
+//                 for(var i = 0; i <= statics.length - 1; i++) {
 
-//                     // If admin exists
-//                     if(admins[i].id == id) {
+//                     // If static exists
+//                     if(statics[i].id == id) {
 
-//                         // Override the admin
-//                         admins[i] = data;
+//                         // Override the static
+//                         statics[i] = data;
 
 //                         // Return the success header
-//                         return [header, {data: 'Admin updated'}];
+//                         return [header, {data: 'static updated'}];
 //                     }
 //                 }
 
 //                 // Return the error header
-//     			return [header, {error:'Admin not found'}];
+//     			return [header, {error:'static not found'}];
 // 			}
 
 // 			// Return the error header
-// 			return [header, {error:'Error updating admin'}];
+// 			return [header, {error:'Error updating static'}];
 // 		}
 
 
@@ -3271,7 +3271,7 @@
 
 // 				label: 'destroy',
 // 			    method: 'DELETE',
-// 			    url: /\/api\/admins\/(d*)/,
+// 			    url: /\/api\/statics\/(d*)/,
 // 			    params: ['id'],
 // 			    respond: destroyRespond
 
@@ -3279,14 +3279,14 @@
 
 // 				label: 'index',
 // 			    method: 'GET',
-// 			    url: '/api/admins/',
+// 			    url: '/api/statics/',
 // 			    respond: indexRespond
 
 // 			},{
 
 // 				label: 'show',
 // 			    method: 'GET',
-// 			    url: /\/api\/admins\/(d*)/,
+// 			    url: /\/api\/statics\/(d*)/,
 // 			    params: ['id'],
 // 			    respond: showRespond
 
@@ -3294,14 +3294,14 @@
 
 // 				label: 'store',
 // 			    method: 'POST',
-// 			    url: '/api/admins/',
+// 			    url: '/api/statics/',
 // 			    respond: storeRespond
 
 // 			},{
 
 // 				label: 'update',
 // 			    method: 'PUT',
-// 			    url: /\/api\/admins\/(d*)/,
+// 			    url: /\/api\/statics\/(d*)/,
 // 			    params: ['id'],
 // 			    respond: updateRespond
 // 			}];
@@ -3309,9 +3309,9 @@
 
 
 // 		// Function for set the array
-// 		function setAdmins() {
+// 		function setstatics() {
 
-//             admins = [];
+//             statics = [];
 // 		}
 // 	}
 
@@ -3321,14 +3321,14 @@
 
   'use strict';
 
-    // Pass the adminsRoute to the app
+    // Pass the staticsRoute to the app
 	angular
 	    .module('y')
-	    .run(adminsRoute);
+	    .run(staticsRoute);
 
 
-	// Define the adminsRoute
-    function adminsRoute(routerHelper) {
+	// Define the staticsRoute
+    function staticsRoute(routerHelper) {
 
 
         // Inject with ng-annotate
@@ -3345,44 +3345,44 @@
 
 		return [{
 
-		    state: 'admins-index',
+		    state: 'statics-index',
 		    config: {
-		        url: '/admins',
-		        templateUrl: 'app/modules/admins/index/admins.index.html',
-		        controller: 'adminsIndexCtrl',
-		        controllerAs: 'adminsIndex'
+		        url: '/statics',
+		        templateUrl: 'app/modules/statics/index/statics.index.html',
+		        controller: 'staticsIndexCtrl',
+		        controllerAs: 'staticsIndex'
 		    }
 		}, {
-		    state: 'admins-store',
+		    state: 'statics-store',
 		    config: {
-		        url: '/admins/store',
-		        templateUrl: 'app/modules/admins/store/admins.store.html',
-		        controller: 'adminsStoreCtrl',
-		        controllerAs: 'adminsStore'
+		        url: '/statics/store',
+		        templateUrl: 'app/modules/statics/store/statics.store.html',
+		        controller: 'staticsStoreCtrl',
+		        controllerAs: 'staticsStore'
 		    }
 		}, {
-		    state: 'admins-show',
+		    state: 'statics-show',
 		    config: {
-		        url: '/admins/:id',
-		        templateUrl: 'app/modules/admins/show/admins.show.html',
-		        controller: 'adminsShowCtrl',
-		        controllerAs: 'adminsShow'
+		        url: '/statics/:id',
+		        templateUrl: 'app/modules/statics/show/statics.show.html',
+		        controller: 'staticsShowCtrl',
+		        controllerAs: 'staticsShow'
 		    }
 		}, {
-		    state: 'admins-update',
+		    state: 'statics-update',
 		    config: {
-		        url: '/admins/:id/update',
-		        templateUrl: 'app/modules/admins/update/admins.update.html',
-		        controller: 'adminsUpdateCtrl',
-		        controllerAs: 'adminsUpdate'
+		        url: '/statics/:id/update',
+		        templateUrl: 'app/modules/statics/update/statics.update.html',
+		        controller: 'staticsUpdateCtrl',
+		        controllerAs: 'staticsUpdate'
 		    }
 		}, {
-		    state: 'admins-destroy',
+		    state: 'statics-destroy',
 		    config: {
-		        url: '/admins/:id/delete',
-		        templateUrl: 'app/modules/admins/destroy/admins.destroy.html',
-		        controller: 'adminsDestroyCtrl',
-		        controllerAs: 'adminsDestroy'
+		        url: '/statics/:id/delete',
+		        templateUrl: 'app/modules/statics/destroy/statics.destroy.html',
+		        controller: 'staticsDestroyCtrl',
+		        controllerAs: 'staticsDestroy'
 		    }
 		}];
 	}
@@ -3393,14 +3393,14 @@
 
     'use strict';
 
-    // Pass the adminssValidator to the app
+    // Pass the staticssValidator to the app
     angular
     .module('y')
-        .run(adminssValidator);
+        .run(staticssValidator);
 
 
-    // Define the adminssValidator
-    function adminssValidator(validatorHelper) {
+    // Define the staticssValidator
+    function staticssValidator(validatorHelper) {
 
 
         // Inject with ng-annotate
@@ -3426,7 +3426,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the adminssValidator
+        | Declaring all functions used in the staticssValidator
         |
         */
 
@@ -4499,7 +4499,7 @@
 
 
     // Define the userService
-    function userService() {
+    function userService($resource) {
 
 
         // Inject with ng-annotate
@@ -4532,6 +4532,7 @@
         function init() {
 
             console.log('Init user factory');
+            console.log($resource);
         }
 
     }
@@ -6769,21 +6770,6 @@
       app.config(["ngRestful", function($restful){
         $restful.setDomain("http://localhost/tree/server/");
       }]);
-
-      app.controller("exampleController", ["$resource", function($resource){
-      //  Domain is already defined, accounts will be appended with the domain url
-      
-      var resource = new $resource("accounts");
-
-      // Fetch can accept optional parameter to where it will perform a request from accounts
-        resource.fetch()
-          .then(function(response){
-            // successful respone
-          })
-          .catch(function(err){
-            // Error on request
-          });
-      }]); 
 })();
 (function(){
 
@@ -7386,27 +7372,27 @@
 
   'use strict';
 
-    // Pass the adminsDestroyCtrl to the app
+    // Pass the staticsDestroyCtrl to the app
     angular
         .module('y')
-        .controller('adminsDestroyCtrl', adminsDestroyCtrl);
+        .controller('staticsDestroyCtrl', staticsDestroyCtrl);
 
 
-    // Define the adminsDestroyCtrl
-    function adminsDestroyCtrl(adminsFactory, $stateParams) {
+    // Define the staticsDestroyCtrl
+    function staticsDestroyCtrl(staticsFactory, $stateParams) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define adminsDestroy as this for ControllerAs and auto-$scope
-        var adminsDestroy = this;
+        // Define staticsDestroy as this for ControllerAs and auto-$scope
+        var staticsDestroy = this;
 
 
-        // Define the adminsDestroy functions and objects that will be passed to the view
-        adminsDestroy.admin = {};                                                 // Object for show the admin
-        adminsDestroy.destroy = destroy;                                         // Delete a resource
+        // Define the staticsDestroy functions and objects that will be passed to the view
+        staticsDestroy.static = {};                                                 // Object for show the static
+        staticsDestroy.destroy = destroy;                                         // Delete a resource
 
 
         /*
@@ -7428,7 +7414,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the adminsDestroyCtrl
+        | Declaring all functions used in the staticsDestroyCtrl
         |
         */
 
@@ -7436,14 +7422,14 @@
         // Sample for init function
         function initLog() {
 
-            console.log('adminsDestroyCtrl init');
+            console.log('staticsDestroyCtrl init');
         }
 
 
         // Delete a resource
         function destroy(id) {
 
-            return adminsFactory.destroy(id).then(function(data) {
+            return staticsFactory.destroy(id).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
@@ -7457,17 +7443,17 @@
         }
 
 
-        // Get the admin
+        // Get the static
         function show(id) {
 
-            return adminsFactory.show(id).then(function(data) {
+            return staticsFactory.show(id).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
                 // Assign data to array and return them
-                adminsDestroy.admin = data;
-                return adminsDestroy.admin;
+                staticsDestroy.static = data;
+                return staticsDestroy.static;
 
             }, function(data) {
 
@@ -7484,26 +7470,26 @@
 
   'use strict';
 
-    // Pass the adminsIndexCtrl to the app
+    // Pass the staticsIndexCtrl to the app
     angular
         .module('y')
-        .controller('adminsIndexCtrl', adminsIndexCtrl);
+        .controller('staticsIndexCtrl', staticsIndexCtrl);
 
 
-    // Define the adminsIndexCtrl
-    function adminsIndexCtrl(adminsFactory) {
+    // Define the staticsIndexCtrl
+    function staticsIndexCtrl(staticsFactory) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define adminsIndex as this for ControllerAs and auto-$scope
-        var adminsIndex = this;
+        // Define staticsIndex as this for ControllerAs and auto-$scope
+        var staticsIndex = this;
 
 
-        // Define the adminsIndex functions and objects that will be passed to the view
-        adminsIndex.admins = [];                                              // Array for list of admins
+        // Define the staticsIndex functions and objects that will be passed to the view
+        staticsIndex.statics = [];                                              // Array for list of statics
 
 
         /*
@@ -7524,7 +7510,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the adminsIndexCtrl
+        | Declaring all functions used in the staticsIndexCtrl
         |
         */
 
@@ -7532,21 +7518,21 @@
         // Sample for init function
         function initLog() {
 
-            console.log('adminsIndexCtrl init');
+            console.log('staticsIndexCtrl init');
         }
 
 
-        // Get all admins.
+        // Get all statics.
         function index() {
 
-            return adminsFactory.index().then(function(data) {
+            return staticsFactory.index().then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
             	// Assign data to array and return them
-	            adminsIndex.admins = data.data;
-	            return adminsIndex.admins;
+	            staticsIndex.statics = data.data;
+	            return staticsIndex.statics;
 
             }, function(data) {
 
@@ -7563,26 +7549,26 @@
 
   'use strict';
 
-    // Pass the adminsShowCtrl to the app
+    // Pass the staticsShowCtrl to the app
     angular
         .module('y')
-        .controller('adminsShowCtrl', adminsShowCtrl);
+        .controller('staticsShowCtrl', staticsShowCtrl);
 
 
-    // Define the adminsShowCtrl
-    function adminsShowCtrl(adminsFactory, $stateParams) {
+    // Define the staticsShowCtrl
+    function staticsShowCtrl(staticsFactory, $stateParams) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define adminsShow as this for ControllerAs and auto-$scope
-        var adminsShow = this;
+        // Define staticsShow as this for ControllerAs and auto-$scope
+        var staticsShow = this;
 
 
-        // Define the adminsShow functions and objects that will be passed to the view
-        adminsShow.admin = {};                                                // Object for show the admin
+        // Define the staticsShow functions and objects that will be passed to the view
+        staticsShow.static = {};                                                // Object for show the static
 
 
         /*
@@ -7604,7 +7590,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the adminsShowCtrl
+        | Declaring all functions used in the staticsShowCtrl
         |
         */
 
@@ -7612,21 +7598,21 @@
         // Sample for init function
         function initLog() {
 
-            console.log('adminsShowCtrl init');
+            console.log('staticsShowCtrl init');
         }
 
 
-        // Get the admin
+        // Get the static
         function show(id) {
 
-            return adminsFactory.show(id).then(function(data) {
+            return staticsFactory.show(id).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
             	// Assign data to array and return them
-	            adminsShow.admin = data;
-	            return adminsShow.admin;
+	            staticsShow.static = data;
+	            return staticsShow.static;
 
             }, function(data) {
 
@@ -7643,26 +7629,26 @@
 
   'use strict';
 
-    // Pass the adminsStoreCtrl to the app
+    // Pass the staticsStoreCtrl to the app
     angular
         .module('y')
-        .controller('adminsStoreCtrl', adminsStoreCtrl);
+        .controller('staticsStoreCtrl', staticsStoreCtrl);
 
 
-    // Define the adminsStoreCtrl
-    function adminsStoreCtrl(adminsFactory) {
+    // Define the staticsStoreCtrl
+    function staticsStoreCtrl(staticsFactory) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define adminsStore as this for ControllerAs and auto-$scope
-        var adminsStore = this;
+        // Define staticsStore as this for ControllerAs and auto-$scope
+        var staticsStore = this;
 
 
-        // Define the adminsStore functions and objects that will be passed to the view
-        adminsStore.store = store;                                           // Store a resource
+        // Define the staticsStore functions and objects that will be passed to the view
+        staticsStore.store = store;                                           // Store a resource
 
 
         /*
@@ -7683,7 +7669,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the adminsStoreCtrl
+        | Declaring all functions used in the staticsStoreCtrl
         |
         */
 
@@ -7691,14 +7677,14 @@
         // Sample for init function
         function initLog() {
 
-            console.log('adminsStoreCtrl init');
+            console.log('staticsStoreCtrl init');
         }
 
 
         // Delete a resource
         function store(data) {
 
-            return adminsFactory.store(data).then(function(data) {
+            return staticsFactory.store(data).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
@@ -7718,27 +7704,27 @@
 
   'use strict';
 
-    // Pass the adminsUpdateCtrl to the app
+    // Pass the staticsUpdateCtrl to the app
     angular
         .module('y')
-        .controller('adminsUpdateCtrl', adminsUpdateCtrl);
+        .controller('staticsUpdateCtrl', staticsUpdateCtrl);
 
 
-    // Define the adminsUpdateCtrl
-    function adminsUpdateCtrl(adminsFactory, $stateParams) {
+    // Define the staticsUpdateCtrl
+    function staticsUpdateCtrl(staticsFactory, $stateParams) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define adminsUpdate as this for ControllerAs and auto-$scope
-        var adminsUpdate = this;
+        // Define staticsUpdate as this for ControllerAs and auto-$scope
+        var staticsUpdate = this;
 
 
-        // Define the adminsUpdate functions and objects that will be passed to the view
-        adminsUpdate.admin = {};                                                  // Object for show the admin
-        adminsUpdate.update = update;                                            // Update a resource
+        // Define the staticsUpdate functions and objects that will be passed to the view
+        staticsUpdate.static = {};                                                  // Object for show the static
+        staticsUpdate.update = update;                                            // Update a resource
 
 
         /*
@@ -7760,7 +7746,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the adminsUpdateCtrl
+        | Declaring all functions used in the staticsUpdateCtrl
         |
         */
 
@@ -7768,14 +7754,14 @@
         // Sample for init function
         function initLog() {
 
-            console.log('adminsUpdateCtrl init');
+            console.log('staticsUpdateCtrl init');
         }
 
 
         // Delete a resource
         function update(id, data) {
 
-            return adminsFactory.update(id, data).then(function(data) {
+            return staticsFactory.update(id, data).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
@@ -7789,17 +7775,17 @@
         }
 
 
-        // Get the admin
+        // Get the static
         function show(id) {
 
-            return adminsFactory.show(id).then(function(data) {
+            return staticsFactory.show(id).then(function(data) {
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
                 // Assign data to array and return them
-                adminsUpdate.admin = data;
-                return adminsUpdate.admin;
+                staticsUpdate.static = data;
+                return staticsUpdate.static;
 
             }, function(data) {
 
@@ -8780,7 +8766,7 @@
     // Define directive controller
     function navbarDirectiveController() {
 
-        // Do stuff...
+        this.title = "Tree app";
     }
 
 })();

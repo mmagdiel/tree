@@ -1,20 +1,24 @@
-<h3>Navbar component</h3>
+<md-toolbar md-whiteframe="4" layout="row">
+	<div class="md-toolbar-tools" layout-align="space-around center">
+		<div>
+			{{::staticsHome.title}}
+		</div>
+		 
+		<div>
+			<md-input-container>
+				<label>Username</label>
+				<md-icon class="fa fa-user"></md-icon>
+				<input ng-model="login.username" type="text" placeholder="Username">
+			</md-input-container>
+			
+			<md-input-container>
+				<label>Password</label>
+				<md-icon class="fa fa-key"></md-icon>
+				<input ng-model="login.password" type="text" placeholder="Password">
+			</md-input-container>
 
-
-<md-toolbar class="md-hue-2">
-  <div class="md-toolbar-tools">
-    <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
-      <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-    </md-button>
-    <h2>
-      <span>Toolbar with Disabled/Enabled Icon Buttons</span>
-    </h2>
-    <span flex></span>
-    <md-button class="md-icon-button" aria-label="Favorite">
-      <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-    </md-button>
-    <md-button class="md-icon-button" aria-label="More">
-      <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
-    </md-button>
-  </div>
+			<md-button class="md-raised md-accent">Login</md-button>
+			<md-button class="md-raised md-warn">Register</md-button>
+		</div>
+	</div>
 </md-toolbar>

@@ -9,7 +9,7 @@
 
 
     // Define the userService
-    function userService() {
+    function userService($resource) {
 
 
         // Inject with ng-annotate
@@ -42,6 +42,7 @@
         function init() {
 
             console.log('Init user factory');
+            console.log($resource);
         }
 
     }
