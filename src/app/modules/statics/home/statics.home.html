@@ -1,26 +1,6 @@
 <navbar-directive></navbar-directive>
 
-<section layout="row" flex>
-   <md-sidenav 
-      class="md-sidenav-left sideNav"
-      md-component-id="left"
-      md-is-locked-open="$mdMedia('gt-md')"
-      md-whiteframe="4">
-      <div layout="column" layout-padding class="all">
-         <md-button class="md-raised" ui-sref="accounts-index">Accounts</md-button>
-         <md-button class="md-raised" ui-sref="advertisements-index">Advertisements</md-button>
-         <md-button class="md-raised" ui-sref="articles-index">Articles</md-button>
-         <md-button class="md-raised" ui-sref="bills-index">Bills</md-button>
-         <md-button class="md-raised" ui-sref="documents-index">Documents</md-button>
-         <md-button class="md-raised" ui-sref="tickets-index">Tickets</md-button>
-         <md-button class="md-raised" ui-sref="users-index">User</md-button>
-         <md-button class="md-raised" ui-sref="statics-index">Static</md-button>
-         <md-button class="md-raised">Vouchers</md-button>
-      </div>
-   </md-sidenav>
-   <md-content flex layout-fill>
-   </md-content>   
-</section>
+<sidenav-directive></sidenav-directive>
 
 <md-toolbar md-whiteframe="4" layout="row">
    <div class="md-toolbar-tools" layout-align="space-around center">

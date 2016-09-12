@@ -16,7 +16,11 @@
 
                 restrict: 'EA',
                 templateUrl: 'app/shared/components/sidenav-component/sidenav-component.html',
-                scope: {},
+                scope: {
+                    navbarString: '@',                      // Isolated scope string
+                    navbarAttribute: '=',                   // Isolated scope two-way data binding
+                    navbarAction: '&'                       // Isolated scope action
+                },
                 link: linkFunc,
                 controller: sidenavDirectiveController,
                 controllerAs: 'sidenavDirective'
