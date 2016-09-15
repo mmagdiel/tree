@@ -4,7 +4,7 @@
 
     // Pass the treeDirective to the app
     angular
-        .module('tree')
+        .module('y')
         .directive('treeDirective', treeDirective);
 
 
@@ -13,33 +13,41 @@
 
         // Define directive
         var directive = {
-
-                restrict: 'EA',
-                templateUrl: 'app/shared/components/tree-component/tree-component.html',
-                scope: {
-                    treeString: '@',                      // Isolated scope string
-                    treeAttribute: '=',                   // Isolated scope two-way data binding
-                    treeAction: '&'                       // Isolated scope action
-                },
-                link: linkFunc,
-                controller: treeDirectiveController,
-                controllerAs: 'treeDirective'
+            restrict: 'E',
+            template: '<div id="cy" style="height:100px; width:100px;"></div>',
+            scope: {
+                nodes: '=',
+                relations: '='
+            },
+            controller: treeDirectiveController
         };
 
         // Return directive
         return directive;
-
-        // Define link function
-        function linkFunc(scope, el, attr, ctrl) {
-
-            // Do stuff...
-        }
     }
 
     // Define directive controller
-    function treeDirectiveController() {
+    function treeDirectiveController($scope) {
+        var container = angular.element(document.querySelector("#cy"));
 
-        // Do stuff...
+        cytoscape({
+            container: container,
+            elements: $scope.nodes.concat($scope.relations),
+            layout: {
+                name: "breadthfirst",
+                directed: true,
+                padding: 30,
+                avoidOverlap: true
+            },
+            style: [
+            {
+                selector: "node",
+                style: {
+                    shape: "circle",
+                    "background-color": "red",
+                    label: "data(name)"
+                }
+            }]
+        });
     }
-
 })();

@@ -5540,85 +5540,6 @@
 
   'use strict';
 
-    // Pass the advertisementsIndexCtrl to the app
-    angular
-        .module('y')
-        .controller('advertisementsIndexCtrl', advertisementsIndexCtrl);
-
-
-    // Define the advertisementsIndexCtrl
-    function advertisementsIndexCtrl(advertisementsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define advertisementsIndex as this for ControllerAs and auto-$scope
-        var advertisementsIndex = this;
-
-
-        // Define the advertisementsIndex functions and objects that will be passed to the view
-        advertisementsIndex.advertisements = [];                                              // Array for list of advertisements
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        index();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementsIndexCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('advertisementsIndexCtrl init');
-        }
-
-
-        // Get all advertisements.
-        function index() {
-
-            return advertisementsFactory.index().then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            advertisementsIndex.advertisements = data.data;
-	            return advertisementsIndex.advertisements;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the advertisementsShowCtrl to the app
     angular
         .module('y')
@@ -5683,6 +5604,85 @@
             	// Assign data to array and return them
 	            advertisementsShow.advertisement = data;
 	            return advertisementsShow.advertisement;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the advertisementsIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('advertisementsIndexCtrl', advertisementsIndexCtrl);
+
+
+    // Define the advertisementsIndexCtrl
+    function advertisementsIndexCtrl(advertisementsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define advertisementsIndex as this for ControllerAs and auto-$scope
+        var advertisementsIndex = this;
+
+
+        // Define the advertisementsIndex functions and objects that will be passed to the view
+        advertisementsIndex.advertisements = [];                                              // Array for list of advertisements
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementsIndexCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('advertisementsIndexCtrl init');
+        }
+
+
+        // Get all advertisements.
+        function index() {
+
+            return advertisementsFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            advertisementsIndex.advertisements = data.data;
+	            return advertisementsIndex.advertisements;
 
             }, function(data) {
 
@@ -7851,10 +7851,53 @@
         // Inject with ng-annotate
         "ngInject";
 
-
         // Define staticsHome as this for ControllerAs and auto-$scope
         var staticsHome = this;
             staticsHome.title =    "Tree app";
+
+            staticsHome.nodes = [
+                {data: {id: "a", name:"1"}},
+                {data: {id: "b", name:"2"}},
+                {data: {id: "c", name:"3"}},
+                {data: {id: "d", name:"4"}},
+                {data: {id: "e", name:"5"}},
+                {data: {id: "f", name:"6"}},
+                {data: {id: "g", name:"7"}}
+            ];
+
+            staticsHome.relations = [
+                {
+                    data: {
+                        source: "a",
+                        target: "b"
+                    }
+                },{
+                    data: {
+                        source: "a",
+                        target: "c"
+                    }
+                },{
+                    data: {
+                        source: "b",
+                        target: "d"
+                    }
+                },{
+                    data: {
+                        source: "b",
+                        target: "e"
+                    }
+                },{
+                    data: {
+                        source: "c",
+                        target: "f"
+                    }
+                },{
+                    data: {
+                        source: "c",
+                        target: "g"
+                    }
+                }
+            ];
     }
 })();
 
@@ -8722,28 +8765,28 @@
 
   'use strict';
 
-    // Pass the accountsDirective to the app
+    // Pass the footerDirective to the app
     angular
         .module('y')
-        .directive('accountsDirective', accountsDirective);
+        .directive('footerDirective', footerDirective);
 
 
-    // Define the accountsDirective
-    function accountsDirective() {
+    // Define the footerDirective
+    function footerDirective() {
 
         // Define directive
         var directive = {
 
                 restrict: 'EA',
-                templateUrl: 'app/shared/components/accounts-component/accounts-component.html',
+                templateUrl: 'app/shared/components/footer-component/footer-component.html',
                 scope: {
-                    accountsString: '@',                      // Isolated scope string
-                    accountsAttribute: '=',                   // Isolated scope two-way data binding
-                    accountsAction: '&'                       // Isolated scope action
+                    footerString: '@',                      // Isolated scope string
+                    footerAttribute: '=',                   // Isolated scope two-way data binding
+                    footerAction: '&'                       // Isolated scope action
                 },
                 link: linkFunc,
-                controller: accountsDirectiveController,
-                controllerAs: 'accountsDirective'
+                controller: footerDirectiveController,
+                controllerAs: 'footerDirective'
         };
 
         // Return directive
@@ -8757,7 +8800,7 @@
     }
 
     // Define directive controller
-    function accountsDirectiveController() {
+    function footerDirectiveController() {
 
         // Do stuff...
     }
@@ -8838,7 +8881,11 @@
 
                 restrict: 'EA',
                 templateUrl: 'app/shared/components/sidenav-component/sidenav-component.html',
-                scope: {},
+                scope: {
+                    navbarString: '@',                      // Isolated scope string
+                    navbarAttribute: '=',                   // Isolated scope two-way data binding
+                    navbarAction: '&'                       // Isolated scope action
+                },
                 link: linkFunc,
                 controller: sidenavDirectiveController,
                 controllerAs: 'sidenavDirective'
@@ -8860,4 +8907,58 @@
         // Do stuff...
     }
 
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the treeDirective to the app
+    angular
+        .module('y')
+        .directive('treeDirective', treeDirective);
+
+
+    // Define the treeDirective
+    function treeDirective() {
+
+        // Define directive
+        var directive = {
+            restrict: 'E',
+            template: '<div id="cy" style="height:100px; width:100px;"></div>',
+            scope: {
+                nodes: '=',
+                relations: '='
+            },
+            controller: treeDirectiveController
+        };
+
+        // Return directive
+        return directive;
+    }
+
+    // Define directive controller
+    function treeDirectiveController($scope) {
+        var container = angular.element(document.querySelector("#cy"));
+
+        cytoscape({
+            container: container,
+            elements: $scope.nodes.concat($scope.relations),
+            layout: {
+                name: "breadthfirst",
+                directed: true,
+                padding: 30,
+                avoidOverlap: true
+            },
+            style: [
+            {
+                selector: "node",
+                style: {
+                    shape: "circle",
+                    "background-color": "red",
+                    label: "data(name)"
+                }
+            }]
+        });
+    }
 })();
