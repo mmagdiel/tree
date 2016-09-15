@@ -14,7 +14,7 @@
         // Define directive
         var directive = {
             restrict: 'E',
-            template: '<div id="cy" style="height:100px; width:100px;"></div>',
+            template: '<div id="cy" style="height:500px; width:500px;"></div>',
             scope: {
                 nodes: '=',
                 relations: '='
