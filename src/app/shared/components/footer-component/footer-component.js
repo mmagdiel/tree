@@ -4,7 +4,7 @@
 
     // Pass the footerDirective to the app
     angular
-        .module('tree')
+        .module('y')
         .directive('footerDirective', footerDirective);
 
 

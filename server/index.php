@@ -3,7 +3,8 @@ require "vendor/autoload.php";
 
 $app = new \Slim\App([
 	"settings" => [
-		"determineRouteBeforeAppMiddleware" => true
+		"determineRouteBeforeAppMiddleware" => true,
+		"displayErrorDetails" => true
 	]
 ]);
 
