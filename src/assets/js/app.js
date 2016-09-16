@@ -4499,7 +4499,7 @@
 
 
     // Define the userService
-    function userService($resource) {
+    function userService($resource, $rootScope) {
 
 
         // Inject with ng-annotate
@@ -4554,6 +4554,8 @@
                         userService.$user = response.data;
                         userService.isGuest = false;
                         success = true;
+
+                        $rootScope.$broadcast("user.login", success, response.data);
                     }
 
                     cb(null, success);
@@ -7853,7 +7855,7 @@
         .controller('staticsHomeCtrl', staticsHomeCtrl);
 
     // Define the staticsHomeCtrl
-    function staticsHomeCtrl() {
+    function staticsHomeCtrl(userService, $scope){
 
         // Inject with ng-annotate
         "ngInject";
@@ -7861,6 +7863,13 @@
         // Define staticsHome as this for ControllerAs and auto-$scope
         var staticsHome = this;
             staticsHome.title =    "Tree app";
+            staticsHome.sideMenu = false;
+
+            $scope.$on("user.login", function(ev, success, data){
+                if(data){
+                    staticsHome.sideMenu = (data.role == "admin");
+                }
+            });
 
             staticsHome.nodes = [
                 {data: {id: "a", name:"1"}},

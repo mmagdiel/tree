@@ -9,7 +9,7 @@
 
 
     // Define the userService
-    function userService($resource) {
+    function userService($resource, $rootScope) {
 
 
         // Inject with ng-annotate
@@ -64,6 +64,8 @@
                         userService.$user = response.data;
                         userService.isGuest = false;
                         success = true;
+
+                        $rootScope.$broadcast("user.login", success, response.data);
                     }
 
                     cb(null, success);

@@ -1,7 +1,7 @@
 <navbar-directive></navbar-directive>
 
 <div flex layout="row">
-	<sidenav-directive></sidenav-directive>
+	<sidenav-directive ng-if="staticsHome.sideMenu"></sidenav-directive>
 
 	<tree-directive flex nodes="staticsHome.nodes" relations="staticsHome.relations"></tree-directive>
 </div>

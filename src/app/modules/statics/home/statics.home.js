@@ -7,7 +7,7 @@
         .controller('staticsHomeCtrl', staticsHomeCtrl);
 
     // Define the staticsHomeCtrl
-    function staticsHomeCtrl() {
+    function staticsHomeCtrl(userService, $scope){
 
         // Inject with ng-annotate
         "ngInject";
@@ -15,6 +15,13 @@
         // Define staticsHome as this for ControllerAs and auto-$scope
         var staticsHome = this;
             staticsHome.title =    "Tree app";
+            staticsHome.sideMenu = false;
+
+            $scope.$on("user.login", function(ev, success, data){
+                if(data){
+                    staticsHome.sideMenu = (data.role == "admin");
+                }
+            });
 
             staticsHome.nodes = [
                 {data: {id: "a", name:"1"}},
