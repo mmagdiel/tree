@@ -19,7 +19,8 @@ $app->post("/login", function($request, $response)
 		$result = (Object) [
 			"username" => $model[0]["username"],
 			"user_id" => $model[0]["user_id"],
-			"access_token" => $model[0]["access_token"]
+			"access_token" => $model[0]["access_token"],
+			"role" => $model[0]["role"]
 		];
 	}
 
