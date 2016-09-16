@@ -21,13 +21,15 @@
                 id: null,
                 username: null,
                 access_token: null,
+                role: null
             },
             isGuest: true,
             init: init,
             login: login,
             getId: getId,
             getToken: getToken,
-            getName: getName
+            getName: getName,
+            getRole: getRole
         };
 
         // Return the user factory
@@ -84,6 +86,11 @@
         // Gets the username of the current logged user
         function getName(){
             return userService.$user.username;
+        }
+
+        // Gets the username of the current logged user
+        function getRole(){
+            return userService.$user.role;
         }
     }
 })();

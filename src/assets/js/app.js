@@ -4511,13 +4511,15 @@
                 id: null,
                 username: null,
                 access_token: null,
+                role: null
             },
             isGuest: true,
             init: init,
             login: login,
             getId: getId,
             getToken: getToken,
-            getName: getName
+            getName: getName,
+            getRole: getRole
         };
 
         // Return the user factory
@@ -4574,6 +4576,11 @@
         // Gets the username of the current logged user
         function getName(){
             return userService.$user.username;
+        }
+
+        // Gets the username of the current logged user
+        function getRole(){
+            return userService.$user.role;
         }
     }
 })();
@@ -8822,7 +8829,6 @@
 
         // Define directive
         var directive = {
-
                 restrict: 'EA',
                 templateUrl: 'app/shared/components/navbar-component/navbar-component.html',
                 scope: {
@@ -8850,6 +8856,7 @@
         var self = this;
         self.title = "Tree";
         self.guest = userService.isGuest;
+        self.role = userService.getRole();
 
         self.login = function(){
             userService.login(self.form, function(err, success){
@@ -8858,6 +8865,7 @@
                 }
 
                 self.guest = !success;
+                self.role = userService.getRole();
             });
         };
     }
