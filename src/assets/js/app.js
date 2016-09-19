@@ -2309,7 +2309,7 @@
 
 
     // Define the userService
-    function userService($resource) {
+    function userService($resource, $rootScope) {
 
 
         // Inject with ng-annotate
@@ -2321,13 +2321,15 @@
                 id: null,
                 username: null,
                 access_token: null,
+                role: null
             },
             isGuest: true,
             init: init,
             login: login,
             getId: getId,
             getToken: getToken,
-            getName: getName
+            getName: getName,
+            getRole: getRole
         };
 
         // Return the user factory
@@ -2362,6 +2364,8 @@
                         userService.$user = response.data;
                         userService.isGuest = false;
                         success = true;
+
+                        $rootScope.$broadcast("user.login", success, response.data);
                     }
 
                     cb(null, success);
@@ -2384,6 +2388,11 @@
         // Gets the username of the current logged user
         function getName(){
             return userService.$user.username;
+        }
+
+        // Gets the username of the current logged user
+        function getRole(){
+            return userService.$user.role;
         }
     }
 })();
@@ -2474,6 +2483,85 @@
                 // Assign data to array and return them
                 accountsDestroy.account = data;
                 return accountsDestroy.account;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the accountsIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('accountsIndexCtrl', accountsIndexCtrl);
+
+
+    // Define the accountsIndexCtrl
+    function accountsIndexCtrl(accountsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define accountsIndex as this for ControllerAs and auto-$scope
+        var accountsIndex = this;
+
+
+        // Define the accountsIndex functions and objects that will be passed to the view
+        accountsIndex.accounts = [];                                              // Array for list of accounts
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the accountsIndexCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('accountsIndexCtrl init');
+        }
+
+
+        // Get all accounts.
+        function index() {
+
+            return accountsFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            accountsIndex.accounts = data.data;
+	            return accountsIndex.accounts;
 
             }, function(data) {
 
@@ -2629,85 +2717,6 @@
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the accountsIndexCtrl to the app
-    angular
-        .module('y')
-        .controller('accountsIndexCtrl', accountsIndexCtrl);
-
-
-    // Define the accountsIndexCtrl
-    function accountsIndexCtrl(accountsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define accountsIndex as this for ControllerAs and auto-$scope
-        var accountsIndex = this;
-
-
-        // Define the accountsIndex functions and objects that will be passed to the view
-        accountsIndex.accounts = [];                                              // Array for list of accounts
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        index();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the accountsIndexCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('accountsIndexCtrl init');
-        }
-
-
-        // Get all accounts.
-        function index() {
-
-            return accountsFactory.index().then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            accountsIndex.accounts = data.data;
-	            return accountsIndex.accounts;
 
             }, function(data) {
 
@@ -4210,6 +4219,165 @@
 
   'use strict';
 
+    // Pass the billsIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('billsIndexCtrl', billsIndexCtrl);
+
+
+    // Define the billsIndexCtrl
+    function billsIndexCtrl(billsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define billsIndex as this for ControllerAs and auto-$scope
+        var billsIndex = this;
+
+
+        // Define the billsIndex functions and objects that will be passed to the view
+        billsIndex.bills = [];                                              // Array for list of bills
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the billsIndexCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('billsIndexCtrl init');
+        }
+
+
+        // Get all bills.
+        function index() {
+
+            return billsFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            billsIndex.bills = data.data;
+	            return billsIndex.bills;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the billsShowCtrl to the app
+    angular
+        .module('y')
+        .controller('billsShowCtrl', billsShowCtrl);
+
+
+    // Define the billsShowCtrl
+    function billsShowCtrl(billsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define billsShow as this for ControllerAs and auto-$scope
+        var billsShow = this;
+
+
+        // Define the billsShow functions and objects that will be passed to the view
+        billsShow.bill = {};                                                // Object for show the bill
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the billsShowCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('billsShowCtrl init');
+        }
+
+
+        // Get the bill
+        function show(id) {
+
+            return billsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            billsShow.bill = data;
+	            return billsShow.bill;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the billsStoreCtrl to the app
     angular
         .module('y')
@@ -4367,165 +4535,6 @@
                 // Assign data to array and return them
                 billsUpdate.bill = data;
                 return billsUpdate.bill;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the billsIndexCtrl to the app
-    angular
-        .module('y')
-        .controller('billsIndexCtrl', billsIndexCtrl);
-
-
-    // Define the billsIndexCtrl
-    function billsIndexCtrl(billsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define billsIndex as this for ControllerAs and auto-$scope
-        var billsIndex = this;
-
-
-        // Define the billsIndex functions and objects that will be passed to the view
-        billsIndex.bills = [];                                              // Array for list of bills
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        index();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the billsIndexCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('billsIndexCtrl init');
-        }
-
-
-        // Get all bills.
-        function index() {
-
-            return billsFactory.index().then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            billsIndex.bills = data.data;
-	            return billsIndex.bills;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the billsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('billsShowCtrl', billsShowCtrl);
-
-
-    // Define the billsShowCtrl
-    function billsShowCtrl(billsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define billsShow as this for ControllerAs and auto-$scope
-        var billsShow = this;
-
-
-        // Define the billsShow functions and objects that will be passed to the view
-        billsShow.bill = {};                                                // Object for show the bill
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the billsShowCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('billsShowCtrl init');
-        }
-
-
-        // Get the bill
-        function show(id) {
-
-            return billsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            billsShow.bill = data;
-	            return billsShow.bill;
 
             }, function(data) {
 
@@ -5866,6 +5875,77 @@
 })();
 
 (function() {
+  'use strict';
+
+    // Pass the staticsHomeCtrl to the app
+    angular
+        .module('y')
+        .controller('staticsHomeCtrl', staticsHomeCtrl);
+
+    // Define the staticsHomeCtrl
+    function staticsHomeCtrl(userService, $scope){
+
+        // Inject with ng-annotate
+        "ngInject";
+
+        // Define staticsHome as this for ControllerAs and auto-$scope
+        var staticsHome = this;
+            staticsHome.title =    "Tree app";
+            staticsHome.sideMenu = false;
+
+            $scope.$on("user.login", function(ev, success, data){
+                if(data){
+                    staticsHome.sideMenu = (data.role == "admin");
+                }
+            });
+
+            staticsHome.nodes = [
+                {data: {id: "a", name:"1"}},
+                {data: {id: "b", name:"2"}},
+                {data: {id: "c", name:"3"}},
+                {data: {id: "d", name:"4"}},
+                {data: {id: "e", name:"5"}},
+                {data: {id: "f", name:"6"}},
+                {data: {id: "g", name:"7"}}
+            ];
+
+            staticsHome.relations = [
+                {
+                    data: {
+                        source: "a",
+                        target: "b"
+                    }
+                },{
+                    data: {
+                        source: "a",
+                        target: "c"
+                    }
+                },{
+                    data: {
+                        source: "b",
+                        target: "d"
+                    }
+                },{
+                    data: {
+                        source: "b",
+                        target: "e"
+                    }
+                },{
+                    data: {
+                        source: "c",
+                        target: "f"
+                    }
+                },{
+                    data: {
+                        source: "c",
+                        target: "g"
+                    }
+                }
+            ];
+    }
+})();
+
+(function() {
 
   'use strict';
 
@@ -7118,7 +7198,6 @@
 
         // Define directive
         var directive = {
-
                 restrict: 'EA',
                 templateUrl: 'app/shared/components/navbar-component/navbar-component.html',
                 scope: {
@@ -7146,6 +7225,7 @@
         var self = this;
         self.title = "Tree";
         self.guest = userService.isGuest;
+        self.role = userService.getRole();
 
         self.login = function(){
             userService.login(self.form, function(err, success){
@@ -7154,6 +7234,7 @@
                 }
 
                 self.guest = !success;
+                self.role = userService.getRole();
             });
         };
     }

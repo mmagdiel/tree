@@ -3,6 +3,10 @@
 		<div>
 			{{navbarDirective.title}}
 		</div>
+
+		<div ng-if="navbarDirective.role">
+			{{navbarDirective.role}}
+		</div>
 		 
 		<div ng-show="navbarDirective.guest">
 			<md-input-container>

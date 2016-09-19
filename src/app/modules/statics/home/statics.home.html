@@ -1,0 +1,9 @@
+<navbar-directive></navbar-directive>
+
+<div flex layout="row">
+	<sidenav-directive ng-if="staticsHome.sideMenu"></sidenav-directive>
+
+	<tree-directive flex nodes="staticsHome.nodes" relations="staticsHome.relations"></tree-directive>
+</div>
+
+<footer-directive></footer-directive>

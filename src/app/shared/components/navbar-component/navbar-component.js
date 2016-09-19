@@ -13,7 +13,6 @@
 
         // Define directive
         var directive = {
-
                 restrict: 'EA',
                 templateUrl: 'app/shared/components/navbar-component/navbar-component.html',
                 scope: {
@@ -41,6 +40,7 @@
         var self = this;
         self.title = "Tree";
         self.guest = userService.isGuest;
+        self.role = userService.getRole();
 
         self.login = function(){
             userService.login(self.form, function(err, success){
@@ -49,6 +49,7 @@
                 }
 
                 self.guest = !success;
+                self.role = userService.getRole();
             });
         };
     }

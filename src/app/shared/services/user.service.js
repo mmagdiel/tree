@@ -9,7 +9,7 @@
 
 
     // Define the userService
-    function userService($resource) {
+    function userService($resource, $rootScope) {
 
 
         // Inject with ng-annotate
@@ -21,13 +21,15 @@
                 id: null,
                 username: null,
                 access_token: null,
+                role: null
             },
             isGuest: true,
             init: init,
             login: login,
             getId: getId,
             getToken: getToken,
-            getName: getName
+            getName: getName,
+            getRole: getRole
         };
 
         // Return the user factory
@@ -62,6 +64,8 @@
                         userService.$user = response.data;
                         userService.isGuest = false;
                         success = true;
+
+                        $rootScope.$broadcast("user.login", success, response.data);
                     }
 
                     cb(null, success);
@@ -84,6 +88,11 @@
         // Gets the username of the current logged user
         function getName(){
             return userService.$user.username;
+        }
+
+        // Gets the username of the current logged user
+        function getRole(){
+            return userService.$user.role;
         }
     }
 })();
