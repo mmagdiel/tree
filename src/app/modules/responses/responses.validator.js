@@ -2,14 +2,14 @@
 
     'use strict';
 
-    // Pass the userssValidator to the app
+    // Pass the responsessValidator to the app
     angular
     .module('y')
-        .run(userssValidator);
+        .run(responsessValidator);
 
 
-    // Define the userssValidator
-    function userssValidator(validatorHelper) {
+    // Define the responsessValidator
+    function responsessValidator(validatorHelper) {
 
 
         // Inject with ng-annotate
@@ -35,7 +35,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the userssValidator
+        | Declaring all functions used in the responsessValidator
         |
         */
 

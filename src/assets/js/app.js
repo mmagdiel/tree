@@ -139,274 +139,6 @@
 
 })();
 
-// (function() {
-
-//   'use strict';
-
-//     // Pass the accountsMock to the app
-// 	angular
-// 	    .module('y')
-// 	    .run(accountsMock);
-
-
-// 	// Define the accountsMock
-//     function accountsMock(mockHelper) {
-
-
-//         // Inject with ng-annotate
-//         "ngInject";
-
-
-//         // Object for account's mock
-//         var accounts = {};
-
-
-//         /*
-//         |--------------------------------------------------------------------------
-//         | Contrsucts function
-//         |--------------------------------------------------------------------------
-//         |
-//         | All functions that should be init when the controller start
-//         |
-//         */
-
-
-//     	setaccounts();															            // Set the list of account
-//     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
-
-
-
-// 	    /*
-// 	    |--------------------------------------------------------------------------
-// 	    | Functions
-// 	    |--------------------------------------------------------------------------
-// 	    |
-// 	    | Declaring all functions used in the accountsMock
-// 	    |
-// 	    */
-
-
-// 		// Function for destroy accounts API
-// 		function destroyRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Delete account by id from account's array
-//                 for(var i = 0; i <= accounts.length - 1; i++) {
-
-//                     // If account exists
-//                     if(accounts[i].id == id) {
-
-//                         // Delete  account
-//                         accounts.splice(i, 1);
-
-//                         // Return the success header
-//                         return [header, {data: 'account removed'}];
-//                     }
-//                 }
-
-// 				// Return the error header
-//                 return [header, {error: 'account not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error in account removing'}];
-// 		}
-
-
-// 		// Function for index accounts API
-// 		function indexRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-// 				// Return the success header
-//                 return [header, {data: accounts}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error while listing accounts'}];
-// 		}
-
-
-// 		// Function for show accounts API
-// 		function showRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get account by id from account's array
-//                 for(var i = 0; i <= accounts.length - 1; i++) {
-
-//                     // If account exists
-//                     if(accounts[i].id == id) {
-
-//                         // Return the success header
-//                         return [header, {data: accounts[i]}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'account not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error showing account'}];
-// 		}
-
-
-// 		// Function for store accounts API
-// 		function storeRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-//             // If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Assisgn account id - override if inserted
-//                 data.id = accounts.length;
-
-//                 // Insert the new account
-//                 accounts.push(data);
-
-//                 // Return the success header
-//                 return [header, {data: 'account stored'}];
-//             }
-
-// 			// Return the error header
-// 			return [header, {error:'Error storing the account'}];
-// 		}
-
-
-// 		// Function for update accounts API
-// 		function updateRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get account by id from account's array
-//                 for(var i = 0; i <= accounts.length - 1; i++) {
-
-//                     // If account exists
-//                     if(accounts[i].id == id) {
-
-//                         // Override the account
-//                         accounts[i] = data;
-
-//                         // Return the success header
-//                         return [header, {data: 'account updated'}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'account not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error updating account'}];
-// 		}
-
-
-// 		// Basic algorithm for random headers
-// 		function randomHeader(){
-
-// 			// Generate a random number from 1 to 10
-// 			var random = Math.floor((Math.random() * 10) + 1);
-
-// 			// Return 500 if random is 10
-// 			if(random == 10) {
-
-// 				return 500;
-// 			}
-
-// 			// Return 404 if random is 9
-// 			if(random == 9) {
-
-// 				return 404;
-// 			}
-
-// 			// Return 200
-// 			return 200;
-// 		}
-
-
-// 		// Function that pass the array that will create the httpBackend
-// 	    function getMocks() {
-
-// 	    	// Object to pass for fake API
-// 			return [{
-
-// 				label: 'destroy',
-// 			    method: 'DELETE',
-// 			    url: /\/api\/accounts\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: destroyRespond
-
-// 			},{
-
-// 				label: 'index',
-// 			    method: 'GET',
-// 			    url: '/api/accounts/',
-// 			    respond: indexRespond
-
-// 			},{
-
-// 				label: 'show',
-// 			    method: 'GET',
-// 			    url: /\/api\/accounts\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: showRespond
-
-// 			},{
-
-// 				label: 'store',
-// 			    method: 'POST',
-// 			    url: '/api/accounts/',
-// 			    respond: storeRespond
-
-// 			},{
-
-// 				label: 'update',
-// 			    method: 'PUT',
-// 			    url: /\/api\/accounts\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: updateRespond
-// 			}];
-// 		}
-
-
-// 		// Function for set the array
-// 		function setaccounts() {
-
-//             accounts = [];
-// 		}
-// 	}
-
-// })();
-
 (function() {
 
   'use strict';
@@ -537,491 +269,6 @@
 
   'use strict';
 
-    // Pass the adminsFactory to the app
-    angular
-        .module('y')
-        .factory('adminsFactory', adminsFactory);
-
-
-    // Define the adminsFactory
-    function adminsFactory($http) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define base URI for admin admin
-        var adminBase = '/api/admins/';
-
-
-        // Define the admin factory object to return
-        var adminsFactory = {
-
-            index: index,
-            show: show,
-            store: store,
-            update: update,
-            destroy: destroy,
-
-        };
-
-
-        // Return the admin factory
-        return adminsFactory;
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the adminsFactory
-        |
-        */
-
-
-        // Display a listing of admins.
-        function index() {
-
-            return $http.get(adminBase)
-                        .then(function(data){ return data; });
-        }
-
-
-        // Display a specified admin.
-        function show(id) {
-
-            return $http.get(adminBase + id)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Store a newly created admin in storage.
-        function store(data) {
-
-            return $http.post(adminBase, data)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Update the specified admin in storage.
-        function update(id, data) {
-
-            return $http.put(adminBase + id, data)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Remove the specified admin from storage.
-        function destroy(id) {
-
-            return $http.delete(adminBase + id)
-                        .then(function(data){ return data.data; });
-        }
-
-    }
-
-})();
-
-// (function() {
-
-//   'use strict';
-
-//     // Pass the adminsMock to the app
-// 	angular
-// 	    .module('y')
-// 	    .run(adminsMock);
-
-
-// 	// Define the adminsMock
-//     function adminsMock(mockHelper) {
-
-
-//         // Inject with ng-annotate
-//         "ngInject";
-
-
-//         // Object for admin's mock
-//         var admins = {};
-
-
-//         /*
-//         |--------------------------------------------------------------------------
-//         | Contrsucts function
-//         |--------------------------------------------------------------------------
-//         |
-//         | All functions that should be init when the controller start
-//         |
-//         */
-
-
-//     	setAdmins();															            // Set the list of admin
-//     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
-
-
-
-// 	    /*
-// 	    |--------------------------------------------------------------------------
-// 	    | Functions
-// 	    |--------------------------------------------------------------------------
-// 	    |
-// 	    | Declaring all functions used in the adminsMock
-// 	    |
-// 	    */
-
-
-// 		// Function for destroy admins API
-// 		function destroyRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Delete admin by id from admin's array
-//                 for(var i = 0; i <= admins.length - 1; i++) {
-
-//                     // If admin exists
-//                     if(admins[i].id == id) {
-
-//                         // Delete  admin
-//                         admins.splice(i, 1);
-
-//                         // Return the success header
-//                         return [header, {data: 'Admin removed'}];
-//                     }
-//                 }
-
-// 				// Return the error header
-//                 return [header, {error: 'Admin not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error in admin removing'}];
-// 		}
-
-
-// 		// Function for index admins API
-// 		function indexRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-// 				// Return the success header
-//                 return [header, {data: admins}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error while listing admins'}];
-// 		}
-
-
-// 		// Function for show admins API
-// 		function showRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get admin by id from admin's array
-//                 for(var i = 0; i <= admins.length - 1; i++) {
-
-//                     // If admin exists
-//                     if(admins[i].id == id) {
-
-//                         // Return the success header
-//                         return [header, {data: admins[i]}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'Admin not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error showing admin'}];
-// 		}
-
-
-// 		// Function for store admins API
-// 		function storeRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-//             // If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Assisgn admin id - override if inserted
-//                 data.id = admins.length;
-
-//                 // Insert the new admin
-//                 admins.push(data);
-
-//                 // Return the success header
-//                 return [header, {data: 'Admin stored'}];
-//             }
-
-// 			// Return the error header
-// 			return [header, {error:'Error storing the admin'}];
-// 		}
-
-
-// 		// Function for update admins API
-// 		function updateRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get admin by id from admin's array
-//                 for(var i = 0; i <= admins.length - 1; i++) {
-
-//                     // If admin exists
-//                     if(admins[i].id == id) {
-
-//                         // Override the admin
-//                         admins[i] = data;
-
-//                         // Return the success header
-//                         return [header, {data: 'Admin updated'}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'Admin not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error updating admin'}];
-// 		}
-
-
-// 		// Basic algorithm for random headers
-// 		function randomHeader(){
-
-// 			// Generate a random number from 1 to 10
-// 			var random = Math.floor((Math.random() * 10) + 1);
-
-// 			// Return 500 if random is 10
-// 			if(random == 10) {
-
-// 				return 500;
-// 			}
-
-// 			// Return 404 if random is 9
-// 			if(random == 9) {
-
-// 				return 404;
-// 			}
-
-// 			// Return 200
-// 			return 200;
-// 		}
-
-
-// 		// Function that pass the array that will create the httpBackend
-// 	    function getMocks() {
-
-// 	    	// Object to pass for fake API
-// 			return [{
-
-// 				label: 'destroy',
-// 			    method: 'DELETE',
-// 			    url: /\/api\/admins\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: destroyRespond
-
-// 			},{
-
-// 				label: 'index',
-// 			    method: 'GET',
-// 			    url: '/api/admins/',
-// 			    respond: indexRespond
-
-// 			},{
-
-// 				label: 'show',
-// 			    method: 'GET',
-// 			    url: /\/api\/admins\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: showRespond
-
-// 			},{
-
-// 				label: 'store',
-// 			    method: 'POST',
-// 			    url: '/api/admins/',
-// 			    respond: storeRespond
-
-// 			},{
-
-// 				label: 'update',
-// 			    method: 'PUT',
-// 			    url: /\/api\/admins\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: updateRespond
-// 			}];
-// 		}
-
-
-// 		// Function for set the array
-// 		function setAdmins() {
-
-//             admins = [];
-// 		}
-// 	}
-
-// })();
-
-(function() {
-
-  'use strict';
-
-    // Pass the adminsRoute to the app
-	angular
-	    .module('y')
-	    .run(adminsRoute);
-
-
-	// Define the adminsRoute
-    function adminsRoute(routerHelper) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-    	// Intercept all the states and add them to the routing
-    	routerHelper.configureStates(getStates());
-    }
-
-
-    // Define the getStates
-    function getStates() {
-
-		return [{
-
-		    state: 'admins-index',
-		    config: {
-		        url: '/admins',
-		        templateUrl: 'app/modules/admins/index/admins.index.html',
-		        controller: 'adminsIndexCtrl',
-		        controllerAs: 'adminsIndex'
-		    }
-		}, {
-		    state: 'admins-store',
-		    config: {
-		        url: '/admins/store',
-		        templateUrl: 'app/modules/admins/store/admins.store.html',
-		        controller: 'adminsStoreCtrl',
-		        controllerAs: 'adminsStore'
-		    }
-		}, {
-		    state: 'admins-show',
-		    config: {
-		        url: '/admins/:id',
-		        templateUrl: 'app/modules/admins/show/admins.show.html',
-		        controller: 'adminsShowCtrl',
-		        controllerAs: 'adminsShow'
-		    }
-		}, {
-		    state: 'admins-update',
-		    config: {
-		        url: '/admins/:id/update',
-		        templateUrl: 'app/modules/admins/update/admins.update.html',
-		        controller: 'adminsUpdateCtrl',
-		        controllerAs: 'adminsUpdate'
-		    }
-		}, {
-		    state: 'admins-destroy',
-		    config: {
-		        url: '/admins/:id/delete',
-		        templateUrl: 'app/modules/admins/destroy/admins.destroy.html',
-		        controller: 'adminsDestroyCtrl',
-		        controllerAs: 'adminsDestroy'
-		    }
-		}];
-	}
-
-})();
-
-(function() {
-
-    'use strict';
-
-    // Pass the adminssValidator to the app
-    angular
-    .module('y')
-        .run(adminssValidator);
-
-
-    // Define the adminssValidator
-    function adminssValidator(validatorHelper) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the adminssValidator
-        |
-        */
-
-
-
-        // Function that pass the array that will create the model validator
-        function getValidators() {
-
-            // Object to pass with validation rules
-            return {};
-
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the advertisementsFactory to the app
     angular
         .module('y')
@@ -1108,274 +355,6 @@
     }
 
 })();
-
-// (function() {
-
-//   'use strict';
-
-//     // Pass the advertisementsMock to the app
-// 	angular
-// 	    .module('y')
-// 	    .run(advertisementsMock);
-
-
-// 	// Define the advertisementsMock
-//     function advertisementsMock(mockHelper) {
-
-
-//         // Inject with ng-annotate
-//         "ngInject";
-
-
-//         // Object for advertisement's mock
-//         var advertisements = {};
-
-
-//         /*
-//         |--------------------------------------------------------------------------
-//         | Contrsucts function
-//         |--------------------------------------------------------------------------
-//         |
-//         | All functions that should be init when the controller start
-//         |
-//         */
-
-
-//     	setadvertisements();															            // Set the list of advertisement
-//     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
-
-
-
-// 	    /*
-// 	    |--------------------------------------------------------------------------
-// 	    | Functions
-// 	    |--------------------------------------------------------------------------
-// 	    |
-// 	    | Declaring all functions used in the advertisementsMock
-// 	    |
-// 	    */
-
-
-// 		// Function for destroy advertisements API
-// 		function destroyRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Delete advertisement by id from advertisement's array
-//                 for(var i = 0; i <= advertisements.length - 1; i++) {
-
-//                     // If advertisement exists
-//                     if(advertisements[i].id == id) {
-
-//                         // Delete  advertisement
-//                         advertisements.splice(i, 1);
-
-//                         // Return the success header
-//                         return [header, {data: 'advertisement removed'}];
-//                     }
-//                 }
-
-// 				// Return the error header
-//                 return [header, {error: 'advertisement not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error in advertisement removing'}];
-// 		}
-
-
-// 		// Function for index advertisements API
-// 		function indexRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-// 				// Return the success header
-//                 return [header, {data: advertisements}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error while listing advertisements'}];
-// 		}
-
-
-// 		// Function for show advertisements API
-// 		function showRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get advertisement by id from advertisement's array
-//                 for(var i = 0; i <= advertisements.length - 1; i++) {
-
-//                     // If advertisement exists
-//                     if(advertisements[i].id == id) {
-
-//                         // Return the success header
-//                         return [header, {data: advertisements[i]}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'advertisement not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error showing advertisement'}];
-// 		}
-
-
-// 		// Function for store advertisements API
-// 		function storeRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-//             // If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Assisgn advertisement id - override if inserted
-//                 data.id = advertisements.length;
-
-//                 // Insert the new advertisement
-//                 advertisements.push(data);
-
-//                 // Return the success header
-//                 return [header, {data: 'advertisement stored'}];
-//             }
-
-// 			// Return the error header
-// 			return [header, {error:'Error storing the advertisement'}];
-// 		}
-
-
-// 		// Function for update advertisements API
-// 		function updateRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get advertisement by id from advertisement's array
-//                 for(var i = 0; i <= advertisements.length - 1; i++) {
-
-//                     // If advertisement exists
-//                     if(advertisements[i].id == id) {
-
-//                         // Override the advertisement
-//                         advertisements[i] = data;
-
-//                         // Return the success header
-//                         return [header, {data: 'advertisement updated'}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'advertisement not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error updating advertisement'}];
-// 		}
-
-
-// 		// Basic algorithm for random headers
-// 		function randomHeader(){
-
-// 			// Generate a random number from 1 to 10
-// 			var random = Math.floor((Math.random() * 10) + 1);
-
-// 			// Return 500 if random is 10
-// 			if(random == 10) {
-
-// 				return 500;
-// 			}
-
-// 			// Return 404 if random is 9
-// 			if(random == 9) {
-
-// 				return 404;
-// 			}
-
-// 			// Return 200
-// 			return 200;
-// 		}
-
-
-// 		// Function that pass the array that will create the httpBackend
-// 	    function getMocks() {
-
-// 	    	// Object to pass for fake API
-// 			return [{
-
-// 				label: 'destroy',
-// 			    method: 'DELETE',
-// 			    url: /\/api\/advertisements\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: destroyRespond
-
-// 			},{
-
-// 				label: 'index',
-// 			    method: 'GET',
-// 			    url: '/api/advertisements/',
-// 			    respond: indexRespond
-
-// 			},{
-
-// 				label: 'show',
-// 			    method: 'GET',
-// 			    url: /\/api\/advertisements\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: showRespond
-
-// 			},{
-
-// 				label: 'store',
-// 			    method: 'POST',
-// 			    url: '/api/advertisements/',
-// 			    respond: storeRespond
-
-// 			},{
-
-// 				label: 'update',
-// 			    method: 'PUT',
-// 			    url: /\/api\/advertisements\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: updateRespond
-// 			}];
-// 		}
-
-
-// 		// Function for set the array
-// 		function setadvertisements() {
-
-//             advertisements = [];
-// 		}
-// 	}
-
-// })();
 
 (function() {
 
@@ -1507,6 +486,223 @@
 
   'use strict';
 
+    // Pass the amountsFactory to the app
+    angular
+        .module('y')
+        .factory('amountsFactory', amountsFactory);
+
+
+    // Define the amountsFactory
+    function amountsFactory($http) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define base URI for amount amount
+        var amountBase = '/api/amounts/';
+
+
+        // Define the amount factory object to return
+        var amountsFactory = {
+
+            index: index,
+            show: show,
+            store: store,
+            update: update,
+            destroy: destroy,
+
+        };
+
+
+        // Return the amount factory
+        return amountsFactory;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsFactory
+        |
+        */
+
+
+        // Display a listing of amounts.
+        function index() {
+
+            return $http.get(amountBase)
+                        .then(function(data){ return data; });
+        }
+
+
+        // Display a specified amount.
+        function show(id) {
+
+            return $http.get(amountBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Store a newly created amount in storage.
+        function store(data) {
+
+            return $http.post(amountBase, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Update the specified amount in storage.
+        function update(id, data) {
+
+            return $http.put(amountBase + id, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Remove the specified amount from storage.
+        function destroy(id) {
+
+            return $http.delete(amountBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsRoute to the app
+	angular
+	    .module('y')
+	    .run(amountsRoute);
+
+
+	// Define the amountsRoute
+    function amountsRoute(routerHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+    	// Intercept all the states and add them to the routing
+    	routerHelper.configureStates(getStates());
+    }
+
+
+    // Define the getStates
+    function getStates() {
+
+		return [{
+
+		    state: 'amounts-index',
+		    config: {
+		        url: '/amounts',
+		        templateUrl: 'app/modules/amounts/index/amounts.index.html',
+		        controller: 'amountsIndexCtrl',
+		        controllerAs: 'amountsIndex'
+		    }
+		}, {
+		    state: 'amounts-store',
+		    config: {
+		        url: '/amounts/store',
+		        templateUrl: 'app/modules/amounts/store/amounts.store.html',
+		        controller: 'amountsStoreCtrl',
+		        controllerAs: 'amountsStore'
+		    }
+		}, {
+		    state: 'amounts-show',
+		    config: {
+		        url: '/amounts/:id',
+		        templateUrl: 'app/modules/amounts/show/amounts.show.html',
+		        controller: 'amountsShowCtrl',
+		        controllerAs: 'amountsShow'
+		    }
+		}, {
+		    state: 'amounts-update',
+		    config: {
+		        url: '/amounts/:id/update',
+		        templateUrl: 'app/modules/amounts/update/amounts.update.html',
+		        controller: 'amountsUpdateCtrl',
+		        controllerAs: 'amountsUpdate'
+		    }
+		}, {
+		    state: 'amounts-destroy',
+		    config: {
+		        url: '/amounts/:id/delete',
+		        templateUrl: 'app/modules/amounts/destroy/amounts.destroy.html',
+		        controller: 'amountsDestroyCtrl',
+		        controllerAs: 'amountsDestroy'
+		    }
+		}];
+	}
+
+})();
+
+(function() {
+
+    'use strict';
+
+    // Pass the amountssValidator to the app
+    angular
+    .module('y')
+        .run(amountssValidator);
+
+
+    // Define the amountssValidator
+    function amountssValidator(validatorHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountssValidator
+        |
+        */
+
+
+
+        // Function that pass the array that will create the model validator
+        function getValidators() {
+
+            // Object to pass with validation rules
+            return {};
+
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the articlesFactory to the app
     angular
         .module('y')
@@ -1593,274 +789,6 @@
     }
 
 })();
-
-// (function() {
-
-//   'use strict';
-
-//     // Pass the articlesMock to the app
-// 	angular
-// 	    .module('y')
-// 	    .run(articlesMock);
-
-
-// 	// Define the articlesMock
-//     function articlesMock(mockHelper) {
-
-
-//         // Inject with ng-annotate
-//         "ngInject";
-
-
-//         // Object for article's mock
-//         var articles = {};
-
-
-//         /*
-//         |--------------------------------------------------------------------------
-//         | Contrsucts function
-//         |--------------------------------------------------------------------------
-//         |
-//         | All functions that should be init when the controller start
-//         |
-//         */
-
-
-//     	setarticles();															            // Set the list of article
-//     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
-
-
-
-// 	    /*
-// 	    |--------------------------------------------------------------------------
-// 	    | Functions
-// 	    |--------------------------------------------------------------------------
-// 	    |
-// 	    | Declaring all functions used in the articlesMock
-// 	    |
-// 	    */
-
-
-// 		// Function for destroy articles API
-// 		function destroyRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Delete article by id from article's array
-//                 for(var i = 0; i <= articles.length - 1; i++) {
-
-//                     // If article exists
-//                     if(articles[i].id == id) {
-
-//                         // Delete  article
-//                         articles.splice(i, 1);
-
-//                         // Return the success header
-//                         return [header, {data: 'article removed'}];
-//                     }
-//                 }
-
-// 				// Return the error header
-//                 return [header, {error: 'article not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error in article removing'}];
-// 		}
-
-
-// 		// Function for index articles API
-// 		function indexRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-// 				// Return the success header
-//                 return [header, {data: articles}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error while listing articles'}];
-// 		}
-
-
-// 		// Function for show articles API
-// 		function showRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get article by id from article's array
-//                 for(var i = 0; i <= articles.length - 1; i++) {
-
-//                     // If article exists
-//                     if(articles[i].id == id) {
-
-//                         // Return the success header
-//                         return [header, {data: articles[i]}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'article not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error showing article'}];
-// 		}
-
-
-// 		// Function for store articles API
-// 		function storeRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-//             // If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Assisgn article id - override if inserted
-//                 data.id = articles.length;
-
-//                 // Insert the new article
-//                 articles.push(data);
-
-//                 // Return the success header
-//                 return [header, {data: 'article stored'}];
-//             }
-
-// 			// Return the error header
-// 			return [header, {error:'Error storing the article'}];
-// 		}
-
-
-// 		// Function for update articles API
-// 		function updateRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get article by id from article's array
-//                 for(var i = 0; i <= articles.length - 1; i++) {
-
-//                     // If article exists
-//                     if(articles[i].id == id) {
-
-//                         // Override the article
-//                         articles[i] = data;
-
-//                         // Return the success header
-//                         return [header, {data: 'article updated'}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'article not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error updating article'}];
-// 		}
-
-
-// 		// Basic algorithm for random headers
-// 		function randomHeader(){
-
-// 			// Generate a random number from 1 to 10
-// 			var random = Math.floor((Math.random() * 10) + 1);
-
-// 			// Return 500 if random is 10
-// 			if(random == 10) {
-
-// 				return 500;
-// 			}
-
-// 			// Return 404 if random is 9
-// 			if(random == 9) {
-
-// 				return 404;
-// 			}
-
-// 			// Return 200
-// 			return 200;
-// 		}
-
-
-// 		// Function that pass the array that will create the httpBackend
-// 	    function getMocks() {
-
-// 	    	// Object to pass for fake API
-// 			return [{
-
-// 				label: 'destroy',
-// 			    method: 'DELETE',
-// 			    url: /\/api\/articles\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: destroyRespond
-
-// 			},{
-
-// 				label: 'index',
-// 			    method: 'GET',
-// 			    url: '/api/articles/',
-// 			    respond: indexRespond
-
-// 			},{
-
-// 				label: 'show',
-// 			    method: 'GET',
-// 			    url: /\/api\/articles\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: showRespond
-
-// 			},{
-
-// 				label: 'store',
-// 			    method: 'POST',
-// 			    url: '/api/articles/',
-// 			    respond: storeRespond
-
-// 			},{
-
-// 				label: 'update',
-// 			    method: 'PUT',
-// 			    url: /\/api\/articles\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: updateRespond
-// 			}];
-// 		}
-
-
-// 		// Function for set the array
-// 		function setarticles() {
-
-//             articles = [];
-// 		}
-// 	}
-
-// })();
 
 (function() {
 
@@ -2079,274 +1007,6 @@
 
 })();
 
-// (function() {
-
-//   'use strict';
-
-//     // Pass the billsMock to the app
-// 	angular
-// 	    .module('y')
-// 	    .run(billsMock);
-
-
-// 	// Define the billsMock
-//     function billsMock(mockHelper) {
-
-
-//         // Inject with ng-annotate
-//         "ngInject";
-
-
-//         // Object for bill's mock
-//         var bills = {};
-
-
-//         /*
-//         |--------------------------------------------------------------------------
-//         | Contrsucts function
-//         |--------------------------------------------------------------------------
-//         |
-//         | All functions that should be init when the controller start
-//         |
-//         */
-
-
-//     	setbills();															            // Set the list of bill
-//     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
-
-
-
-// 	    /*
-// 	    |--------------------------------------------------------------------------
-// 	    | Functions
-// 	    |--------------------------------------------------------------------------
-// 	    |
-// 	    | Declaring all functions used in the billsMock
-// 	    |
-// 	    */
-
-
-// 		// Function for destroy bills API
-// 		function destroyRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Delete bill by id from bill's array
-//                 for(var i = 0; i <= bills.length - 1; i++) {
-
-//                     // If bill exists
-//                     if(bills[i].id == id) {
-
-//                         // Delete  bill
-//                         bills.splice(i, 1);
-
-//                         // Return the success header
-//                         return [header, {data: 'bill removed'}];
-//                     }
-//                 }
-
-// 				// Return the error header
-//                 return [header, {error: 'bill not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error in bill removing'}];
-// 		}
-
-
-// 		// Function for index bills API
-// 		function indexRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-// 				// Return the success header
-//                 return [header, {data: bills}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error while listing bills'}];
-// 		}
-
-
-// 		// Function for show bills API
-// 		function showRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get bill by id from bill's array
-//                 for(var i = 0; i <= bills.length - 1; i++) {
-
-//                     // If bill exists
-//                     if(bills[i].id == id) {
-
-//                         // Return the success header
-//                         return [header, {data: bills[i]}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'bill not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error showing bill'}];
-// 		}
-
-
-// 		// Function for store bills API
-// 		function storeRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-//             // If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Assisgn bill id - override if inserted
-//                 data.id = bills.length;
-
-//                 // Insert the new bill
-//                 bills.push(data);
-
-//                 // Return the success header
-//                 return [header, {data: 'bill stored'}];
-//             }
-
-// 			// Return the error header
-// 			return [header, {error:'Error storing the bill'}];
-// 		}
-
-
-// 		// Function for update bills API
-// 		function updateRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get bill by id from bill's array
-//                 for(var i = 0; i <= bills.length - 1; i++) {
-
-//                     // If bill exists
-//                     if(bills[i].id == id) {
-
-//                         // Override the bill
-//                         bills[i] = data;
-
-//                         // Return the success header
-//                         return [header, {data: 'bill updated'}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'bill not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error updating bill'}];
-// 		}
-
-
-// 		// Basic algorithm for random headers
-// 		function randomHeader(){
-
-// 			// Generate a random number from 1 to 10
-// 			var random = Math.floor((Math.random() * 10) + 1);
-
-// 			// Return 500 if random is 10
-// 			if(random == 10) {
-
-// 				return 500;
-// 			}
-
-// 			// Return 404 if random is 9
-// 			if(random == 9) {
-
-// 				return 404;
-// 			}
-
-// 			// Return 200
-// 			return 200;
-// 		}
-
-
-// 		// Function that pass the array that will create the httpBackend
-// 	    function getMocks() {
-
-// 	    	// Object to pass for fake API
-// 			return [{
-
-// 				label: 'destroy',
-// 			    method: 'DELETE',
-// 			    url: /\/api\/bills\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: destroyRespond
-
-// 			},{
-
-// 				label: 'index',
-// 			    method: 'GET',
-// 			    url: '/api/bills/',
-// 			    respond: indexRespond
-
-// 			},{
-
-// 				label: 'show',
-// 			    method: 'GET',
-// 			    url: /\/api\/bills\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: showRespond
-
-// 			},{
-
-// 				label: 'store',
-// 			    method: 'POST',
-// 			    url: '/api/bills/',
-// 			    respond: storeRespond
-
-// 			},{
-
-// 				label: 'update',
-// 			    method: 'PUT',
-// 			    url: /\/api\/bills\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: updateRespond
-// 			}];
-// 		}
-
-
-// 		// Function for set the array
-// 		function setbills() {
-
-//             bills = [];
-// 		}
-// 	}
-
-// })();
-
 (function() {
 
   'use strict';
@@ -2564,274 +1224,6 @@
 
 })();
 
-// (function() {
-
-//   'use strict';
-
-//     // Pass the documentsMock to the app
-// 	angular
-// 	    .module('y')
-// 	    .run(documentsMock);
-
-
-// 	// Define the documentsMock
-//     function documentsMock(mockHelper) {
-
-
-//         // Inject with ng-annotate
-//         "ngInject";
-
-
-//         // Object for document's mock
-//         var documents = {};
-
-
-//         /*
-//         |--------------------------------------------------------------------------
-//         | Contrsucts function
-//         |--------------------------------------------------------------------------
-//         |
-//         | All functions that should be init when the controller start
-//         |
-//         */
-
-
-//     	setdocuments();															            // Set the list of document
-//     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
-
-
-
-// 	    /*
-// 	    |--------------------------------------------------------------------------
-// 	    | Functions
-// 	    |--------------------------------------------------------------------------
-// 	    |
-// 	    | Declaring all functions used in the documentsMock
-// 	    |
-// 	    */
-
-
-// 		// Function for destroy documents API
-// 		function destroyRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Delete document by id from document's array
-//                 for(var i = 0; i <= documents.length - 1; i++) {
-
-//                     // If document exists
-//                     if(documents[i].id == id) {
-
-//                         // Delete  document
-//                         documents.splice(i, 1);
-
-//                         // Return the success header
-//                         return [header, {data: 'document removed'}];
-//                     }
-//                 }
-
-// 				// Return the error header
-//                 return [header, {error: 'document not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error in document removing'}];
-// 		}
-
-
-// 		// Function for index documents API
-// 		function indexRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-// 				// Return the success header
-//                 return [header, {data: documents}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error while listing documents'}];
-// 		}
-
-
-// 		// Function for show documents API
-// 		function showRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get document by id from document's array
-//                 for(var i = 0; i <= documents.length - 1; i++) {
-
-//                     // If document exists
-//                     if(documents[i].id == id) {
-
-//                         // Return the success header
-//                         return [header, {data: documents[i]}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'document not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error showing document'}];
-// 		}
-
-
-// 		// Function for store documents API
-// 		function storeRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-//             // If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Assisgn document id - override if inserted
-//                 data.id = documents.length;
-
-//                 // Insert the new document
-//                 documents.push(data);
-
-//                 // Return the success header
-//                 return [header, {data: 'document stored'}];
-//             }
-
-// 			// Return the error header
-// 			return [header, {error:'Error storing the document'}];
-// 		}
-
-
-// 		// Function for update documents API
-// 		function updateRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get document by id from document's array
-//                 for(var i = 0; i <= documents.length - 1; i++) {
-
-//                     // If document exists
-//                     if(documents[i].id == id) {
-
-//                         // Override the document
-//                         documents[i] = data;
-
-//                         // Return the success header
-//                         return [header, {data: 'document updated'}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'document not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error updating document'}];
-// 		}
-
-
-// 		// Basic algorithm for random headers
-// 		function randomHeader(){
-
-// 			// Generate a random number from 1 to 10
-// 			var random = Math.floor((Math.random() * 10) + 1);
-
-// 			// Return 500 if random is 10
-// 			if(random == 10) {
-
-// 				return 500;
-// 			}
-
-// 			// Return 404 if random is 9
-// 			if(random == 9) {
-
-// 				return 404;
-// 			}
-
-// 			// Return 200
-// 			return 200;
-// 		}
-
-
-// 		// Function that pass the array that will create the httpBackend
-// 	    function getMocks() {
-
-// 	    	// Object to pass for fake API
-// 			return [{
-
-// 				label: 'destroy',
-// 			    method: 'DELETE',
-// 			    url: /\/api\/documents\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: destroyRespond
-
-// 			},{
-
-// 				label: 'index',
-// 			    method: 'GET',
-// 			    url: '/api/documents/',
-// 			    respond: indexRespond
-
-// 			},{
-
-// 				label: 'show',
-// 			    method: 'GET',
-// 			    url: /\/api\/documents\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: showRespond
-
-// 			},{
-
-// 				label: 'store',
-// 			    method: 'POST',
-// 			    url: '/api/documents/',
-// 			    respond: storeRespond
-
-// 			},{
-
-// 				label: 'update',
-// 			    method: 'PUT',
-// 			    url: /\/api\/documents\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: updateRespond
-// 			}];
-// 		}
-
-
-// 		// Function for set the array
-// 		function setdocuments() {
-
-//             documents = [];
-// 		}
-// 	}
-
-// })();
-
 (function() {
 
   'use strict';
@@ -2962,6 +1354,303 @@
 
   'use strict';
 
+    // Pass the staticsRoute to the app
+	angular
+	    .module('y')
+	    .run(dynamicsRoute);
+
+
+	// Define the staticsRoute
+    function dynamicsRoute(routerHelper) {
+
+
+		// Inject with ng-annotate
+		"ngInject";
+
+
+    	// Intercept all the states and add them to the routing
+    	routerHelper.configureStates(getStates());
+    }
+
+
+    // Define the getStates
+    function getStates() {
+
+		return [{
+
+		    state: 'dynamics-home',
+		    config: {
+		        url: '/dynamics',
+		        templateUrl: 'app/modules/dynamics/home/dynamics.home.html',
+		        controller: 'dynamicsHomeCtrl',
+		        controllerAs: 'dynamicsHome'
+		    }
+		}];
+	}
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the staticsRoute to the app
+	angular
+	    .module('y')
+	    .run(estaticoRoute);
+
+
+	// Define the staticsRoute
+    function estaticoRoute(routerHelper) {
+
+
+		// Inject with ng-annotate
+		"ngInject";
+
+
+    	// Intercept all the states and add them to the routing
+    	routerHelper.configureStates(getStates());
+    }
+
+
+    // Define the getStates
+    function getStates() {
+
+		return [{
+
+		    state: 'estatico-home',
+		    config: {
+		        url: '/',
+		        templateUrl: 'app/modules/estatico/home/estatico.home.html',
+		        controller: 'estaticoHomeCtrl',
+		        controllerAs: 'estaticoHome'
+		    }
+		}];
+	}
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the responsesFactory to the app
+    angular
+        .module('y')
+        .factory('responsesFactory', responsesFactory);
+
+
+    // Define the responsesFactory
+    function responsesFactory($http) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define base URI for response response
+        var responseBase = '/api/responses/';
+
+
+        // Define the response factory object to return
+        var responsesFactory = {
+
+            index: index,
+            show: show,
+            store: store,
+            update: update,
+            destroy: destroy,
+
+        };
+
+
+        // Return the response factory
+        return responsesFactory;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the responsesFactory
+        |
+        */
+
+
+        // Display a listing of responses.
+        function index() {
+
+            return $http.get(responseBase)
+                        .then(function(data){ return data; });
+        }
+
+
+        // Display a specified response.
+        function show(id) {
+
+            return $http.get(responseBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Store a newly created response in storage.
+        function store(data) {
+
+            return $http.post(responseBase, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Update the specified response in storage.
+        function update(id, data) {
+
+            return $http.put(responseBase + id, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Remove the specified response from storage.
+        function destroy(id) {
+
+            return $http.delete(responseBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the responsesRoute to the app
+	angular
+	    .module('y')
+	    .run(responsesRoute);
+
+
+	// Define the responsesRoute
+    function responsesRoute(routerHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+    	// Intercept all the states and add them to the routing
+    	routerHelper.configureStates(getStates());
+    }
+
+
+    // Define the getStates
+    function getStates() {
+
+		return [{
+
+		    state: 'responses-index',
+		    config: {
+		        url: '/responses',
+		        templateUrl: 'app/modules/responses/index/responses.index.html',
+		        controller: 'responsesIndexCtrl',
+		        controllerAs: 'responsesIndex'
+		    }
+		}, {
+		    state: 'responses-store',
+		    config: {
+		        url: '/responses/store',
+		        templateUrl: 'app/modules/responses/store/responses.store.html',
+		        controller: 'responsesStoreCtrl',
+		        controllerAs: 'responsesStore'
+		    }
+		}, {
+		    state: 'responses-show',
+		    config: {
+		        url: '/responses/:id',
+		        templateUrl: 'app/modules/responses/show/responses.show.html',
+		        controller: 'responsesShowCtrl',
+		        controllerAs: 'responsesShow'
+		    }
+		}, {
+		    state: 'responses-update',
+		    config: {
+		        url: '/responses/:id/update',
+		        templateUrl: 'app/modules/responses/update/responses.update.html',
+		        controller: 'responsesUpdateCtrl',
+		        controllerAs: 'responsesUpdate'
+		    }
+		}, {
+		    state: 'responses-destroy',
+		    config: {
+		        url: '/responses/:id/delete',
+		        templateUrl: 'app/modules/responses/destroy/responses.destroy.html',
+		        controller: 'responsesDestroyCtrl',
+		        controllerAs: 'responsesDestroy'
+		    }
+		}];
+	}
+
+})();
+
+(function() {
+
+    'use strict';
+
+    // Pass the responsessValidator to the app
+    angular
+    .module('y')
+        .run(responsessValidator);
+
+
+    // Define the responsessValidator
+    function responsessValidator(validatorHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the responsessValidator
+        |
+        */
+
+
+
+        // Function that pass the array that will create the model validator
+        function getValidators() {
+
+            // Object to pass with validation rules
+            return {};
+
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the staticsFactory to the app
     angular
         .module('y')
@@ -3048,274 +1737,6 @@
     }
 
 })();
-
-// (function() {
-
-//   'use strict';
-
-//     // Pass the staticsMock to the app
-// 	angular
-// 	    .module('y')
-// 	    .run(staticsMock);
-
-
-// 	// Define the staticsMock
-//     function staticsMock(mockHelper) {
-
-
-//         // Inject with ng-annotate
-//         "ngInject";
-
-
-//         // Object for static's mock
-//         var statics = {};
-
-
-//         /*
-//         |--------------------------------------------------------------------------
-//         | Contrsucts function
-//         |--------------------------------------------------------------------------
-//         |
-//         | All functions that should be init when the controller start
-//         |
-//         */
-
-
-//     	setstatics();															            // Set the list of static
-//     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
-
-
-
-// 	    /*
-// 	    |--------------------------------------------------------------------------
-// 	    | Functions
-// 	    |--------------------------------------------------------------------------
-// 	    |
-// 	    | Declaring all functions used in the staticsMock
-// 	    |
-// 	    */
-
-
-// 		// Function for destroy statics API
-// 		function destroyRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Delete static by id from static's array
-//                 for(var i = 0; i <= statics.length - 1; i++) {
-
-//                     // If static exists
-//                     if(statics[i].id == id) {
-
-//                         // Delete  static
-//                         statics.splice(i, 1);
-
-//                         // Return the success header
-//                         return [header, {data: 'static removed'}];
-//                     }
-//                 }
-
-// 				// Return the error header
-//                 return [header, {error: 'static not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error in static removing'}];
-// 		}
-
-
-// 		// Function for index statics API
-// 		function indexRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-// 				// Return the success header
-//                 return [header, {data: statics}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error while listing statics'}];
-// 		}
-
-
-// 		// Function for show statics API
-// 		function showRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get static by id from static's array
-//                 for(var i = 0; i <= statics.length - 1; i++) {
-
-//                     // If static exists
-//                     if(statics[i].id == id) {
-
-//                         // Return the success header
-//                         return [header, {data: statics[i]}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'static not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error showing static'}];
-// 		}
-
-
-// 		// Function for store statics API
-// 		function storeRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-//             // If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Assisgn static id - override if inserted
-//                 data.id = statics.length;
-
-//                 // Insert the new static
-//                 statics.push(data);
-
-//                 // Return the success header
-//                 return [header, {data: 'static stored'}];
-//             }
-
-// 			// Return the error header
-// 			return [header, {error:'Error storing the static'}];
-// 		}
-
-
-// 		// Function for update statics API
-// 		function updateRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get static by id from static's array
-//                 for(var i = 0; i <= statics.length - 1; i++) {
-
-//                     // If static exists
-//                     if(statics[i].id == id) {
-
-//                         // Override the static
-//                         statics[i] = data;
-
-//                         // Return the success header
-//                         return [header, {data: 'static updated'}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'static not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error updating static'}];
-// 		}
-
-
-// 		// Basic algorithm for random headers
-// 		function randomHeader(){
-
-// 			// Generate a random number from 1 to 10
-// 			var random = Math.floor((Math.random() * 10) + 1);
-
-// 			// Return 500 if random is 10
-// 			if(random == 10) {
-
-// 				return 500;
-// 			}
-
-// 			// Return 404 if random is 9
-// 			if(random == 9) {
-
-// 				return 404;
-// 			}
-
-// 			// Return 200
-// 			return 200;
-// 		}
-
-
-// 		// Function that pass the array that will create the httpBackend
-// 	    function getMocks() {
-
-// 	    	// Object to pass for fake API
-// 			return [{
-
-// 				label: 'destroy',
-// 			    method: 'DELETE',
-// 			    url: /\/api\/statics\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: destroyRespond
-
-// 			},{
-
-// 				label: 'index',
-// 			    method: 'GET',
-// 			    url: '/api/statics/',
-// 			    respond: indexRespond
-
-// 			},{
-
-// 				label: 'show',
-// 			    method: 'GET',
-// 			    url: /\/api\/statics\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: showRespond
-
-// 			},{
-
-// 				label: 'store',
-// 			    method: 'POST',
-// 			    url: '/api/statics/',
-// 			    respond: storeRespond
-
-// 			},{
-
-// 				label: 'update',
-// 			    method: 'PUT',
-// 			    url: /\/api\/statics\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: updateRespond
-// 			}];
-// 		}
-
-
-// 		// Function for set the array
-// 		function setstatics() {
-
-//             statics = [];
-// 		}
-// 	}
-
-// })();
 
 (function() {
 
@@ -3447,46 +1868,6 @@
 
   'use strict';
 
-    // Pass the staticsRoute to the app
-	angular
-	    .module('y')
-	    .run(staticsRoute);
-
-
-	// Define the staticsRoute
-    function staticsRoute(routerHelper) {
-
-
-		// Inject with ng-annotate
-		"ngInject";
-
-
-    	// Intercept all the states and add them to the routing
-    	routerHelper.configureStates(getStates());
-    }
-
-
-    // Define the getStates
-    function getStates() {
-
-		return [{
-
-		    state: 'statics-home',
-		    config: {
-		        url: '/',
-		        templateUrl: 'app/modules/statics/home/statics.home.html',
-		        controller: 'staticsHomeCtrl',
-		        controllerAs: 'staticsHome'
-		    }
-		}];
-	}
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the ticketsFactory to the app
     angular
         .module('y')
@@ -3573,274 +1954,6 @@
     }
 
 })();
-
-// (function() {
-
-//   'use strict';
-
-//     // Pass the ticketsMock to the app
-// 	angular
-// 	    .module('y')
-// 	    .run(ticketsMock);
-
-
-// 	// Define the ticketsMock
-//     function ticketsMock(mockHelper) {
-
-
-//         // Inject with ng-annotate
-//         "ngInject";
-
-
-//         // Object for ticket's mock
-//         var tickets = {};
-
-
-//         /*
-//         |--------------------------------------------------------------------------
-//         | Contrsucts function
-//         |--------------------------------------------------------------------------
-//         |
-//         | All functions that should be init when the controller start
-//         |
-//         */
-
-
-//     	settickets();															            // Set the list of ticket
-//     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
-
-
-
-// 	    /*
-// 	    |--------------------------------------------------------------------------
-// 	    | Functions
-// 	    |--------------------------------------------------------------------------
-// 	    |
-// 	    | Declaring all functions used in the ticketsMock
-// 	    |
-// 	    */
-
-
-// 		// Function for destroy tickets API
-// 		function destroyRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Delete ticket by id from ticket's array
-//                 for(var i = 0; i <= tickets.length - 1; i++) {
-
-//                     // If ticket exists
-//                     if(tickets[i].id == id) {
-
-//                         // Delete  ticket
-//                         tickets.splice(i, 1);
-
-//                         // Return the success header
-//                         return [header, {data: 'ticket removed'}];
-//                     }
-//                 }
-
-// 				// Return the error header
-//                 return [header, {error: 'ticket not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error in ticket removing'}];
-// 		}
-
-
-// 		// Function for index tickets API
-// 		function indexRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-// 				// Return the success header
-//                 return [header, {data: tickets}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error while listing tickets'}];
-// 		}
-
-
-// 		// Function for show tickets API
-// 		function showRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get ticket by id from ticket's array
-//                 for(var i = 0; i <= tickets.length - 1; i++) {
-
-//                     // If ticket exists
-//                     if(tickets[i].id == id) {
-
-//                         // Return the success header
-//                         return [header, {data: tickets[i]}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'ticket not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error showing ticket'}];
-// 		}
-
-
-// 		// Function for store tickets API
-// 		function storeRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-//             // If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Assisgn ticket id - override if inserted
-//                 data.id = tickets.length;
-
-//                 // Insert the new ticket
-//                 tickets.push(data);
-
-//                 // Return the success header
-//                 return [header, {data: 'ticket stored'}];
-//             }
-
-// 			// Return the error header
-// 			return [header, {error:'Error storing the ticket'}];
-// 		}
-
-
-// 		// Function for update tickets API
-// 		function updateRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get ticket by id from ticket's array
-//                 for(var i = 0; i <= tickets.length - 1; i++) {
-
-//                     // If ticket exists
-//                     if(tickets[i].id == id) {
-
-//                         // Override the ticket
-//                         tickets[i] = data;
-
-//                         // Return the success header
-//                         return [header, {data: 'ticket updated'}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'ticket not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error updating ticket'}];
-// 		}
-
-
-// 		// Basic algorithm for random headers
-// 		function randomHeader(){
-
-// 			// Generate a random number from 1 to 10
-// 			var random = Math.floor((Math.random() * 10) + 1);
-
-// 			// Return 500 if random is 10
-// 			if(random == 10) {
-
-// 				return 500;
-// 			}
-
-// 			// Return 404 if random is 9
-// 			if(random == 9) {
-
-// 				return 404;
-// 			}
-
-// 			// Return 200
-// 			return 200;
-// 		}
-
-
-// 		// Function that pass the array that will create the httpBackend
-// 	    function getMocks() {
-
-// 	    	// Object to pass for fake API
-// 			return [{
-
-// 				label: 'destroy',
-// 			    method: 'DELETE',
-// 			    url: /\/api\/tickets\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: destroyRespond
-
-// 			},{
-
-// 				label: 'index',
-// 			    method: 'GET',
-// 			    url: '/api/tickets/',
-// 			    respond: indexRespond
-
-// 			},{
-
-// 				label: 'show',
-// 			    method: 'GET',
-// 			    url: /\/api\/tickets\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: showRespond
-
-// 			},{
-
-// 				label: 'store',
-// 			    method: 'POST',
-// 			    url: '/api/tickets/',
-// 			    respond: storeRespond
-
-// 			},{
-
-// 				label: 'update',
-// 			    method: 'PUT',
-// 			    url: /\/api\/tickets\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: updateRespond
-// 			}];
-// 		}
-
-
-// 		// Function for set the array
-// 		function settickets() {
-
-//             tickets = [];
-// 		}
-// 	}
-
-// })();
 
 (function() {
 
@@ -4059,289 +2172,6 @@
 
 })();
 
-// (function() {
-
-//   'use strict';
-
-//     // Pass the usersMock to the app
-// 	angular
-// 	    .module('y')
-// 	    .run(usersMock);
-
-
-// 	// Define the usersMock
-//     function usersMock(mockHelper) {
-
-
-//         // Inject with ng-annotate
-//         "ngInject";
-
-
-//         // Object for user's mock
-//         var users = {};
-
-
-//         /*
-//         |--------------------------------------------------------------------------
-//         | Contrsucts function
-//         |--------------------------------------------------------------------------
-//         |
-//         | All functions that should be init when the controller start
-//         |
-//         */
-
-
-//     	setUsers();															            // Set the list of user
-//     	mockHelper.configureMocks(getMocks()); 									        // Intercept all the api and add them to the httpBackend
-
-
-
-// 	    /*
-// 	    |--------------------------------------------------------------------------
-// 	    | Functions
-// 	    |--------------------------------------------------------------------------
-// 	    |
-// 	    | Declaring all functions used in the usersMock
-// 	    |
-// 	    */
-
-
-// 		// Function for destroy users API
-// 		function destroyRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Delete user by id from user's array
-//                 for(var i = 0; i <= users.length - 1; i++) {
-
-//                     // If user exists
-//                     if(users[i].id == id) {
-
-//                         // Delete  user
-//                         users.splice(i, 1);
-
-//                         // Return the success header
-//                         return [header, {data: 'User removed'}];
-//                     }
-//                 }
-
-// 				// Return the error header
-//                 return [header, {error: 'User not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error in user removing'}];
-// 		}
-
-
-// 		// Function for index users API
-// 		function indexRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-// 				// Return the success header
-//                 return [header, {data: users}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error while listing users'}];
-// 		}
-
-
-// 		// Function for show users API
-// 		function showRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get user by id from user's array
-//                 for(var i = 0; i <= users.length - 1; i++) {
-
-//                     // If user exists
-//                     if(users[i].id == id) {
-
-//                         // Return the success header
-//                         return [header, {data: users[i]}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'User not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error showing user'}];
-// 		}
-
-
-// 		// Function for store users API
-// 		function storeRespond(method, url, data, headers, params) {
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-//             // If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Assisgn user id - override if inserted
-//                 data.id = users.length;
-
-//                 // Insert the new user
-//                 users.push(data);
-
-//                 // Return the success header
-//                 return [header, {data: 'User stored'}];
-//             }
-
-// 			// Return the error header
-// 			return [header, {error:'Error storing the user'}];
-// 		}
-
-
-// 		// Function for update users API
-// 		function updateRespond(method, url, data, headers, params) {
-
-//             // Get the id param from url
-//             var id = url.split("/").pop();
-
-// 			// Get a random header
-// 			var header = randomHeader();
-
-// 			// If the result will be 200, execute the operation
-// 			if(header == 200) {
-
-//                 // Get user by id from user's array
-//                 for(var i = 0; i <= users.length - 1; i++) {
-
-//                     // If user exists
-//                     if(users[i].id == id) {
-
-//                         // Override the user
-//                         users[i] = data;
-
-//                         // Return the success header
-//                         return [header, {data: 'User updated'}];
-//                     }
-//                 }
-
-//                 // Return the error header
-//     			return [header, {error:'User not found'}];
-// 			}
-
-// 			// Return the error header
-// 			return [header, {error:'Error updating user'}];
-// 		}
-
-
-// 		// Basic algorithm for random headers
-// 		function randomHeader(){
-
-// 			// Generate a random number from 1 to 10
-// 			var random = Math.floor((Math.random() * 10) + 1);
-
-// 			// Return 500 if random is 10
-// 			if(random == 10) {
-
-// 				return 500;
-// 			}
-
-// 			// Return 404 if random is 9
-// 			if(random == 9) {
-
-// 				return 404;
-// 			}
-
-// 			// Return 200
-// 			return 200;
-// 		}
-
-
-// 		// Function that pass the array that will create the httpBackend
-// 	    function getMocks() {
-
-// 	    	// Object to pass for fake API
-// 			return [{
-
-// 				label: 'destroy',
-// 			    method: 'DELETE',
-// 			    url: /\/api\/users\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: destroyRespond
-
-// 			},{
-
-// 				label: 'index',
-// 			    method: 'GET',
-// 			    url: '/api/users/',
-// 			    respond: indexRespond
-
-// 			},{
-
-// 				label: 'show',
-// 			    method: 'GET',
-// 			    url: /\/api\/users\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: showRespond
-
-// 			},{
-
-// 				label: 'store',
-// 			    method: 'POST',
-// 			    url: '/api/users/',
-// 			    respond: storeRespond
-
-// 			},{
-
-// 				label: 'update',
-// 			    method: 'PUT',
-// 			    url: /\/api\/users\/(d*)/,
-// 			    params: ['id'],
-// 			    respond: updateRespond
-// 			}];
-// 		}
-
-
-// 		// Function for set the array
-// 		function setUsers() {
-
-//             users = [{
-
-//                 "id": 1,
-//                 "name": "Mario",
-//                 "surname": "Rossi"
-//             },
-//             {
-//                 "id": 2,
-//                 "name": "Luigi",
-//                 "surname": "Verdi"
-//             },
-//             {
-//                 "id": 3,
-//                 "name": "Furio",
-//                 "surname": "Bianchi"
-//             }];
-// 		}
-// 	}
-
-// })();
-
 (function() {
 
   'use strict';
@@ -4418,14 +2248,14 @@
 
     'use strict';
 
-    // Pass the usersValidator to the app
+    // Pass the userssValidator to the app
     angular
-        .module('y')
-        .run(usersValidator);
+    .module('y')
+        .run(userssValidator);
 
 
-    // Define the usersValidator
-    function usersValidator(validatorHelper) {
+    // Define the userssValidator
+    function userssValidator(validatorHelper) {
 
 
         // Inject with ng-annotate
@@ -4451,7 +2281,7 @@
         | Functions
         |--------------------------------------------------------------------------
         |
-        | Declaring all functions used in the usersValidator
+        | Declaring all functions used in the userssValidator
         |
         */
 
@@ -4461,27 +2291,7 @@
         function getValidators() {
 
             // Object to pass with validation rules
-            return {
-                'User': {
-                    'lastName': {
-                        'size': {
-                            'min': 2,
-                            'max': 10,
-                            'message': 'Last name must be between 2 and 10 characters.'
-                        },
-                        'required': {
-                            'message': 'Last name is required.'
-                        }
-                    },
-                    'firstName': {
-                        'size': {
-                            'min': 2,
-                            'max': 20,
-                            'message': 'First name must be between 2 and 20 characters.'
-                        }
-                    }
-                }
-            };
+            return {};
 
         }
     }
@@ -5012,436 +2822,6 @@
 
   'use strict';
 
-    // Pass the adminsDestroyCtrl to the app
-    angular
-        .module('y')
-        .controller('adminsDestroyCtrl', adminsDestroyCtrl);
-
-
-    // Define the adminsDestroyCtrl
-    function adminsDestroyCtrl(adminsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define adminsDestroy as this for ControllerAs and auto-$scope
-        var adminsDestroy = this;
-
-
-        // Define the adminsDestroy functions and objects that will be passed to the view
-        adminsDestroy.admin = {};                                                 // Object for show the admin
-        adminsDestroy.destroy = destroy;                                         // Delete a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the adminsDestroyCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('adminsDestroyCtrl init');
-        }
-
-
-        // Delete a resource
-        function destroy(id) {
-
-            return adminsFactory.destroy(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-            	// Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the admin
-        function show(id) {
-
-            return adminsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                adminsDestroy.admin = data;
-                return adminsDestroy.admin;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the adminsIndexCtrl to the app
-    angular
-        .module('y')
-        .controller('adminsIndexCtrl', adminsIndexCtrl);
-
-
-    // Define the adminsIndexCtrl
-    function adminsIndexCtrl(adminsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define adminsIndex as this for ControllerAs and auto-$scope
-        var adminsIndex = this;
-
-
-        // Define the adminsIndex functions and objects that will be passed to the view
-        adminsIndex.admins = [];                                              // Array for list of admins
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        index();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the adminsIndexCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('adminsIndexCtrl init');
-        }
-
-
-        // Get all admins.
-        function index() {
-
-            return adminsFactory.index().then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            adminsIndex.admins = data.data;
-	            return adminsIndex.admins;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the adminsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('adminsShowCtrl', adminsShowCtrl);
-
-
-    // Define the adminsShowCtrl
-    function adminsShowCtrl(adminsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define adminsShow as this for ControllerAs and auto-$scope
-        var adminsShow = this;
-
-
-        // Define the adminsShow functions and objects that will be passed to the view
-        adminsShow.admin = {};                                                // Object for show the admin
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the adminsShowCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('adminsShowCtrl init');
-        }
-
-
-        // Get the admin
-        function show(id) {
-
-            return adminsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            adminsShow.admin = data;
-	            return adminsShow.admin;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the adminsStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('adminsStoreCtrl', adminsStoreCtrl);
-
-
-    // Define the adminsStoreCtrl
-    function adminsStoreCtrl(adminsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define adminsStore as this for ControllerAs and auto-$scope
-        var adminsStore = this;
-
-
-        // Define the adminsStore functions and objects that will be passed to the view
-        adminsStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the adminsStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('adminsStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return adminsFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the adminsUpdateCtrl to the app
-    angular
-        .module('y')
-        .controller('adminsUpdateCtrl', adminsUpdateCtrl);
-
-
-    // Define the adminsUpdateCtrl
-    function adminsUpdateCtrl(adminsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define adminsUpdate as this for ControllerAs and auto-$scope
-        var adminsUpdate = this;
-
-
-        // Define the adminsUpdate functions and objects that will be passed to the view
-        adminsUpdate.admin = {};                                                  // Object for show the admin
-        adminsUpdate.update = update;                                            // Update a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the adminsUpdateCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('adminsUpdateCtrl init');
-        }
-
-
-        // Delete a resource
-        function update(id, data) {
-
-            return adminsFactory.update(id, data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the admin
-        function show(id) {
-
-            return adminsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                adminsUpdate.admin = data;
-                return adminsUpdate.admin;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the advertisementsDestroyCtrl to the app
     angular
         .module('y')
@@ -5856,6 +3236,436 @@
                 // Assign data to array and return them
                 advertisementsUpdate.advertisement = data;
                 return advertisementsUpdate.advertisement;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsDestroyCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsDestroyCtrl', amountsDestroyCtrl);
+
+
+    // Define the amountsDestroyCtrl
+    function amountsDestroyCtrl(amountsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsDestroy as this for ControllerAs and auto-$scope
+        var amountsDestroy = this;
+
+
+        // Define the amountsDestroy functions and objects that will be passed to the view
+        amountsDestroy.amount = {};                                                 // Object for show the amount
+        amountsDestroy.destroy = destroy;                                         // Delete a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsDestroyCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsDestroyCtrl init');
+        }
+
+
+        // Delete a resource
+        function destroy(id) {
+
+            return amountsFactory.destroy(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+            	// Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the amount
+        function show(id) {
+
+            return amountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                amountsDestroy.amount = data;
+                return amountsDestroy.amount;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsIndexCtrl', amountsIndexCtrl);
+
+
+    // Define the amountsIndexCtrl
+    function amountsIndexCtrl(amountsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsIndex as this for ControllerAs and auto-$scope
+        var amountsIndex = this;
+
+
+        // Define the amountsIndex functions and objects that will be passed to the view
+        amountsIndex.amounts = [];                                              // Array for list of amounts
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsIndexCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsIndexCtrl init');
+        }
+
+
+        // Get all amounts.
+        function index() {
+
+            return amountsFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            amountsIndex.amounts = data.data;
+	            return amountsIndex.amounts;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsShowCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsShowCtrl', amountsShowCtrl);
+
+
+    // Define the amountsShowCtrl
+    function amountsShowCtrl(amountsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsShow as this for ControllerAs and auto-$scope
+        var amountsShow = this;
+
+
+        // Define the amountsShow functions and objects that will be passed to the view
+        amountsShow.amount = {};                                                // Object for show the amount
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsShowCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsShowCtrl init');
+        }
+
+
+        // Get the amount
+        function show(id) {
+
+            return amountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            amountsShow.amount = data;
+	            return amountsShow.amount;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsStoreCtrl', amountsStoreCtrl);
+
+
+    // Define the amountsStoreCtrl
+    function amountsStoreCtrl(amountsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsStore as this for ControllerAs and auto-$scope
+        var amountsStore = this;
+
+
+        // Define the amountsStore functions and objects that will be passed to the view
+        amountsStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+
+            return amountsFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsUpdateCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsUpdateCtrl', amountsUpdateCtrl);
+
+
+    // Define the amountsUpdateCtrl
+    function amountsUpdateCtrl(amountsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsUpdate as this for ControllerAs and auto-$scope
+        var amountsUpdate = this;
+
+
+        // Define the amountsUpdate functions and objects that will be passed to the view
+        amountsUpdate.amount = {};                                                  // Object for show the amount
+        amountsUpdate.update = update;                                            // Update a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsUpdateCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+
+            return amountsFactory.update(id, data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the amount
+        function show(id) {
+
+            return amountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                amountsUpdate.amount = data;
+                return amountsUpdate.amount;
 
             }, function(data) {
 
@@ -7408,6 +5218,556 @@
 })();
 
 (function() {
+  'use strict';
+
+    // Pass the staticsHomeCtrl to the app
+    angular
+        .module('y')
+        .controller('dynamicsHomeCtrl', dynamicsHomeCtrl);
+
+    // Define the staticsHomeCtrl
+    function dynamicsHomeCtrl() {
+
+        // Inject with ng-annotate
+        "ngInject";
+
+        // Define staticsHome as this for ControllerAs and auto-$scope
+        var dynamicsHome = this;
+            dynamicsHome.title =    "Tree app";
+
+            dynamicsHome.nodes = [
+                {data: {id: "a", name:"1"}},
+                {data: {id: "b", name:"2"}},
+                {data: {id: "c", name:"3"}},
+                {data: {id: "d", name:"4"}},
+                {data: {id: "e", name:"5"}},
+                {data: {id: "f", name:"6"}},
+                {data: {id: "g", name:"7"}}
+            ];
+
+            dynamicsHome.relations = [
+                {
+                    data: {
+                        source: "a",
+                        target: "b"
+                    }
+                },{
+                    data: {
+                        source: "a",
+                        target: "c"
+                    }
+                },{
+                    data: {
+                        source: "b",
+                        target: "d"
+                    }
+                },{
+                    data: {
+                        source: "b",
+                        target: "e"
+                    }
+                },{
+                    data: {
+                        source: "c",
+                        target: "f"
+                    }
+                },{
+                    data: {
+                        source: "c",
+                        target: "g"
+                    }
+                }
+            ];
+    }
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the staticsHomeCtrl to the app
+    angular
+        .module('y')
+        .controller('estaticoHomeCtrl', estaticoHomeCtrl);
+
+
+    // Define the staticsHomeCtrl
+    function estaticoHomeCtrl() {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define staticsHome as this for ControllerAs and auto-$scope
+        var estaticoHome = this;
+            estaticoHome.title =    "AngularJS-boilerplate";
+            estaticoHome.content =  "A micro AngularJS boilerplate for start projects with mocking and routing modules ready, based on John Papa's style guide";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the staticsHomeCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('estaticoHomeCtrl init');
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the responsesDestroyCtrl to the app
+    angular
+        .module('y')
+        .controller('responsesDestroyCtrl', responsesDestroyCtrl);
+
+
+    // Define the responsesDestroyCtrl
+    function responsesDestroyCtrl(responsesFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define responsesDestroy as this for ControllerAs and auto-$scope
+        var responsesDestroy = this;
+
+
+        // Define the responsesDestroy functions and objects that will be passed to the view
+        responsesDestroy.response = {};                                                 // Object for show the response
+        responsesDestroy.destroy = destroy;                                         // Delete a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the responsesDestroyCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('responsesDestroyCtrl init');
+        }
+
+
+        // Delete a resource
+        function destroy(id) {
+
+            return responsesFactory.destroy(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+            	// Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the response
+        function show(id) {
+
+            return responsesFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                responsesDestroy.response = data;
+                return responsesDestroy.response;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the responsesIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('responsesIndexCtrl', responsesIndexCtrl);
+
+
+    // Define the responsesIndexCtrl
+    function responsesIndexCtrl(responsesFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define responsesIndex as this for ControllerAs and auto-$scope
+        var responsesIndex = this;
+
+
+        // Define the responsesIndex functions and objects that will be passed to the view
+        responsesIndex.responses = [];                                              // Array for list of responses
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the responsesIndexCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('responsesIndexCtrl init');
+        }
+
+
+        // Get all responses.
+        function index() {
+
+            return responsesFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            responsesIndex.responses = data.data;
+	            return responsesIndex.responses;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the responsesShowCtrl to the app
+    angular
+        .module('y')
+        .controller('responsesShowCtrl', responsesShowCtrl);
+
+
+    // Define the responsesShowCtrl
+    function responsesShowCtrl(responsesFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define responsesShow as this for ControllerAs and auto-$scope
+        var responsesShow = this;
+
+
+        // Define the responsesShow functions and objects that will be passed to the view
+        responsesShow.response = {};                                                // Object for show the response
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the responsesShowCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('responsesShowCtrl init');
+        }
+
+
+        // Get the response
+        function show(id) {
+
+            return responsesFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            responsesShow.response = data;
+	            return responsesShow.response;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the responsesStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('responsesStoreCtrl', responsesStoreCtrl);
+
+
+    // Define the responsesStoreCtrl
+    function responsesStoreCtrl(responsesFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define responsesStore as this for ControllerAs and auto-$scope
+        var responsesStore = this;
+
+
+        // Define the responsesStore functions and objects that will be passed to the view
+        responsesStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the responsesStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('responsesStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+
+            return responsesFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the responsesUpdateCtrl to the app
+    angular
+        .module('y')
+        .controller('responsesUpdateCtrl', responsesUpdateCtrl);
+
+
+    // Define the responsesUpdateCtrl
+    function responsesUpdateCtrl(responsesFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define responsesUpdate as this for ControllerAs and auto-$scope
+        var responsesUpdate = this;
+
+
+        // Define the responsesUpdate functions and objects that will be passed to the view
+        responsesUpdate.response = {};                                                  // Object for show the response
+        responsesUpdate.update = update;                                            // Update a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the responsesUpdateCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('responsesUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+
+            return responsesFactory.update(id, data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the response
+        function show(id) {
+
+            return responsesFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                responsesUpdate.response = data;
+                return responsesUpdate.response;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
 
   'use strict';
 
@@ -7835,70 +6195,6 @@
         }
     }
 
-})();
-
-(function() {
-  'use strict';
-
-    // Pass the staticsHomeCtrl to the app
-    angular
-        .module('y')
-        .controller('staticsHomeCtrl', staticsHomeCtrl);
-
-    // Define the staticsHomeCtrl
-    function staticsHomeCtrl() {
-
-        // Inject with ng-annotate
-        "ngInject";
-
-        // Define staticsHome as this for ControllerAs and auto-$scope
-        var staticsHome = this;
-            staticsHome.title =    "Tree app";
-
-            staticsHome.nodes = [
-                {data: {id: "a", name:"1"}},
-                {data: {id: "b", name:"2"}},
-                {data: {id: "c", name:"3"}},
-                {data: {id: "d", name:"4"}},
-                {data: {id: "e", name:"5"}},
-                {data: {id: "f", name:"6"}},
-                {data: {id: "g", name:"7"}}
-            ];
-
-            staticsHome.relations = [
-                {
-                    data: {
-                        source: "a",
-                        target: "b"
-                    }
-                },{
-                    data: {
-                        source: "a",
-                        target: "c"
-                    }
-                },{
-                    data: {
-                        source: "b",
-                        target: "d"
-                    }
-                },{
-                    data: {
-                        source: "b",
-                        target: "e"
-                    }
-                },{
-                    data: {
-                        source: "c",
-                        target: "f"
-                    }
-                },{
-                    data: {
-                        source: "c",
-                        target: "g"
-                    }
-                }
-            ];
-    }
 })();
 
 (function() {
