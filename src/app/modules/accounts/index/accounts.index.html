@@ -1,1 +1,13 @@
-<h1>account index view</h1>
+<navbar-directive></navbar-directive>
+
+<div flex layout="row">
+	<sidenav-directive></sidenav-directive>
+	
+	<md-virtual-repeat-container id="vertical">
+		<div md-virtual-repeat="item in accountsIndex.accounts" md-on-demand class="repeat-item" flex>
+			{{item.id}}
+		</div>
+	</md-virtual-repeat-container>
+</div>
+
+<footer-directive></footer-directive>

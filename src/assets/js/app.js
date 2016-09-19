@@ -59,15 +59,15 @@
 
 
     // Define the accountsFactory
-    function accountsFactory($http) {
+    function accountsFactory($resource) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for account account
-        var accountBase = '/api/accounts/';
+        // Define resource instance
+        var resource = new $resource("accounts");
 
 
         // Define the account factory object to return
@@ -99,7 +99,7 @@
         // Display a listing of accounts.
         function index() {
 
-            return $http.get(accountBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -107,7 +107,7 @@
         // Display a specified account.
         function show(id) {
 
-            return $http.get(accountBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -115,7 +115,7 @@
         // Store a newly created account in storage.
         function store(data) {
 
-            return $http.post(accountBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -123,7 +123,7 @@
         // Update the specified account in storage.
         function update(id, data) {
 
-            return $http.put(accountBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -131,7 +131,7 @@
         // Remove the specified account from storage.
         function destroy(id) {
 
-            return $http.delete(accountBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -249,223 +249,6 @@
         |--------------------------------------------------------------------------
         |
         | Declaring all functions used in the accountssValidator
-        |
-        */
-
-
-
-        // Function that pass the array that will create the model validator
-        function getValidators() {
-
-            // Object to pass with validation rules
-            return {};
-
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the advertisementsFactory to the app
-    angular
-        .module('y')
-        .factory('advertisementsFactory', advertisementsFactory);
-
-
-    // Define the advertisementsFactory
-    function advertisementsFactory($http) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define base URI for advertisement advertisement
-        var advertisementBase = '/api/advertisements/';
-
-
-        // Define the advertisement factory object to return
-        var advertisementsFactory = {
-
-            index: index,
-            show: show,
-            store: store,
-            update: update,
-            destroy: destroy,
-
-        };
-
-
-        // Return the advertisement factory
-        return advertisementsFactory;
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementsFactory
-        |
-        */
-
-
-        // Display a listing of advertisements.
-        function index() {
-
-            return $http.get(advertisementBase)
-                        .then(function(data){ return data; });
-        }
-
-
-        // Display a specified advertisement.
-        function show(id) {
-
-            return $http.get(advertisementBase + id)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Store a newly created advertisement in storage.
-        function store(data) {
-
-            return $http.post(advertisementBase, data)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Update the specified advertisement in storage.
-        function update(id, data) {
-
-            return $http.put(advertisementBase + id, data)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Remove the specified advertisement from storage.
-        function destroy(id) {
-
-            return $http.delete(advertisementBase + id)
-                        .then(function(data){ return data.data; });
-        }
-
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the advertisementsRoute to the app
-	angular
-	    .module('y')
-	    .run(advertisementsRoute);
-
-
-	// Define the advertisementsRoute
-    function advertisementsRoute(routerHelper) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-    	// Intercept all the states and add them to the routing
-    	routerHelper.configureStates(getStates());
-    }
-
-
-    // Define the getStates
-    function getStates() {
-
-		return [{
-
-		    state: 'advertisements-index',
-		    config: {
-		        url: '/advertisements',
-		        templateUrl: 'app/modules/advertisements/index/advertisements.index.html',
-		        controller: 'advertisementsIndexCtrl',
-		        controllerAs: 'advertisementsIndex'
-		    }
-		}, {
-		    state: 'advertisements-store',
-		    config: {
-		        url: '/advertisements/store',
-		        templateUrl: 'app/modules/advertisements/store/advertisements.store.html',
-		        controller: 'advertisementsStoreCtrl',
-		        controllerAs: 'advertisementsStore'
-		    }
-		}, {
-		    state: 'advertisements-show',
-		    config: {
-		        url: '/advertisements/:id',
-		        templateUrl: 'app/modules/advertisements/show/advertisements.show.html',
-		        controller: 'advertisementsShowCtrl',
-		        controllerAs: 'advertisementsShow'
-		    }
-		}, {
-		    state: 'advertisements-update',
-		    config: {
-		        url: '/advertisements/:id/update',
-		        templateUrl: 'app/modules/advertisements/update/advertisements.update.html',
-		        controller: 'advertisementsUpdateCtrl',
-		        controllerAs: 'advertisementsUpdate'
-		    }
-		}, {
-		    state: 'advertisements-destroy',
-		    config: {
-		        url: '/advertisements/:id/delete',
-		        templateUrl: 'app/modules/advertisements/destroy/advertisements.destroy.html',
-		        controller: 'advertisementsDestroyCtrl',
-		        controllerAs: 'advertisementsDestroy'
-		    }
-		}];
-	}
-
-})();
-
-(function() {
-
-    'use strict';
-
-    // Pass the advertisementssValidator to the app
-    angular
-    .module('y')
-        .run(advertisementssValidator);
-
-
-    // Define the advertisementssValidator
-    function advertisementssValidator(validatorHelper) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementssValidator
         |
         */
 
@@ -683,6 +466,223 @@
         |--------------------------------------------------------------------------
         |
         | Declaring all functions used in the amountssValidator
+        |
+        */
+
+
+
+        // Function that pass the array that will create the model validator
+        function getValidators() {
+
+            // Object to pass with validation rules
+            return {};
+
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the advertisementsFactory to the app
+    angular
+        .module('y')
+        .factory('advertisementsFactory', advertisementsFactory);
+
+
+    // Define the advertisementsFactory
+    function advertisementsFactory($http) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define base URI for advertisement advertisement
+        var advertisementBase = '/api/advertisements/';
+
+
+        // Define the advertisement factory object to return
+        var advertisementsFactory = {
+
+            index: index,
+            show: show,
+            store: store,
+            update: update,
+            destroy: destroy,
+
+        };
+
+
+        // Return the advertisement factory
+        return advertisementsFactory;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementsFactory
+        |
+        */
+
+
+        // Display a listing of advertisements.
+        function index() {
+
+            return $http.get(advertisementBase)
+                        .then(function(data){ return data; });
+        }
+
+
+        // Display a specified advertisement.
+        function show(id) {
+
+            return $http.get(advertisementBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Store a newly created advertisement in storage.
+        function store(data) {
+
+            return $http.post(advertisementBase, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Update the specified advertisement in storage.
+        function update(id, data) {
+
+            return $http.put(advertisementBase + id, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Remove the specified advertisement from storage.
+        function destroy(id) {
+
+            return $http.delete(advertisementBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the advertisementsRoute to the app
+	angular
+	    .module('y')
+	    .run(advertisementsRoute);
+
+
+	// Define the advertisementsRoute
+    function advertisementsRoute(routerHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+    	// Intercept all the states and add them to the routing
+    	routerHelper.configureStates(getStates());
+    }
+
+
+    // Define the getStates
+    function getStates() {
+
+		return [{
+
+		    state: 'advertisements-index',
+		    config: {
+		        url: '/advertisements',
+		        templateUrl: 'app/modules/advertisements/index/advertisements.index.html',
+		        controller: 'advertisementsIndexCtrl',
+		        controllerAs: 'advertisementsIndex'
+		    }
+		}, {
+		    state: 'advertisements-store',
+		    config: {
+		        url: '/advertisements/store',
+		        templateUrl: 'app/modules/advertisements/store/advertisements.store.html',
+		        controller: 'advertisementsStoreCtrl',
+		        controllerAs: 'advertisementsStore'
+		    }
+		}, {
+		    state: 'advertisements-show',
+		    config: {
+		        url: '/advertisements/:id',
+		        templateUrl: 'app/modules/advertisements/show/advertisements.show.html',
+		        controller: 'advertisementsShowCtrl',
+		        controllerAs: 'advertisementsShow'
+		    }
+		}, {
+		    state: 'advertisements-update',
+		    config: {
+		        url: '/advertisements/:id/update',
+		        templateUrl: 'app/modules/advertisements/update/advertisements.update.html',
+		        controller: 'advertisementsUpdateCtrl',
+		        controllerAs: 'advertisementsUpdate'
+		    }
+		}, {
+		    state: 'advertisements-destroy',
+		    config: {
+		        url: '/advertisements/:id/delete',
+		        templateUrl: 'app/modules/advertisements/destroy/advertisements.destroy.html',
+		        controller: 'advertisementsDestroyCtrl',
+		        controllerAs: 'advertisementsDestroy'
+		    }
+		}];
+	}
+
+})();
+
+(function() {
+
+    'use strict';
+
+    // Pass the advertisementssValidator to the app
+    angular
+    .module('y')
+        .run(advertisementssValidator);
+
+
+    // Define the advertisementssValidator
+    function advertisementssValidator(validatorHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementssValidator
         |
         */
 
@@ -2831,436 +2831,6 @@
 
   'use strict';
 
-    // Pass the advertisementsDestroyCtrl to the app
-    angular
-        .module('y')
-        .controller('advertisementsDestroyCtrl', advertisementsDestroyCtrl);
-
-
-    // Define the advertisementsDestroyCtrl
-    function advertisementsDestroyCtrl(advertisementsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define advertisementsDestroy as this for ControllerAs and auto-$scope
-        var advertisementsDestroy = this;
-
-
-        // Define the advertisementsDestroy functions and objects that will be passed to the view
-        advertisementsDestroy.advertisement = {};                                                 // Object for show the advertisement
-        advertisementsDestroy.destroy = destroy;                                         // Delete a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementsDestroyCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('advertisementsDestroyCtrl init');
-        }
-
-
-        // Delete a resource
-        function destroy(id) {
-
-            return advertisementsFactory.destroy(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-            	// Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the advertisement
-        function show(id) {
-
-            return advertisementsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                advertisementsDestroy.advertisement = data;
-                return advertisementsDestroy.advertisement;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the advertisementsIndexCtrl to the app
-    angular
-        .module('y')
-        .controller('advertisementsIndexCtrl', advertisementsIndexCtrl);
-
-
-    // Define the advertisementsIndexCtrl
-    function advertisementsIndexCtrl(advertisementsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define advertisementsIndex as this for ControllerAs and auto-$scope
-        var advertisementsIndex = this;
-
-
-        // Define the advertisementsIndex functions and objects that will be passed to the view
-        advertisementsIndex.advertisements = [];                                              // Array for list of advertisements
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        index();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementsIndexCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('advertisementsIndexCtrl init');
-        }
-
-
-        // Get all advertisements.
-        function index() {
-
-            return advertisementsFactory.index().then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            advertisementsIndex.advertisements = data.data;
-	            return advertisementsIndex.advertisements;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the advertisementsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('advertisementsShowCtrl', advertisementsShowCtrl);
-
-
-    // Define the advertisementsShowCtrl
-    function advertisementsShowCtrl(advertisementsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define advertisementsShow as this for ControllerAs and auto-$scope
-        var advertisementsShow = this;
-
-
-        // Define the advertisementsShow functions and objects that will be passed to the view
-        advertisementsShow.advertisement = {};                                                // Object for show the advertisement
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementsShowCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('advertisementsShowCtrl init');
-        }
-
-
-        // Get the advertisement
-        function show(id) {
-
-            return advertisementsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            advertisementsShow.advertisement = data;
-	            return advertisementsShow.advertisement;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the advertisementsStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('advertisementsStoreCtrl', advertisementsStoreCtrl);
-
-
-    // Define the advertisementsStoreCtrl
-    function advertisementsStoreCtrl(advertisementsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define advertisementsStore as this for ControllerAs and auto-$scope
-        var advertisementsStore = this;
-
-
-        // Define the advertisementsStore functions and objects that will be passed to the view
-        advertisementsStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementsStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('advertisementsStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return advertisementsFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the advertisementsUpdateCtrl to the app
-    angular
-        .module('y')
-        .controller('advertisementsUpdateCtrl', advertisementsUpdateCtrl);
-
-
-    // Define the advertisementsUpdateCtrl
-    function advertisementsUpdateCtrl(advertisementsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define advertisementsUpdate as this for ControllerAs and auto-$scope
-        var advertisementsUpdate = this;
-
-
-        // Define the advertisementsUpdate functions and objects that will be passed to the view
-        advertisementsUpdate.advertisement = {};                                                  // Object for show the advertisement
-        advertisementsUpdate.update = update;                                            // Update a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementsUpdateCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('advertisementsUpdateCtrl init');
-        }
-
-
-        // Delete a resource
-        function update(id, data) {
-
-            return advertisementsFactory.update(id, data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the advertisement
-        function show(id) {
-
-            return advertisementsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                advertisementsUpdate.advertisement = data;
-                return advertisementsUpdate.advertisement;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the amountsDestroyCtrl to the app
     angular
         .module('y')
@@ -3675,6 +3245,436 @@
                 // Assign data to array and return them
                 amountsUpdate.amount = data;
                 return amountsUpdate.amount;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the advertisementsDestroyCtrl to the app
+    angular
+        .module('y')
+        .controller('advertisementsDestroyCtrl', advertisementsDestroyCtrl);
+
+
+    // Define the advertisementsDestroyCtrl
+    function advertisementsDestroyCtrl(advertisementsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define advertisementsDestroy as this for ControllerAs and auto-$scope
+        var advertisementsDestroy = this;
+
+
+        // Define the advertisementsDestroy functions and objects that will be passed to the view
+        advertisementsDestroy.advertisement = {};                                                 // Object for show the advertisement
+        advertisementsDestroy.destroy = destroy;                                         // Delete a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementsDestroyCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('advertisementsDestroyCtrl init');
+        }
+
+
+        // Delete a resource
+        function destroy(id) {
+
+            return advertisementsFactory.destroy(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+            	// Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the advertisement
+        function show(id) {
+
+            return advertisementsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                advertisementsDestroy.advertisement = data;
+                return advertisementsDestroy.advertisement;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the advertisementsIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('advertisementsIndexCtrl', advertisementsIndexCtrl);
+
+
+    // Define the advertisementsIndexCtrl
+    function advertisementsIndexCtrl(advertisementsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define advertisementsIndex as this for ControllerAs and auto-$scope
+        var advertisementsIndex = this;
+
+
+        // Define the advertisementsIndex functions and objects that will be passed to the view
+        advertisementsIndex.advertisements = [];                                              // Array for list of advertisements
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementsIndexCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('advertisementsIndexCtrl init');
+        }
+
+
+        // Get all advertisements.
+        function index() {
+
+            return advertisementsFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            advertisementsIndex.advertisements = data.data;
+	            return advertisementsIndex.advertisements;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the advertisementsShowCtrl to the app
+    angular
+        .module('y')
+        .controller('advertisementsShowCtrl', advertisementsShowCtrl);
+
+
+    // Define the advertisementsShowCtrl
+    function advertisementsShowCtrl(advertisementsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define advertisementsShow as this for ControllerAs and auto-$scope
+        var advertisementsShow = this;
+
+
+        // Define the advertisementsShow functions and objects that will be passed to the view
+        advertisementsShow.advertisement = {};                                                // Object for show the advertisement
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementsShowCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('advertisementsShowCtrl init');
+        }
+
+
+        // Get the advertisement
+        function show(id) {
+
+            return advertisementsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            advertisementsShow.advertisement = data;
+	            return advertisementsShow.advertisement;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the advertisementsStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('advertisementsStoreCtrl', advertisementsStoreCtrl);
+
+
+    // Define the advertisementsStoreCtrl
+    function advertisementsStoreCtrl(advertisementsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define advertisementsStore as this for ControllerAs and auto-$scope
+        var advertisementsStore = this;
+
+
+        // Define the advertisementsStore functions and objects that will be passed to the view
+        advertisementsStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementsStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('advertisementsStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+
+            return advertisementsFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the advertisementsUpdateCtrl to the app
+    angular
+        .module('y')
+        .controller('advertisementsUpdateCtrl', advertisementsUpdateCtrl);
+
+
+    // Define the advertisementsUpdateCtrl
+    function advertisementsUpdateCtrl(advertisementsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define advertisementsUpdate as this for ControllerAs and auto-$scope
+        var advertisementsUpdate = this;
+
+
+        // Define the advertisementsUpdate functions and objects that will be passed to the view
+        advertisementsUpdate.advertisement = {};                                                  // Object for show the advertisement
+        advertisementsUpdate.update = update;                                            // Update a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementsUpdateCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('advertisementsUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+
+            return advertisementsFactory.update(id, data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the advertisement
+        function show(id) {
+
+            return advertisementsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                advertisementsUpdate.advertisement = data;
+                return advertisementsUpdate.advertisement;
 
             }, function(data) {
 
@@ -4626,7 +4626,7 @@
             .module('core.rest');
       // Define global domain for resource
       app.config(["ngRestful", function($restful){
-        $restful.setDomain("http://localhost/tree/server");
+        $restful.setDomain("http://192.168.1.106/tree/server");
       }]);
 })();
 (function(){

@@ -9,15 +9,15 @@
 
 
     // Define the accountsFactory
-    function accountsFactory($http) {
+    function accountsFactory($resource) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for account account
-        var accountBase = '/api/accounts/';
+        // Define resource instance
+        var resource = new $resource("accounts");
 
 
         // Define the account factory object to return
@@ -49,7 +49,7 @@
         // Display a listing of accounts.
         function index() {
 
-            return $http.get(accountBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -57,7 +57,7 @@
         // Display a specified account.
         function show(id) {
 
-            return $http.get(accountBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -65,7 +65,7 @@
         // Store a newly created account in storage.
         function store(data) {
 
-            return $http.post(accountBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -73,7 +73,7 @@
         // Update the specified account in storage.
         function update(id, data) {
 
-            return $http.put(accountBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -81,7 +81,7 @@
         // Remove the specified account from storage.
         function destroy(id) {
 
-            return $http.delete(accountBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
