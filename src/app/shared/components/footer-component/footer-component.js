@@ -37,8 +37,9 @@
     }
 
     // Define directive controller
-    function footerDirectiveController() {
-
+    function footerDirectiveController($scope) {
+		$scope.twitter='http://www.twitter.com',
+		$scope.facebook='http://www.facebook.com'
         // Do stuff...
     }
 

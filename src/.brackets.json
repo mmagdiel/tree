@@ -1,5 +1,6 @@
 {
     "jscodehints.detectedExclusions": [
-        "/home/ldvt/tree/src/assets/bower_components/cytoscape/snippets/animated-bfs.js"
+        "/home/ldvt/tree/src/assets/bower_components/cytoscape/snippets/animated-bfs.js",
+        "underscore.js"
     ]
 }

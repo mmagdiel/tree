@@ -9,8 +9,8 @@
 
 
     // Define the accountsStoreCtrl
-    function accountsStoreCtrl(accountsFactory) {
-
+    function accountsStoreCtrl(accountsFactory,$scope) {
+		$scope.bandera=false;
 
         // Inject with ng-annotate
         "ngInject";
@@ -56,7 +56,7 @@
 
         // Delete a resource
         function store(data) {
-
+			
             return accountsFactory.store(data).then(function(data) {
 
                 // Custom function for success handling

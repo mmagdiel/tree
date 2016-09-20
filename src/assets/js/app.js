@@ -924,223 +924,6 @@
 
   'use strict';
 
-    // Pass the billsFactory to the app
-    angular
-        .module('y')
-        .factory('billsFactory', billsFactory);
-
-
-    // Define the billsFactory
-    function billsFactory($http) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define base URI for bill bill
-        var billBase = '/api/bills/';
-
-
-        // Define the bill factory object to return
-        var billsFactory = {
-
-            index: index,
-            show: show,
-            store: store,
-            update: update,
-            destroy: destroy,
-
-        };
-
-
-        // Return the bill factory
-        return billsFactory;
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the billsFactory
-        |
-        */
-
-
-        // Display a listing of bills.
-        function index() {
-
-            return $http.get(billBase)
-                        .then(function(data){ return data; });
-        }
-
-
-        // Display a specified bill.
-        function show(id) {
-
-            return $http.get(billBase + id)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Store a newly created bill in storage.
-        function store(data) {
-
-            return $http.post(billBase, data)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Update the specified bill in storage.
-        function update(id, data) {
-
-            return $http.put(billBase + id, data)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Remove the specified bill from storage.
-        function destroy(id) {
-
-            return $http.delete(billBase + id)
-                        .then(function(data){ return data.data; });
-        }
-
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the billsRoute to the app
-	angular
-	    .module('y')
-	    .run(billsRoute);
-
-
-	// Define the billsRoute
-    function billsRoute(routerHelper) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-    	// Intercept all the states and add them to the routing
-    	routerHelper.configureStates(getStates());
-    }
-
-
-    // Define the getStates
-    function getStates() {
-
-		return [{
-
-		    state: 'bills-index',
-		    config: {
-		        url: '/bills',
-		        templateUrl: 'app/modules/bills/index/bills.index.html',
-		        controller: 'billsIndexCtrl',
-		        controllerAs: 'billsIndex'
-		    }
-		}, {
-		    state: 'bills-store',
-		    config: {
-		        url: '/bills/store',
-		        templateUrl: 'app/modules/bills/store/bills.store.html',
-		        controller: 'billsStoreCtrl',
-		        controllerAs: 'billsStore'
-		    }
-		}, {
-		    state: 'bills-show',
-		    config: {
-		        url: '/bills/:id',
-		        templateUrl: 'app/modules/bills/show/bills.show.html',
-		        controller: 'billsShowCtrl',
-		        controllerAs: 'billsShow'
-		    }
-		}, {
-		    state: 'bills-update',
-		    config: {
-		        url: '/bills/:id/update',
-		        templateUrl: 'app/modules/bills/update/bills.update.html',
-		        controller: 'billsUpdateCtrl',
-		        controllerAs: 'billsUpdate'
-		    }
-		}, {
-		    state: 'bills-destroy',
-		    config: {
-		        url: '/bills/:id/delete',
-		        templateUrl: 'app/modules/bills/destroy/bills.destroy.html',
-		        controller: 'billsDestroyCtrl',
-		        controllerAs: 'billsDestroy'
-		    }
-		}];
-	}
-
-})();
-
-(function() {
-
-    'use strict';
-
-    // Pass the billssValidator to the app
-    angular
-    .module('y')
-        .run(billssValidator);
-
-
-    // Define the billssValidator
-    function billssValidator(validatorHelper) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the billssValidator
-        |
-        */
-
-
-
-        // Function that pass the array that will create the model validator
-        function getValidators() {
-
-            // Object to pass with validation rules
-            return {};
-
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the documentsFactory to the app
     angular
         .module('y')
@@ -2405,6 +2188,223 @@
 
   'use strict';
 
+    // Pass the billsFactory to the app
+    angular
+        .module('y')
+        .factory('billsFactory', billsFactory);
+
+
+    // Define the billsFactory
+    function billsFactory($http) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define base URI for bill bill
+        var billBase = '/api/bills/';
+
+
+        // Define the bill factory object to return
+        var billsFactory = {
+
+            index: index,
+            show: show,
+            store: store,
+            update: update,
+            destroy: destroy,
+
+        };
+
+
+        // Return the bill factory
+        return billsFactory;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the billsFactory
+        |
+        */
+
+
+        // Display a listing of bills.
+        function index() {
+
+            return $http.get(billBase)
+                        .then(function(data){ return data; });
+        }
+
+
+        // Display a specified bill.
+        function show(id) {
+
+            return $http.get(billBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Store a newly created bill in storage.
+        function store(data) {
+
+            return $http.post(billBase, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Update the specified bill in storage.
+        function update(id, data) {
+
+            return $http.put(billBase + id, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Remove the specified bill from storage.
+        function destroy(id) {
+
+            return $http.delete(billBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the billsRoute to the app
+	angular
+	    .module('y')
+	    .run(billsRoute);
+
+
+	// Define the billsRoute
+    function billsRoute(routerHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+    	// Intercept all the states and add them to the routing
+    	routerHelper.configureStates(getStates());
+    }
+
+
+    // Define the getStates
+    function getStates() {
+
+		return [{
+
+		    state: 'bills-index',
+		    config: {
+		        url: '/bills',
+		        templateUrl: 'app/modules/bills/index/bills.index.html',
+		        controller: 'billsIndexCtrl',
+		        controllerAs: 'billsIndex'
+		    }
+		}, {
+		    state: 'bills-store',
+		    config: {
+		        url: '/bills/store',
+		        templateUrl: 'app/modules/bills/store/bills.store.html',
+		        controller: 'billsStoreCtrl',
+		        controllerAs: 'billsStore'
+		    }
+		}, {
+		    state: 'bills-show',
+		    config: {
+		        url: '/bills/:id',
+		        templateUrl: 'app/modules/bills/show/bills.show.html',
+		        controller: 'billsShowCtrl',
+		        controllerAs: 'billsShow'
+		    }
+		}, {
+		    state: 'bills-update',
+		    config: {
+		        url: '/bills/:id/update',
+		        templateUrl: 'app/modules/bills/update/bills.update.html',
+		        controller: 'billsUpdateCtrl',
+		        controllerAs: 'billsUpdate'
+		    }
+		}, {
+		    state: 'bills-destroy',
+		    config: {
+		        url: '/bills/:id/delete',
+		        templateUrl: 'app/modules/bills/destroy/bills.destroy.html',
+		        controller: 'billsDestroyCtrl',
+		        controllerAs: 'billsDestroy'
+		    }
+		}];
+	}
+
+})();
+
+(function() {
+
+    'use strict';
+
+    // Pass the billssValidator to the app
+    angular
+    .module('y')
+        .run(billssValidator);
+
+
+    // Define the billssValidator
+    function billssValidator(validatorHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the billssValidator
+        |
+        */
+
+
+
+        // Function that pass the array that will create the model validator
+        function getValidators() {
+
+            // Object to pass with validation rules
+            return {};
+
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the accountsDestroyCtrl to the app
     angular
         .module('y')
@@ -2582,81 +2582,6 @@
 
   'use strict';
 
-    // Pass the accountsStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('accountsStoreCtrl', accountsStoreCtrl);
-
-
-    // Define the accountsStoreCtrl
-    function accountsStoreCtrl(accountsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define accountsStore as this for ControllerAs and auto-$scope
-        var accountsStore = this;
-
-
-        // Define the accountsStore functions and objects that will be passed to the view
-        accountsStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the accountsStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('accountsStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return accountsFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the accountsShowCtrl to the app
     angular
         .module('y')
@@ -2721,6 +2646,81 @@
             	// Assign data to array and return them
 	            accountsShow.account = data;
 	            return accountsShow.account;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the accountsStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('accountsStoreCtrl', accountsStoreCtrl);
+
+
+    // Define the accountsStoreCtrl
+    function accountsStoreCtrl(accountsFactory,$scope) {
+		$scope.bandera=false;
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define accountsStore as this for ControllerAs and auto-$scope
+        var accountsStore = this;
+
+
+        // Define the accountsStore functions and objects that will be passed to the view
+        accountsStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the accountsStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('accountsStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+			
+            return accountsFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
 
             }, function(data) {
 
@@ -4121,436 +4121,6 @@
 
 })();
 
-(function() {
-
-  'use strict';
-
-    // Pass the billsDestroyCtrl to the app
-    angular
-        .module('y')
-        .controller('billsDestroyCtrl', billsDestroyCtrl);
-
-
-    // Define the billsDestroyCtrl
-    function billsDestroyCtrl(billsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define billsDestroy as this for ControllerAs and auto-$scope
-        var billsDestroy = this;
-
-
-        // Define the billsDestroy functions and objects that will be passed to the view
-        billsDestroy.bill = {};                                                 // Object for show the bill
-        billsDestroy.destroy = destroy;                                         // Delete a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the billsDestroyCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('billsDestroyCtrl init');
-        }
-
-
-        // Delete a resource
-        function destroy(id) {
-
-            return billsFactory.destroy(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-            	// Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the bill
-        function show(id) {
-
-            return billsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                billsDestroy.bill = data;
-                return billsDestroy.bill;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the billsIndexCtrl to the app
-    angular
-        .module('y')
-        .controller('billsIndexCtrl', billsIndexCtrl);
-
-
-    // Define the billsIndexCtrl
-    function billsIndexCtrl(billsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define billsIndex as this for ControllerAs and auto-$scope
-        var billsIndex = this;
-
-
-        // Define the billsIndex functions and objects that will be passed to the view
-        billsIndex.bills = [];                                              // Array for list of bills
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        index();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the billsIndexCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('billsIndexCtrl init');
-        }
-
-
-        // Get all bills.
-        function index() {
-
-            return billsFactory.index().then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            billsIndex.bills = data.data;
-	            return billsIndex.bills;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the billsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('billsShowCtrl', billsShowCtrl);
-
-
-    // Define the billsShowCtrl
-    function billsShowCtrl(billsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define billsShow as this for ControllerAs and auto-$scope
-        var billsShow = this;
-
-
-        // Define the billsShow functions and objects that will be passed to the view
-        billsShow.bill = {};                                                // Object for show the bill
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the billsShowCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('billsShowCtrl init');
-        }
-
-
-        // Get the bill
-        function show(id) {
-
-            return billsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            billsShow.bill = data;
-	            return billsShow.bill;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the billsStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('billsStoreCtrl', billsStoreCtrl);
-
-
-    // Define the billsStoreCtrl
-    function billsStoreCtrl(billsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define billsStore as this for ControllerAs and auto-$scope
-        var billsStore = this;
-
-
-        // Define the billsStore functions and objects that will be passed to the view
-        billsStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the billsStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('billsStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return billsFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the billsUpdateCtrl to the app
-    angular
-        .module('y')
-        .controller('billsUpdateCtrl', billsUpdateCtrl);
-
-
-    // Define the billsUpdateCtrl
-    function billsUpdateCtrl(billsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define billsUpdate as this for ControllerAs and auto-$scope
-        var billsUpdate = this;
-
-
-        // Define the billsUpdate functions and objects that will be passed to the view
-        billsUpdate.bill = {};                                                  // Object for show the bill
-        billsUpdate.update = update;                                            // Update a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the billsUpdateCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('billsUpdateCtrl init');
-        }
-
-
-        // Delete a resource
-        function update(id, data) {
-
-            return billsFactory.update(id, data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the bill
-        function show(id) {
-
-            return billsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                billsUpdate.bill = data;
-                return billsUpdate.bill;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
 // (function(){
 
 // 	'use strict';
@@ -4986,86 +4556,6 @@
             	// Assign data to array and return them
 	            documentsIndex.documents = data.data;
 	            return documentsIndex.documents;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the documentsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('documentsShowCtrl', documentsShowCtrl);
-
-
-    // Define the documentsShowCtrl
-    function documentsShowCtrl(documentsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define documentsShow as this for ControllerAs and auto-$scope
-        var documentsShow = this;
-
-
-        // Define the documentsShow functions and objects that will be passed to the view
-        documentsShow.document = {};                                                // Object for show the document
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the documentsShowCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('documentsShowCtrl init');
-        }
-
-
-        // Get the document
-        function show(id) {
-
-            return documentsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            documentsShow.document = data;
-	            return documentsShow.document;
 
             }, function(data) {
 
@@ -7201,8 +6691,9 @@
     }
 
     // Define directive controller
-    function footerDirectiveController() {
-
+    function footerDirectiveController($scope) {
+		$scope.twitter='http://www.twitter.com',
+		$scope.facebook='http://www.facebook.com'
         // Do stuff...
     }
 
@@ -7363,4 +6854,514 @@
             }]
         });
     }
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the documentsShowCtrl to the app
+    angular
+        .module('y')
+        .controller('documentsShowCtrl', documentsShowCtrl);
+
+
+    // Define the documentsShowCtrl
+    function documentsShowCtrl(documentsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define documentsShow as this for ControllerAs and auto-$scope
+        var documentsShow = this;
+
+
+        // Define the documentsShow functions and objects that will be passed to the view
+        documentsShow.document = {};                                                // Object for show the document
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the documentsShowCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('documentsShowCtrl init');
+        }
+
+
+        // Get the document
+        function show(id) {
+
+            return documentsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            documentsShow.document = data;
+	            return documentsShow.document;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the billsDestroyCtrl to the app
+    angular
+        .module('y')
+        .controller('billsDestroyCtrl', billsDestroyCtrl);
+
+
+    // Define the billsDestroyCtrl
+    function billsDestroyCtrl(billsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define billsDestroy as this for ControllerAs and auto-$scope
+        var billsDestroy = this;
+
+
+        // Define the billsDestroy functions and objects that will be passed to the view
+        billsDestroy.bill = {};                                                 // Object for show the bill
+        billsDestroy.destroy = destroy;                                         // Delete a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the billsDestroyCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('billsDestroyCtrl init');
+        }
+
+
+        // Delete a resource
+        function destroy(id) {
+
+            return billsFactory.destroy(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+            	// Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the bill
+        function show(id) {
+
+            return billsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                billsDestroy.bill = data;
+                return billsDestroy.bill;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the billsIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('billsIndexCtrl', billsIndexCtrl);
+
+
+    // Define the billsIndexCtrl
+    function billsIndexCtrl(billsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define billsIndex as this for ControllerAs and auto-$scope
+        var billsIndex = this;
+
+
+        // Define the billsIndex functions and objects that will be passed to the view
+        billsIndex.bills = [];                                              // Array for list of bills
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the billsIndexCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('billsIndexCtrl init');
+        }
+
+
+        // Get all bills.
+        function index() {
+
+            return billsFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            billsIndex.bills = data.data;
+	            return billsIndex.bills;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the billsShowCtrl to the app
+    angular
+        .module('y')
+        .controller('billsShowCtrl', billsShowCtrl);
+
+
+    // Define the billsShowCtrl
+    function billsShowCtrl(billsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define billsShow as this for ControllerAs and auto-$scope
+        var billsShow = this;
+
+
+        // Define the billsShow functions and objects that will be passed to the view
+        billsShow.bill = {};                                                // Object for show the bill
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the billsShowCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('billsShowCtrl init');
+        }
+
+
+        // Get the bill
+        function show(id) {
+
+            return billsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            billsShow.bill = data;
+	            return billsShow.bill;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the billsStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('billsStoreCtrl', billsStoreCtrl);
+
+
+    // Define the billsStoreCtrl
+    function billsStoreCtrl(billsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define billsStore as this for ControllerAs and auto-$scope
+        var billsStore = this;
+
+
+        // Define the billsStore functions and objects that will be passed to the view
+        billsStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the billsStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('billsStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+
+            return billsFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the billsUpdateCtrl to the app
+    angular
+        .module('y')
+        .controller('billsUpdateCtrl', billsUpdateCtrl);
+
+
+    // Define the billsUpdateCtrl
+    function billsUpdateCtrl(billsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define billsUpdate as this for ControllerAs and auto-$scope
+        var billsUpdate = this;
+
+
+        // Define the billsUpdate functions and objects that will be passed to the view
+        billsUpdate.bill = {};                                                  // Object for show the bill
+        billsUpdate.update = update;                                            // Update a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the billsUpdateCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('billsUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+
+            return billsFactory.update(id, data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the bill
+        function show(id) {
+
+            return billsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                billsUpdate.bill = data;
+                return billsUpdate.bill;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
 })();
