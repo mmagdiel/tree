@@ -1,7 +1,7 @@
 <navbar-directive></navbar-directive>
 
 <div flex layout="row">
-	<sidenav-directive></sidenav-directive>
+	<sidenav-directive ng-if="dynamicsHome.bandera"></sidenav-directive>
 
 	<tree-directive flex nodes="dynamicsHome.nodes" relations="dynamicsHome.relations"></tree-directive>
 </div>

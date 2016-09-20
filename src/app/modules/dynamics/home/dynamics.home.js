@@ -7,8 +7,13 @@
         .controller('dynamicsHomeCtrl', dynamicsHomeCtrl);
 
     // Define the staticsHomeCtrl
-    function dynamicsHomeCtrl() {
-
+    function dynamicsHomeCtrl($scope) {
+		$scope.bandera = false;
+		
+		$scope.$on("user.login", function(event, success, data){
+			console.log("user.login");
+			if (data.role == "admin") $scope.bandera = false;  
+		})
         // Inject with ng-annotate
         "ngInject";
 

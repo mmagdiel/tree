@@ -9,8 +9,11 @@
 
 
     // Define the staticsHomeCtrl
-    function estaticoHomeCtrl() {
-
+    function estaticoHomeCtrl($scope, $state) {
+		
+		$scope.$on("user.login", function(event, success, data){
+			if (success == true ) $state.go('dynamics-home')  
+		})
 
         // Inject with ng-annotate
         "ngInject";
