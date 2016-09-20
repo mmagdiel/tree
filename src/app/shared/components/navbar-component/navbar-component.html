@@ -1,22 +1,22 @@
-<md-toolbar md-whiteframe="4" layout="row">
+<md-toolbar class="navbar" md-whiteframe="2" layout="row">
 	<div class="md-toolbar-tools" layout-align="space-around center">
-		<div>
-			{{navbarDirective.title}}
-		</div>
-
+	
+	<!--	<md-button class="md-fab md-hue-2" aria-label="logo">
+		</md-button>
+	-->	
+			<md-icon md-svg-src="assets/img/index.svg" style="width: 50px; height: 50px;"></md-icon>
+			
 		<div ng-if="navbarDirective.role">
 			{{navbarDirective.role}}
 		</div>
 		 
 		<div ng-show="navbarDirective.guest">
-			<md-input-container>
-				<label>Username</label>
+			<md-input-container md-no-float>
 				<md-icon class="fa fa-user"></md-icon>
 				<input ng-model="navbarDirective.form.username" type="text" placeholder="Username">
 			</md-input-container>
 			
-			<md-input-container>
-				<label>Password</label>
+			<md-input-container md-no-float>
 				<md-icon class="fa fa-key"></md-icon>
 				<input ng-model="navbarDirective.form.password" type="text" placeholder="Password">
 			</md-input-container>
