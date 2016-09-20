@@ -3,11 +3,14 @@
 <div flex layout="row">
 	<sidenav-directive></sidenav-directive>
 	
-	<md-virtual-repeat-container id="vertical">
-		<div md-virtual-repeat="item in accountsIndex.accounts" md-on-demand class="repeat-item" flex>
-			{{item.id}}
-		</div>
-	</md-virtual-repeat-container>
+	<md-content>
+		<md-list flex>
+			<md-list-item class="md-3-line" ng-repeat="item in accountsIndex.accounts" ng-click="null">
+				<p>{{item.id}}</p>
+				<p>{{item.username}}</p>
+			</md-list-item>
+		</md-list>
+	</md-content>
 </div>
 
 <footer-directive></footer-directive>
