@@ -59,7 +59,7 @@
 
 
     // Define the accountsFactory
-    function accountsFactory($resource) {
+    function accountsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
@@ -67,7 +67,11 @@
 
 
         // Define resource instance
-        var resource = new $resource("accounts");
+        var resource = new $resource("accounts", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the account factory object to return
@@ -249,223 +253,6 @@
         |--------------------------------------------------------------------------
         |
         | Declaring all functions used in the accountssValidator
-        |
-        */
-
-
-
-        // Function that pass the array that will create the model validator
-        function getValidators() {
-
-            // Object to pass with validation rules
-            return {};
-
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the amountsFactory to the app
-    angular
-        .module('y')
-        .factory('amountsFactory', amountsFactory);
-
-
-    // Define the amountsFactory
-    function amountsFactory($http) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define base URI for amount amount
-        var amountBase = '/api/amounts/';
-
-
-        // Define the amount factory object to return
-        var amountsFactory = {
-
-            index: index,
-            show: show,
-            store: store,
-            update: update,
-            destroy: destroy,
-
-        };
-
-
-        // Return the amount factory
-        return amountsFactory;
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the amountsFactory
-        |
-        */
-
-
-        // Display a listing of amounts.
-        function index() {
-
-            return $http.get(amountBase)
-                        .then(function(data){ return data; });
-        }
-
-
-        // Display a specified amount.
-        function show(id) {
-
-            return $http.get(amountBase + id)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Store a newly created amount in storage.
-        function store(data) {
-
-            return $http.post(amountBase, data)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Update the specified amount in storage.
-        function update(id, data) {
-
-            return $http.put(amountBase + id, data)
-                        .then(function(data){ return data.data; });
-        }
-
-
-        // Remove the specified amount from storage.
-        function destroy(id) {
-
-            return $http.delete(amountBase + id)
-                        .then(function(data){ return data.data; });
-        }
-
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the amountsRoute to the app
-	angular
-	    .module('y')
-	    .run(amountsRoute);
-
-
-	// Define the amountsRoute
-    function amountsRoute(routerHelper) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-    	// Intercept all the states and add them to the routing
-    	routerHelper.configureStates(getStates());
-    }
-
-
-    // Define the getStates
-    function getStates() {
-
-		return [{
-
-		    state: 'amounts-index',
-		    config: {
-		        url: '/amounts',
-		        templateUrl: 'app/modules/amounts/index/amounts.index.html',
-		        controller: 'amountsIndexCtrl',
-		        controllerAs: 'amountsIndex'
-		    }
-		}, {
-		    state: 'amounts-store',
-		    config: {
-		        url: '/amounts/store',
-		        templateUrl: 'app/modules/amounts/store/amounts.store.html',
-		        controller: 'amountsStoreCtrl',
-		        controllerAs: 'amountsStore'
-		    }
-		}, {
-		    state: 'amounts-show',
-		    config: {
-		        url: '/amounts/:id',
-		        templateUrl: 'app/modules/amounts/show/amounts.show.html',
-		        controller: 'amountsShowCtrl',
-		        controllerAs: 'amountsShow'
-		    }
-		}, {
-		    state: 'amounts-update',
-		    config: {
-		        url: '/amounts/:id/update',
-		        templateUrl: 'app/modules/amounts/update/amounts.update.html',
-		        controller: 'amountsUpdateCtrl',
-		        controllerAs: 'amountsUpdate'
-		    }
-		}, {
-		    state: 'amounts-destroy',
-		    config: {
-		        url: '/amounts/:id/delete',
-		        templateUrl: 'app/modules/amounts/destroy/amounts.destroy.html',
-		        controller: 'amountsDestroyCtrl',
-		        controllerAs: 'amountsDestroy'
-		    }
-		}];
-	}
-
-})();
-
-(function() {
-
-    'use strict';
-
-    // Pass the amountssValidator to the app
-    angular
-    .module('y')
-        .run(amountssValidator);
-
-
-    // Define the amountssValidator
-    function amountssValidator(validatorHelper) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
-
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the amountssValidator
         |
         */
 
@@ -683,6 +470,223 @@
         |--------------------------------------------------------------------------
         |
         | Declaring all functions used in the advertisementssValidator
+        |
+        */
+
+
+
+        // Function that pass the array that will create the model validator
+        function getValidators() {
+
+            // Object to pass with validation rules
+            return {};
+
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsFactory to the app
+    angular
+        .module('y')
+        .factory('amountsFactory', amountsFactory);
+
+
+    // Define the amountsFactory
+    function amountsFactory($http) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define base URI for amount amount
+        var amountBase = '/api/amounts/';
+
+
+        // Define the amount factory object to return
+        var amountsFactory = {
+
+            index: index,
+            show: show,
+            store: store,
+            update: update,
+            destroy: destroy,
+
+        };
+
+
+        // Return the amount factory
+        return amountsFactory;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsFactory
+        |
+        */
+
+
+        // Display a listing of amounts.
+        function index() {
+
+            return $http.get(amountBase)
+                        .then(function(data){ return data; });
+        }
+
+
+        // Display a specified amount.
+        function show(id) {
+
+            return $http.get(amountBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Store a newly created amount in storage.
+        function store(data) {
+
+            return $http.post(amountBase, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Update the specified amount in storage.
+        function update(id, data) {
+
+            return $http.put(amountBase + id, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Remove the specified amount from storage.
+        function destroy(id) {
+
+            return $http.delete(amountBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsRoute to the app
+	angular
+	    .module('y')
+	    .run(amountsRoute);
+
+
+	// Define the amountsRoute
+    function amountsRoute(routerHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+    	// Intercept all the states and add them to the routing
+    	routerHelper.configureStates(getStates());
+    }
+
+
+    // Define the getStates
+    function getStates() {
+
+		return [{
+
+		    state: 'amounts-index',
+		    config: {
+		        url: '/amounts',
+		        templateUrl: 'app/modules/amounts/index/amounts.index.html',
+		        controller: 'amountsIndexCtrl',
+		        controllerAs: 'amountsIndex'
+		    }
+		}, {
+		    state: 'amounts-store',
+		    config: {
+		        url: '/amounts/store',
+		        templateUrl: 'app/modules/amounts/store/amounts.store.html',
+		        controller: 'amountsStoreCtrl',
+		        controllerAs: 'amountsStore'
+		    }
+		}, {
+		    state: 'amounts-show',
+		    config: {
+		        url: '/amounts/:id',
+		        templateUrl: 'app/modules/amounts/show/amounts.show.html',
+		        controller: 'amountsShowCtrl',
+		        controllerAs: 'amountsShow'
+		    }
+		}, {
+		    state: 'amounts-update',
+		    config: {
+		        url: '/amounts/:id/update',
+		        templateUrl: 'app/modules/amounts/update/amounts.update.html',
+		        controller: 'amountsUpdateCtrl',
+		        controllerAs: 'amountsUpdate'
+		    }
+		}, {
+		    state: 'amounts-destroy',
+		    config: {
+		        url: '/amounts/:id/delete',
+		        templateUrl: 'app/modules/amounts/destroy/amounts.destroy.html',
+		        controller: 'amountsDestroyCtrl',
+		        controllerAs: 'amountsDestroy'
+		    }
+		}];
+	}
+
+})();
+
+(function() {
+
+    'use strict';
+
+    // Pass the amountssValidator to the app
+    angular
+    .module('y')
+        .run(amountssValidator);
+
+
+    // Define the amountssValidator
+    function amountssValidator(validatorHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountssValidator
         |
         */
 
@@ -2831,436 +2835,6 @@
 
   'use strict';
 
-    // Pass the amountsDestroyCtrl to the app
-    angular
-        .module('y')
-        .controller('amountsDestroyCtrl', amountsDestroyCtrl);
-
-
-    // Define the amountsDestroyCtrl
-    function amountsDestroyCtrl(amountsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define amountsDestroy as this for ControllerAs and auto-$scope
-        var amountsDestroy = this;
-
-
-        // Define the amountsDestroy functions and objects that will be passed to the view
-        amountsDestroy.amount = {};                                                 // Object for show the amount
-        amountsDestroy.destroy = destroy;                                         // Delete a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the amountsDestroyCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('amountsDestroyCtrl init');
-        }
-
-
-        // Delete a resource
-        function destroy(id) {
-
-            return amountsFactory.destroy(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-            	// Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the amount
-        function show(id) {
-
-            return amountsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                amountsDestroy.amount = data;
-                return amountsDestroy.amount;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the amountsIndexCtrl to the app
-    angular
-        .module('y')
-        .controller('amountsIndexCtrl', amountsIndexCtrl);
-
-
-    // Define the amountsIndexCtrl
-    function amountsIndexCtrl(amountsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define amountsIndex as this for ControllerAs and auto-$scope
-        var amountsIndex = this;
-
-
-        // Define the amountsIndex functions and objects that will be passed to the view
-        amountsIndex.amounts = [];                                              // Array for list of amounts
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        index();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the amountsIndexCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('amountsIndexCtrl init');
-        }
-
-
-        // Get all amounts.
-        function index() {
-
-            return amountsFactory.index().then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            amountsIndex.amounts = data.data;
-	            return amountsIndex.amounts;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the amountsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('amountsShowCtrl', amountsShowCtrl);
-
-
-    // Define the amountsShowCtrl
-    function amountsShowCtrl(amountsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define amountsShow as this for ControllerAs and auto-$scope
-        var amountsShow = this;
-
-
-        // Define the amountsShow functions and objects that will be passed to the view
-        amountsShow.amount = {};                                                // Object for show the amount
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the amountsShowCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('amountsShowCtrl init');
-        }
-
-
-        // Get the amount
-        function show(id) {
-
-            return amountsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            amountsShow.amount = data;
-	            return amountsShow.amount;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the amountsStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('amountsStoreCtrl', amountsStoreCtrl);
-
-
-    // Define the amountsStoreCtrl
-    function amountsStoreCtrl(amountsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define amountsStore as this for ControllerAs and auto-$scope
-        var amountsStore = this;
-
-
-        // Define the amountsStore functions and objects that will be passed to the view
-        amountsStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the amountsStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('amountsStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return amountsFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the amountsUpdateCtrl to the app
-    angular
-        .module('y')
-        .controller('amountsUpdateCtrl', amountsUpdateCtrl);
-
-
-    // Define the amountsUpdateCtrl
-    function amountsUpdateCtrl(amountsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define amountsUpdate as this for ControllerAs and auto-$scope
-        var amountsUpdate = this;
-
-
-        // Define the amountsUpdate functions and objects that will be passed to the view
-        amountsUpdate.amount = {};                                                  // Object for show the amount
-        amountsUpdate.update = update;                                            // Update a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the amountsUpdateCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('amountsUpdateCtrl init');
-        }
-
-
-        // Delete a resource
-        function update(id, data) {
-
-            return amountsFactory.update(id, data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the amount
-        function show(id) {
-
-            return amountsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                amountsUpdate.amount = data;
-                return amountsUpdate.amount;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the advertisementsDestroyCtrl to the app
     angular
         .module('y')
@@ -3675,6 +3249,436 @@
                 // Assign data to array and return them
                 advertisementsUpdate.advertisement = data;
                 return advertisementsUpdate.advertisement;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsDestroyCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsDestroyCtrl', amountsDestroyCtrl);
+
+
+    // Define the amountsDestroyCtrl
+    function amountsDestroyCtrl(amountsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsDestroy as this for ControllerAs and auto-$scope
+        var amountsDestroy = this;
+
+
+        // Define the amountsDestroy functions and objects that will be passed to the view
+        amountsDestroy.amount = {};                                                 // Object for show the amount
+        amountsDestroy.destroy = destroy;                                         // Delete a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsDestroyCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsDestroyCtrl init');
+        }
+
+
+        // Delete a resource
+        function destroy(id) {
+
+            return amountsFactory.destroy(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+            	// Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the amount
+        function show(id) {
+
+            return amountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                amountsDestroy.amount = data;
+                return amountsDestroy.amount;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsIndexCtrl', amountsIndexCtrl);
+
+
+    // Define the amountsIndexCtrl
+    function amountsIndexCtrl(amountsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsIndex as this for ControllerAs and auto-$scope
+        var amountsIndex = this;
+
+
+        // Define the amountsIndex functions and objects that will be passed to the view
+        amountsIndex.amounts = [];                                              // Array for list of amounts
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsIndexCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsIndexCtrl init');
+        }
+
+
+        // Get all amounts.
+        function index() {
+
+            return amountsFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            amountsIndex.amounts = data.data;
+	            return amountsIndex.amounts;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsShowCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsShowCtrl', amountsShowCtrl);
+
+
+    // Define the amountsShowCtrl
+    function amountsShowCtrl(amountsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsShow as this for ControllerAs and auto-$scope
+        var amountsShow = this;
+
+
+        // Define the amountsShow functions and objects that will be passed to the view
+        amountsShow.amount = {};                                                // Object for show the amount
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsShowCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsShowCtrl init');
+        }
+
+
+        // Get the amount
+        function show(id) {
+
+            return amountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            amountsShow.amount = data;
+	            return amountsShow.amount;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsStoreCtrl', amountsStoreCtrl);
+
+
+    // Define the amountsStoreCtrl
+    function amountsStoreCtrl(amountsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsStore as this for ControllerAs and auto-$scope
+        var amountsStore = this;
+
+
+        // Define the amountsStore functions and objects that will be passed to the view
+        amountsStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+
+            return amountsFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the amountsUpdateCtrl to the app
+    angular
+        .module('y')
+        .controller('amountsUpdateCtrl', amountsUpdateCtrl);
+
+
+    // Define the amountsUpdateCtrl
+    function amountsUpdateCtrl(amountsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define amountsUpdate as this for ControllerAs and auto-$scope
+        var amountsUpdate = this;
+
+
+        // Define the amountsUpdate functions and objects that will be passed to the view
+        amountsUpdate.amount = {};                                                  // Object for show the amount
+        amountsUpdate.update = update;                                            // Update a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the amountsUpdateCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('amountsUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+
+            return amountsFactory.update(id, data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the amount
+        function show(id) {
+
+            return amountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                amountsUpdate.amount = data;
+                return amountsUpdate.amount;
 
             }, function(data) {
 
@@ -7221,7 +7225,7 @@
     }
 
     // Define directive controller
-    function navbarDirectiveController(userService) {
+    function navbarDirectiveController(userService, $resource) {
         var self = this;
         self.title = "Tree";
         self.guest = userService.isGuest;

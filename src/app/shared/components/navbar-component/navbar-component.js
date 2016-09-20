@@ -36,7 +36,7 @@
     }
 
     // Define directive controller
-    function navbarDirectiveController(userService) {
+    function navbarDirectiveController(userService, $resource) {
         var self = this;
         self.title = "Tree";
         self.guest = userService.isGuest;

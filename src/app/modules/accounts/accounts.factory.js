@@ -9,7 +9,7 @@
 
 
     // Define the accountsFactory
-    function accountsFactory($resource) {
+    function accountsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
@@ -17,7 +17,11 @@
 
 
         // Define resource instance
-        var resource = new $resource("accounts");
+        var resource = new $resource("accounts", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the account factory object to return
