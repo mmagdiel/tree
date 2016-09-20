@@ -179,7 +179,7 @@ $app->options("/responses[/{id}]", function($request, $response, $args)
 		$response = $response->withHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
 	}
 
-	$response = $response->withHeader("Access-Control-Allow-Headers", "Content-Type"); // Allow content-type other than defaults
+	$response = $response->withHeader("Access-Control-Allow-Headers", "Content-Type, X-Access-Token"); // Allow content-type other than defaults
 	$response = $response->withHeader("Access-Control-Max-Age", "86400"); // 24hrs for preflight cache
 
 	$response = $response->withStatus(204);
