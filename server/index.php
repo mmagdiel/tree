@@ -29,7 +29,7 @@ $app->add(function($request, $response, $next)
 	}
 
 	// Check for access as long as the current route is not login
-	if($request->getUri()->getPath() != "login")
+	if($request->getUri()->getPath() != "login" && !$request->isOptions())
 	{
 		include_once "models/Account.php";
 
