@@ -10,6 +10,7 @@
         "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/util.js",
         "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/uglify.options.js",
         "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/mapping.js",
-        "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/minify.js"
+        "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/minify.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/vendor/backbone/test/view.js"
     ]
 }

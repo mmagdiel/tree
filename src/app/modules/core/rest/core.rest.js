@@ -1,5 +1,4 @@
 (function(){
-
 	'use strict';
 
 	// Pass the configuration theming to the app

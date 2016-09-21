@@ -1141,6 +1141,46 @@
 
   'use strict';
 
+    // Pass the staticsRoute to the app
+	angular
+	    .module('y')
+	    .run(biodynamicsRoute);
+
+
+	// Define the staticsRoute
+    function biodynamicsRoute(routerHelper) {
+
+
+		// Inject with ng-annotate
+		"ngInject";
+
+
+    	// Intercept all the states and add them to the routing
+    	routerHelper.configureStates(getStates());
+    }
+
+
+    // Define the getStates
+    function getStates() {
+
+		return [{
+
+		    state: 'biodynamics-home',
+		    config: {
+		        url: '/biodynamics',
+		        templateUrl: 'app/modules/biodynamics/home/biodynamics.home.html',
+		        controller: 'biodynamicsHomeCtrl',
+		        controllerAs: 'biodynamicsHome'
+		    }
+		}];
+	}
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the documentsFactory to the app
     angular
         .module('y')
@@ -4551,6 +4591,69 @@
 
 })();
 
+(function() {
+  'use strict';
+
+    // Pass the staticsHomeCtrl to the app
+    angular
+        .module('y')
+        .controller('biodynamicsHomeCtrl', biodynamicsHomeCtrl);
+
+    // Define the staticsHomeCtrl
+    function biodynamicsHomeCtrl() {
+        // Inject with ng-annotate
+        "ngInject";
+
+        // Define staticsHome as this for ControllerAs and auto-$scope
+        var biodynamicsHome = this;
+            biodynamicsHome.title =    "Tree app";
+
+            biodynamicsHome.nodes = [
+                {data: {id: "a", name:"1"}},
+                {data: {id: "b", name:"2"}},
+                {data: {id: "c", name:"3"}},
+                {data: {id: "d", name:"4"}},
+                {data: {id: "e", name:"5"}},
+                {data: {id: "f", name:"6"}},
+                {data: {id: "g", name:"7"}}
+            ];
+
+            biodynamicsHome.relations = [
+                {
+                    data: {
+                        source: "a",
+                        target: "b"
+                    }
+                },{
+                    data: {
+                        source: "a",
+                        target: "c"
+                    }
+                },{
+                    data: {
+                        source: "b",
+                        target: "d"
+                    }
+                },{
+                    data: {
+                        source: "b",
+                        target: "e"
+                    }
+                },{
+                    data: {
+                        source: "c",
+                        target: "f"
+                    }
+                },{
+                    data: {
+                        source: "c",
+                        target: "g"
+                    }
+                }
+            ];
+    }
+})();
+
 // (function(){
 
 // 	'use strict';
@@ -4622,7 +4725,6 @@
 // })();
 
 (function(){
-
 	'use strict';
 
 	// Pass the configuration theming to the app
@@ -5260,13 +5362,7 @@
         .controller('dynamicsHomeCtrl', dynamicsHomeCtrl);
 
     // Define the staticsHomeCtrl
-    function dynamicsHomeCtrl($scope) {
-		$scope.bandera = false;
-		
-		$scope.$on("user.login", function(event, success, data){
-			console.log("user.login");
-			if (data.role == "admin") $scope.bandera = false;  
-		})
+    function dynamicsHomeCtrl() {
         // Inject with ng-annotate
         "ngInject";
 
@@ -5334,7 +5430,14 @@
     function estaticoHomeCtrl($scope, $state) {
 		
 		$scope.$on("user.login", function(event, success, data){
-			if (success == true ) $state.go('dynamics-home')  
+			if (success == true ){
+				if( data.role == "admin" ){
+					$state.go('biodynamics-home')
+				} 
+				else{
+					$state.go('dynamics-home')
+				}
+			} 
 		})
 
         // Inject with ng-annotate

@@ -12,7 +12,14 @@
     function estaticoHomeCtrl($scope, $state) {
 		
 		$scope.$on("user.login", function(event, success, data){
-			if (success == true ) $state.go('dynamics-home')  
+			if (success == true ){
+				if( data.role == "admin" ){
+					$state.go('biodynamics-home')
+				} 
+				else{
+					$state.go('dynamics-home')
+				}
+			} 
 		})
 
         // Inject with ng-annotate
