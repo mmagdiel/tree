@@ -9,8 +9,18 @@
 
 
     // Define the staticsHomeCtrl
-    function estaticoHomeCtrl() {
-
+    function estaticoHomeCtrl($scope, $state) {
+		
+		$scope.$on("user.login", function(event, success, data){
+			if (success == true ){
+				if( data.role == "admin" ){
+					$state.go('biodynamics-home')
+				} 
+				else{
+					$state.go('dynamics-home')
+				}
+			} 
+		})
 
         // Inject with ng-annotate
         "ngInject";

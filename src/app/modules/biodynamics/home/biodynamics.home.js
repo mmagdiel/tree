@@ -4,18 +4,18 @@
     // Pass the staticsHomeCtrl to the app
     angular
         .module('y')
-        .controller('dynamicsHomeCtrl', dynamicsHomeCtrl);
+        .controller('biodynamicsHomeCtrl', biodynamicsHomeCtrl);
 
     // Define the staticsHomeCtrl
-    function dynamicsHomeCtrl() {
+    function biodynamicsHomeCtrl() {
         // Inject with ng-annotate
         "ngInject";
 
         // Define staticsHome as this for ControllerAs and auto-$scope
-        var dynamicsHome = this;
-            dynamicsHome.title =    "Tree app";
+        var biodynamicsHome = this;
+            biodynamicsHome.title =    "Tree app";
 
-            dynamicsHome.nodes = [
+            biodynamicsHome.nodes = [
                 {data: {id: "a", name:"1"}},
                 {data: {id: "b", name:"2"}},
                 {data: {id: "c", name:"3"}},
@@ -25,7 +25,7 @@
                 {data: {id: "g", name:"7"}}
             ];
 
-            dynamicsHome.relations = [
+            biodynamicsHome.relations = [
                 {
                     data: {
                         source: "a",
