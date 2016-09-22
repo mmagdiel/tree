@@ -29,10 +29,10 @@ Class Instapago
 	public function createPayment(Int $Amount, stdClass $info)
 	{
 		$fields = (Object) [
-			"KeyID" => $this->key,
+			"KeyId" => $this->key,
 			"PublicKeyId" => $this->public_key,
 			"Amount" => $Amount,
-			"Description"  => $info->description,
+			"Description"  => $info->Description,
 			"StatusId" => $info->StatusId,
 			"CardHolder"=> $info->CardHolder,
 			"CardHolderId"=> $info->CardHolderId,
@@ -41,7 +41,56 @@ Class Instapago
 			"ExpirationDate" => $info->ExpirationDate
 		];
 
-		$this->send("payment", $fields);
+		$this->send("payment", $fields, "POST");
+	}
+
+	/**
+	 * Completes a payment in pre-authorization state
+	 * 
+	 * @param  stdClass $info The object containing the required information for the payment
+	 */
+	public function completePayment(stdClass $info)
+	{
+		$fields = (Object) [
+			"KeyId" => $this->key,
+			"PublicKeyId" => $this->public_key,
+			"Id" => $info->Id,
+			"Amount" => $info->Amount
+		];
+
+		$this->send("complete", $fields, "POST");
+	}
+
+	/**
+	 * Cancels a payment in pre-authorization state
+	 * 
+	 * @param  String $id The id of the payment in pre-authorization state
+	 */
+	public function nullifyPayment(String $id)
+	{
+		$fields = (Object) [
+			"KeyId" => $this->key,
+			"PublicKeyId" => $this->public_key,
+			"Id" => $id
+		];
+
+		$this->send("payment", $fields, "DELETE");
+	}
+
+	/**
+	 * Fetch information about a payment in either state
+	 * 
+	 * @param  String $id The id of the payment
+	 */
+	public function getPayment(String $id)
+	{
+		$fields = (Object) [
+			"KeyId" => $this->key,
+			"PublicKeyId" => $this->public_key,
+			"Id" => $id
+		];
+
+		$this->send("payment", $fields, "GET");
 	}
 
 	/**
@@ -62,18 +111,29 @@ Class Instapago
 	 * @param  String   $action The name of the action in api
 	 * @param  stdClass $fields The information fields that are being sent in post
 	 */
-	private function send(String $action, stdClass $fields)
+	private function send(String $action, stdClass $fields, String $method)
 	{
 		$query = http_build_query($fields);
 
 		$connection = curl_init();
 
-		curl_setopt_array($connection,[
-			CURLOPT_URL => $this->createUrl($action),
-			CURLOPT_POST => 1,
-			CURLOPT_POSTFIELDS => $query,
-			CURLOPT_RETURNTRANSFER => true
-		]);
+		if($method !== "GET")
+		{
+			curl_setopt_array($connection, [
+				CURLOPT_URL => $this->createUrl($action),
+				CURLOPT_CUSTOMREQUEST => $method,
+				CURLOPT_POSTFIELDS => $query,
+				CURLOPT_RETURNTRANSFER => true
+			]);
+		}
+
+		else
+		{
+			curl_setopt_array($connection, [
+				CURLOPT_URL => $this->createUrl($action) . "?" . $query,
+				CURLOPT_RETURNTRANSFER => true
+			]);
+		}
 
 		$this->result = curl_exec($connection);
 
