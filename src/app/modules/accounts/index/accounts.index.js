@@ -48,7 +48,9 @@
         */
 
 		accountsIndex.go = function(state,id){
-			$state.go(state,id);
+			$state.go(state,{
+				id: id
+			});
 		}
 
         // Sample for init function

@@ -36,6 +36,7 @@
 
         initLog();
         show($stateParams.id);
+		console.log($stateParams.id)
 
 
         /*
