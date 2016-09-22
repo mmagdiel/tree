@@ -2550,7 +2550,7 @@
 
 
     // Define the accountsIndexCtrl
-    function accountsIndexCtrl(accountsFactory) {
+    function accountsIndexCtrl(accountsFactory,$state) {
 
 
         // Inject with ng-annotate
@@ -2577,6 +2577,7 @@
 
         initLog();
         index();
+		
 
         /*
         |--------------------------------------------------------------------------
@@ -2587,6 +2588,9 @@
         |
         */
 
+		accountsIndex.go = function(state,id){
+			$state.go(state,id);
+		}
 
         // Sample for init function
         function initLog() {
