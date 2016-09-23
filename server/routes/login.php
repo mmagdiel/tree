@@ -12,16 +12,11 @@ $app->post("/login", function($request, $response)
 		"password" => $data["password"]
 	]);
 
-	$result = (Object) [
-		"passed" => false,
-		"data" => (Object) []
-	];
+	$result = [];
 
 	if($model)
 	{
-		$result->passed = true;
-
-		$result->data = (Object) [
+		$result = (Object) [
 			"username" => $model[0]["username"],
 			"user_id" => $model[0]["user_id"],
 			"access_token" => $model[0]["access_token"],

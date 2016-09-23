@@ -59,9 +59,12 @@
 
             login.save(null, data)
                 .then(function(response){
-                    if(response.status == 200 && response.data.passed)
+                    var objectType = Object.prototype.toString.call(response.data);
+
+                    // Server returns array if login is failed, and returns object if login is successful
+                    if(response.status == 200 && objectType == "[object Object]")
                     {
-                        userService.$user = response.data.data;
+                        userService.$user = response.data;
                         userService.isGuest = false;
                         success = true;
 
