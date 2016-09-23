@@ -48,8 +48,10 @@
                     console.error(err);
                 }
 
-                self.guest = !success;
-                self.role = userService.getRole();
+                if(success){
+                    self.guest = !success;
+                    self.role = userService.getRole();
+                }
             });
         };
     }
