@@ -1,16 +1,19 @@
 <navbar-directive></navbar-directive>
 
-<div flex layout="row">
+<div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<h1>Account index view</h1>
-	<md-content>
-		<md-list flex>
-			<md-list-item class="md-3-line" ng-repeat="item in accountsIndex.accounts" ng-click="null">
-				<p>{{item.id}}</p>
-				<p>{{item.username}}</p>
-			</md-list-item>
-		</md-list>
-	</md-content>
+	<div>
+		<h1>account index view</h1>
+		<md-content>
+			<md-list flex>
+				<md-list-item class="md-3-line" ng-repeat="item in accountsIndex.accounts" ng-click="accountsIndex.go('accounts-show',item.id)">
+					<p>{{item.id}}</p>
+					<p>{{item.username}}</p>
+					<p>{{item.role}}</p>
+				</md-list-item>
+			</md-list>
+		</md-content>
+	</div>
 </div>
 
 <footer-directive></footer-directive>
