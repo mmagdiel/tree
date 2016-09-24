@@ -68,7 +68,7 @@
                         userService.isGuest = false;
                         success = true;
 
-                        $rootScope.$broadcast("user.login", success, response.data);
+                        $rootScope.$broadcast("user.login", success, userService.$user);
                     }
 
                     cb(null, success);
