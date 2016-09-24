@@ -6,6 +6,6 @@
             .module('core.rest');
       // Define global domain for resource
       app.config(["ngRestful", function($restful){
-        $restful.setDomain("http://192.168.1.106/tree/server");
+        $restful.setDomain("http://unn.com.ve/server");
       }]);
 })();
