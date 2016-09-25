@@ -10,5 +10,15 @@
 		'core.cookie',
 		'ngMaterial',
 		'ui.router'
-	]);
+	])
+	.controller("mainController", ["$scope", "$state", "userService", "$location", function($scope, $state, $user, $location){
+		if(!$user.hasCookie()){
+			console.trace();
+			$location.path($state.href("/"));
+		}
+
+		$scope.$on("user.logout", function(){
+			$state.go("estatico-home");
+		});
+	}])
 })();

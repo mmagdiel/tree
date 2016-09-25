@@ -26,11 +26,13 @@
             isGuest: true,
             init: init,
             login: login,
+            hasCookie: hasCookie,
             getId: getId,
             getToken: getToken,
             getName: getName,
             getRole: getRole,
-            cookieLogin: cookieLogin
+            cookieLogin: cookieLogin,
+            logout: logout
         };
 
         // Return the user factory
@@ -78,6 +80,12 @@
                 .catch(function(err){
                     cb(err, false);
                 });
+        }
+
+        // Checks if the current session has a cookie stored
+        function hasCookie()
+        {
+            return ($cookies.get("access_token") !== undefined);
         }
 
         // Gets the id of the current logged user
@@ -139,6 +147,30 @@
             else{
                 cb(null, false, null);
             }
+        }
+
+        // Restore the users's data to default
+        function restoreUser(){
+            userService.$user = {
+                id: null,
+                username: null,
+                access_token: null,
+                role: null
+            };
+        }
+
+        // Logout the current user
+        function logout(){
+            restoreUser();
+
+            // Remove the cookie token if it's stored
+            if($cookies.get("access_token")){
+                $cookies.remove("access_token");
+            }
+
+            userService.isGuest = true;
+
+            $rootScope.$broadcast("user.logout");
         }
     }
 })();

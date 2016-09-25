@@ -55,7 +55,8 @@
 			}
 		}
 		
-        // Do stuff...
+        this.logout = function(){
+            userService.logout()
+        }
     }
-
 })();
