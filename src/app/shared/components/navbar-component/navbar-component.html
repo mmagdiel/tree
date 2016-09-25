@@ -13,13 +13,15 @@
 		<div ng-show="navbarDirective.guest">
 			<md-input-container md-no-float>
 				<md-icon class="fa fa-user"></md-icon>
-				<input ng-model="navbarDirective.form.username" type="text" placeholder="Username">
+				<input ng-disabled="navbarDirective.disable" ng-model="navbarDirective.form.username" type="text" placeholder="Username">
 			</md-input-container>
 			
 			<md-input-container md-no-float>
 				<md-icon class="fa fa-key"></md-icon>
-				<input ng-model="navbarDirective.form.password" type="text" placeholder="Password">
+				<input ng-disabled="navbarDirective.disable" ng-model="navbarDirective.form.password" type="text" placeholder="Password">
 			</md-input-container>
+
+			<md-checkbox ng-model="navbarDirective.form.cookie" aria-label="do not sign out"></md-checkbox>
 
 			<md-button class="md-raised md-accent" ng-click="navbarDirective.login()">Login</md-button>
 			<md-button class="md-raised md-warn" ui-sref="accounts-store">Register</md-button>

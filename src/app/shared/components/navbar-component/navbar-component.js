@@ -36,11 +36,17 @@
     }
 
     // Define directive controller
-    function navbarDirectiveController(userService, $resource) {
+    function navbarDirectiveController(userService, $scope) {
         var self = this;
         self.title = "Tree";
         self.guest = userService.isGuest;
         self.role = userService.getRole();
+
+        self.disable = true;
+
+        userService.cookieLogin(function(){
+            self.disable = false;
+        });
 
         self.login = function(){
             userService.login(self.form, function(err, success){
@@ -54,5 +60,12 @@
                 }
             });
         };
+
+        $scope.$on("user.login", function(ev, success, data){
+           if(success){
+                self.guest = !success;
+                self.role = userService.getRole();
+            }
+        });
     }
 })();
