@@ -119,31 +119,28 @@
 
                 var success = false;
 
-                if(data.access_token){
+                login.save(null, data)
+                    .then(function(response){
+                        if(response.status == 200 && response.data.passed)
+                        {
+                            userService.$user = response.data.data;
+                            userService.isGuest = false;
+                            success = true;
 
-                    login.save(null, data)
-                        .then(function(response){
-                            if(response.status == 200 && response.data.passed)
-                            {
-                                userService.$user = response.data.data;
-                                userService.isGuest = false;
-                                success = true;
+                            $rootScope.$broadcast("user.login", success, userService.$user);
+                        }
 
-                                $rootScope.$broadcast("user.login", success, userService.$user);
-                            }
+                        if(cb){
+                            cb(null, success, userService.$user);
+                        }
+                    })
+                    .catch(function(err){
+                        console.error(err);
+                    })
 
-                            if(cb){
-                                cb(null, success, userService.$user);
-                            }
-                        })
-                        .catch(function(err){
-                            console.error(err);
-                        })
-                }
-
-                else{
-                    cb(null, success, null);
-                }
+            }
+            else{
+                cb(null, false, null);
             }
         }
     }
