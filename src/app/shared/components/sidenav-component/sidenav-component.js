@@ -37,8 +37,24 @@
     }
 
     // Define directive controller
-    function sidenavDirectiveController() {
-
+    function sidenavDirectiveController(userService, $state) {
+		
+		this.home = function(){
+			console.log("hola")
+			var self = this;
+        	self.guest = userService.isGuest;
+        	self.role = userService.getRole();
+			if(self.guest = "false"){
+				if(self.role = "admin"){
+					$state.go('biodynamics-home');
+				}else{
+					$state.go('dynamics-home');
+				}
+			}else{
+				$state.go('estatico-home');
+			}
+		}
+		
         // Do stuff...
     }
 

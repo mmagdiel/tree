@@ -5,16 +5,8 @@
       md-is-locked-open="$mdMedia('gt-md')"
       md-whiteframe="4">
       <div layout="column" layout-padding class="all">
-         <md-button class="md-raised" ui-sref="accounts-index">Accounts</md-button>
-         <md-button class="md-raised" ui-sref="advertisements-index">Advertisements</md-button>
-         <md-button class="md-raised" ui-sref="articles-index">Articles</md-button>
-         <md-button class="md-raised" ui-sref="bills-index">Bills</md-button>
-         <md-button class="md-raised" ui-sref="documents-index">Documents</md-button>
-         <md-button class="md-raised" ui-sref="tickets-index">Tickets</md-button>
-         <md-button class="md-raised" ui-sref="users-index">User</md-button>
-         <md-button class="md-raised" ui-sref="statics-index">Static</md-button>
-         <md-button class="md-raised" ui-serf="responses-index">Response</md-button>
-         <md-button class="md-raised" ui-serf="amounts-index">Amount</md-button>
+         <md-button class="md-raised" ng-click="sidenavDirective.home()">Home</md-button>
+         <md-button class="md-raised" ng-click="">Loggon</md-button>
       </div>
    </md-sidenav>  
 </section>
