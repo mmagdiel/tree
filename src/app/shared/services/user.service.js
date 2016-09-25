@@ -116,24 +116,31 @@
 
                 var success = false;
 
-                login.save(null, data)
-                    .then(function(response){
-                        if(response.status == 200 && response.data.passed)
-                        {
-                            userService.$user = response.data.data;
-                            userService.isGuest = false;
-                            success = true;
+                if(data.access_token){
 
-                            $rootScope.$broadcast("user.login", success, userService.$user);
-                        }
+                    login.save(null, data)
+                        .then(function(response){
+                            if(response.status == 200 && response.data.passed)
+                            {
+                                userService.$user = response.data.data;
+                                userService.isGuest = false;
+                                success = true;
 
-                        if(cb){
-                            cb(null, success, userService.$user);
-                        }
-                    })
-                    .catch(function(err){
-                        console.error(err);
-                    })
+                                $rootScope.$broadcast("user.login", success, userService.$user);
+                            }
+
+                            if(cb){
+                                cb(null, success, userService.$user);
+                            }
+                        })
+                        .catch(function(err){
+                            console.error(err);
+                        })
+                }
+
+                else{
+                    cb(null, success, null);
+                }
             }
         }
     }
