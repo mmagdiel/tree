@@ -7,13 +7,25 @@ $app->post("/login", function($request, $response)
 {
 	$data = $request->getParsedBody();
 
-	$model = Account::model()->findByAttributes([
-		"username" => $data["username"],
-		"password" => $data["password"]
-	]);
+	$criteria = [];
+
+	if(isset($data["access_token"]))
+	{
+		$criteria["access_token"] = $data["access_token"];
+	}
+
+	if(isset($data["username"]) && isset($data["password"]))
+	{
+		$criteria["username"] = $data["username"];
+		$criteria["password"] = $data["password"];
+	}
+
+	// Find account with the given criteria from post
+	$model = Account::model()->findByAttributes($criteria);
 
 	$result = [];
 
+	// Fill response data if account was found in Database
 	if($model)
 	{
 		$result = (Object) [

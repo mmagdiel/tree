@@ -9,7 +9,7 @@
 
 
     // Define the userService
-    function userService($resource, $rootScope) {
+    function userService($resource, $rootScope, $cookies) {
 
 
         // Inject with ng-annotate
@@ -29,7 +29,8 @@
             getId: getId,
             getToken: getToken,
             getName: getName,
-            getRole: getRole
+            getRole: getRole,
+            cookieLogin: cookieLogin
         };
 
         // Return the user factory
@@ -68,6 +69,10 @@
                         userService.isGuest = false;
                         success = true;
 
+                        if(data.cookie){
+                            storeCookie("access_token", response.data.data.access_token);
+                        }
+
                         $rootScope.$broadcast("user.login", success, userService.$user);
                     }
 
@@ -96,6 +101,50 @@
         // Gets the username of the current logged user
         function getRole(){
             return userService.$user.role;
+        }
+
+        // Store a cookie value
+        function storeCookie(key, value){
+            $cookies.put(key, value);
+        }
+
+        // Try to login through cookie if defined
+        function cookieLogin(cb){
+            if($cookies.get("access_token")){
+                var login = new $resource("login");
+
+                var data = {
+                    access_token: $cookies.get("access_token")
+                }
+
+                var success = false;
+
+                if(data.access_token){
+
+                    login.save(null, data)
+                        .then(function(response){
+                            if(response.status == 200 && response.data.passed)
+                            {
+                                userService.$user = response.data.data;
+                                userService.isGuest = false;
+                                success = true;
+
+                                $rootScope.$broadcast("user.login", success, userService.$user);
+                            }
+
+                            if(cb){
+                                cb(null, success, userService.$user);
+                            }
+                        })
+                        .catch(function(err){
+                            console.error(err);
+                        })
+                }
+
+                else{
+                    cb(null, success, null);
+                }
+            }
         }
     }
 })();
