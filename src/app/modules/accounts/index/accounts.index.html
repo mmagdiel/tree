@@ -2,8 +2,10 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div>
-		<h1>account index view</h1>
+	<div layout="row">
+	  <div flex="10"></div>
+	  <div flex="90">
+		<h1>account index</h1>
 		<md-content>
 			<md-list flex>
 				<md-list-item class="md-3-line" ng-repeat="item in accountsIndex.accounts" ng-click="accountsIndex.go('accounts-show',item.id)">
@@ -13,6 +15,7 @@
 				</md-list-item>
 			</md-list>
 		</md-content>
+	  </div>
 	</div>
 </div>
 

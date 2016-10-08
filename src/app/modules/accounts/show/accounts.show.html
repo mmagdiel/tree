@@ -2,16 +2,30 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div>
+	<div layout="row">
+	  <div flex="10"></div>
+	  <div flex="90">
 		<h1>account show view</h1>
-		<div>
-			<p>{{accountsShow.account.id}}</p>
-			<p>{{accountsShow.account.username}}</p>
-			<p>{{accountsShow.account.role}}</p>
-			<p>{{accountsShow.account.create_at}}</p>
-			<p>{{accountsShow.account.update}}</p>
-			<p>{{accountsShow.account.user_id}}</p>
-		</div>
+		
+		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{accountsShow.account.username}}</span>
+            <p> Role: {{accountsShow.account.role}}</p>
+			<p>Create at: {{accountsShow.account.create_at}}</p>
+			<p>Update at:{{accountsShow.account.update_at}}</p>
+			<p>User id: {{accountsShow.account.user_id}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised" ng-click="accountsShow.go('accounts-update',accountsShow.account.id)">Update</md-button>
+          <md-button class="md-raised" ng-click="accountsShow.go('accounts-destroy',accountsShow.account.id)">Destroy</md-button>
+        </md-card-actions>
+        
+      </md-card>					
+					
+	  </div>
 	</div>
 </div>
 

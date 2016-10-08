@@ -42,6 +42,14 @@
 		        controllerAs: 'accountsStore'
 		    }
 		}, {
+		    state: 'accounts-stores',
+		    config: {
+		        url: '/accounts/stores',
+		        templateUrl: 'app/modules/accounts/stores/accounts.stores.html',
+		        controller: 'accountsStoresCtrl',
+		        controllerAs: 'accountsStores'
+		    }
+		}, {
 		    state: 'accounts-show',
 		    config: {
 		        url: '/accounts/:id',

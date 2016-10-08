@@ -1,13 +1,13 @@
 <navbar-directive></navbar-directive>
 
 <div layout="row" layout-aling="center">
-<sidenav-directive></sidenav-directive>
+	<sidenav-directive></sidenav-directive>
 	<div flex="5"></div>
-	<div flex=>
-		<h1>account update view</h1>
+	<div flex>
+		<h2>Registro de Cuentas</h2>
 		<div>
 			<md-input-container>
-				<label>Username </label>
+				<label>Username</label>
 				<input type="text">
 			</md-input-container>
 		</div>
@@ -21,6 +21,12 @@
 			<md-input-container>
 				<label>Re-Password</label>
 				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			He leido todos los terminos y consiciones
+			<md-input-container>
+				<md-switch ng-model="bandera">Conforme: {{bandera ? "No": "Si"}}</md-switch>
 			</md-input-container>
 		</div>
 	</div>
