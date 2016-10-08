@@ -56,152 +56,16 @@
 		'core.cookie',
 		'ngMaterial',
 		'ui.router'
-	]);
-})();
+	])
+	.controller("mainController", ["$scope", "$state", "userService", "$location", function($scope, $state, $user, $location){
+		if(!$user.hasCookie()){
+			$location.path($state.href("/"));
+		}
 
-(function() {
-
-  'use strict';
-
-    // Pass the userService to the app
-    angular
-        .module('y')
-        .factory('userService', userService);
-
-
-    // Define the userService
-    function userService($resource, $rootScope, $cookies) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-        // Define the user factory object to return
-        var userService = {
-            $user: {
-                id: null,
-                username: null,
-                access_token: null,
-                role: null
-            },
-            isGuest: true,
-            init: init,
-            login: login,
-            getId: getId,
-            getToken: getToken,
-            getName: getName,
-            getRole: getRole,
-            cookieLogin: cookieLogin
-        };
-
-        // Return the user factory
-        return userService;
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the userService
-        |
-        */
-
-
-        // Display a listing of user.
-        function init() {
-            console.log('Init user factory');
-        }
-
-        // Logins a current user
-        function login(data, cb = null){
-            var login = new $resource("login");
-
-            var success = false;
-
-            login.save(null, data)
-                .then(function(response){
-                    if(response.status == 200 && response.data.passed)
-                    {
-                        userService.$user = response.data.data;
-                        userService.isGuest = false;
-                        success = true;
-
-                        if(data.cookie){
-                            storeCookie("access_token", response.data.data.access_token);
-                        }
-
-                        $rootScope.$broadcast("user.login", success, userService.$user);
-                    }
-
-                    cb(null, success);
-                })
-                .catch(function(err){
-                    cb(err, false);
-                });
-        }
-
-        // Gets the id of the current logged user
-        function getId(){
-            return userService.$user.id;
-        }
-
-        // Gets the access_token of the current logged user
-        function getToken(){
-            return userService.$user.access_token;
-        }
-
-        // Gets the username of the current logged user
-        function getName(){
-            return userService.$user.username;
-        }
-
-        // Gets the username of the current logged user
-        function getRole(){
-            return userService.$user.role;
-        }
-
-        // Store a cookie value
-        function storeCookie(key, value){
-            $cookies.put(key, value);
-        }
-
-        // Try to login through cookie if defined
-        function cookieLogin(cb){
-            if($cookies.get("access_token")){
-                var login = new $resource("login");
-
-                var data = {
-                    access_token: $cookies.get("access_token")
-                }
-
-                var success = false;
-
-                login.save(null, data)
-                    .then(function(response){
-                        if(response.status == 200 && response.data.passed)
-                        {
-                            userService.$user = response.data.data;
-                            userService.isGuest = false;
-                            success = true;
-
-                            $rootScope.$broadcast("user.login", success, userService.$user);
-                        }
-
-                        if(cb){
-                            cb(null, success, userService.$user);
-                        }
-                    })
-                    .catch(function(err){
-                        console.error(err);
-                    })
-
-            }
-            else{
-                cb(null, false, null);
-            }
-        }
-    }
+		$scope.$on("user.logout", function(){
+			$state.go("estatico-home");
+		});
+	}])
 })();
 
 (function() {
@@ -2502,234 +2366,176 @@
 
   'use strict';
 
-    // Pass the footerDirective to the app
+    // Pass the userService to the app
     angular
         .module('y')
-        .directive('footerDirective', footerDirective);
+        .factory('userService', userService);
 
 
-    // Define the footerDirective
-    function footerDirective() {
+    // Define the userService
+    function userService($resource, $rootScope, $cookies) {
 
-        // Define directive
-        var directive = {
 
-                restrict: 'EA',
-                templateUrl: 'app/shared/components/footer-component/footer-component.html',
-                scope: {
-                    footerString: '@',                      // Isolated scope string
-                    footerAttribute: '=',                   // Isolated scope two-way data binding
-                    footerAction: '&'                       // Isolated scope action
-                },
-                link: linkFunc,
-                controller: footerDirectiveController,
-                controllerAs: 'footerDirective'
+        // Inject with ng-annotate
+        "ngInject";
+
+        // Define the user factory object to return
+        var userService = {
+            $user: {
+                id: null,
+                username: null,
+                access_token: null,
+                role: null
+            },
+            isGuest: true,
+            init: init,
+            login: login,
+            hasCookie: hasCookie,
+            getId: getId,
+            getToken: getToken,
+            getName: getName,
+            getRole: getRole,
+            cookieLogin: cookieLogin,
+            logout: logout
         };
 
-        // Return directive
-        return directive;
+        // Return the user factory
+        return userService;
 
-        // Define link function
-        function linkFunc(scope, el, attr, ctrl) {
 
-            // Do stuff...
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the userService
+        |
+        */
+
+
+        // Display a listing of user.
+        function init() {
+            console.log('Init user factory');
         }
-    }
 
-    // Define directive controller
-    function footerDirectiveController($scope) {
-		$scope.twitter='http://www.twitter.com',
-		$scope.facebook='http://www.facebook.com'
-        // Do stuff...
-    }
+        // Logins a current user
+        function login(data, cb = null){
+            var login = new $resource("login");
 
-})();
+            var success = false;
 
-(function() {
+            login.save(null, data)
+                .then(function(response){
+                    if(response.status == 200 && response.data.passed)
+                    {
+                        userService.$user = response.data.data;
+                        userService.isGuest = false;
+                        success = true;
 
-  'use strict';
+                        if(data.cookie){
+                            storeCookie("access_token", response.data.data.access_token);
+                        }
 
-    // Pass the navbarDirective to the app
-    angular
-        .module('y')
-        .directive('navbarDirective', navbarDirective);
+                        $rootScope.$broadcast("user.login", success, userService.$user);
+                    }
 
-
-    // Define the navbarDirective
-    function navbarDirective() {
-
-        // Define directive
-        var directive = {
-                restrict: 'EA',
-                templateUrl: 'app/shared/components/navbar-component/navbar-component.html',
-                scope: {
-                    navbarString: '@',                      // Isolated scope string
-                    navbarAttribute: '=',                   // Isolated scope two-way data binding
-                    navbarAction: '&'                       // Isolated scope action
-                },
-                link: linkFunc,
-                controller: navbarDirectiveController,
-                controllerAs: 'navbarDirective'
-        };
-
-        // Return directive
-        return directive;
-
-        // Define link function
-        function linkFunc(scope, el, attr, ctrl) {
-
-            // Do stuff...
+                    cb(null, success);
+                })
+                .catch(function(err){
+                    cb(err, false);
+                });
         }
-    }
 
-    // Define directive controller
-    function navbarDirectiveController(userService, $scope) {
-        var self = this;
-        self.title = "Tree";
-        self.guest = userService.isGuest;
-        self.role = userService.getRole();
+        // Checks if the current session has a cookie stored
+        function hasCookie()
+        {
+            return ($cookies.get("access_token") !== undefined);
+        }
 
-        self.disable = true;
+        // Gets the id of the current logged user
+        function getId(){
+            return userService.$user.id;
+        }
 
-        userService.cookieLogin(function(){
-            self.disable = false;
-        });
+        // Gets the access_token of the current logged user
+        function getToken(){
+            return userService.$user.access_token;
+        }
 
-        self.login = function(){
-            userService.login(self.form, function(err, success){
-                if(err){
-                    console.error(err);
+        // Gets the username of the current logged user
+        function getName(){
+            return userService.$user.username;
+        }
+
+        // Gets the username of the current logged user
+        function getRole(){
+            return userService.$user.role;
+        }
+
+        // Store a cookie value
+        function storeCookie(key, value){
+            $cookies.put(key, value);
+        }
+
+        // Try to login through cookie if defined
+        function cookieLogin(cb){
+            if($cookies.get("access_token")){
+                var login = new $resource("login");
+
+                var data = {
+                    access_token: $cookies.get("access_token")
                 }
 
-                if(success){
-                    self.guest = !success;
-                    self.role = userService.getRole();
-                }
-            });
-        };
+                var success = false;
 
-        $scope.$on("user.login", function(ev, success, data){
-           if(success){
-                self.guest = !success;
-                self.role = userService.getRole();
+                login.save(null, data)
+                    .then(function(response){
+                        if(response.status == 200 && response.data.passed)
+                        {
+                            userService.$user = response.data.data;
+                            userService.isGuest = false;
+                            success = true;
+
+                            $rootScope.$broadcast("user.login", success, userService.$user);
+                        }
+
+                        if(cb){
+                            cb(null, success, userService.$user);
+                        }
+                    })
+                    .catch(function(err){
+                        console.error(err);
+                    })
+
             }
-        });
-    }
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the sidenavDirective to the app
-    angular
-        .module('y')
-        .directive('sidenavDirective', sidenavDirective);
-
-
-    // Define the sidenavDirective
-    function sidenavDirective() {
-
-        // Define directive
-        var directive = {
-
-                restrict: 'EA',
-                templateUrl: 'app/shared/components/sidenav-component/sidenav-component.html',
-                scope: {
-                    navbarString: '@',                      // Isolated scope string
-                    navbarAttribute: '=',                   // Isolated scope two-way data binding
-                    navbarAction: '&'                       // Isolated scope action
-                },
-                link: linkFunc,
-                controller: sidenavDirectiveController,
-                controllerAs: 'sidenavDirective'
-        };
-
-        // Return directive
-        return directive;
-
-        // Define link function
-        function linkFunc(scope, el, attr, ctrl) {
-
-            // Do stuff...
+            else{
+                cb(null, false, null);
+            }
         }
-    }
 
-    // Define directive controller
-    function sidenavDirectiveController(userService, $state) {
-		
-		this.home = function(){
-			console.log("hola")
-			var self = this;
-        	self.guest = userService.isGuest;
-        	self.role = userService.getRole();
-			if(self.guest = "false"){
-				if(self.role = "admin"){
-					$state.go('biodynamics-home');
-				}else{
-					$state.go('dynamics-home');
-				}
-			}else{
-				$state.go('estatico-home');
-			}
-		}
-		
-        // Do stuff...
-    }
+        // Restore the users's data to default
+        function restoreUser(){
+            userService.$user = {
+                id: null,
+                username: null,
+                access_token: null,
+                role: null
+            };
+        }
 
-})();
+        // Logout the current user
+        function logout(){
+            restoreUser();
 
-(function() {
+            // Remove the cookie token if it's stored
+            if($cookies.get("access_token")){
+                $cookies.remove("access_token");
+            }
 
-  'use strict';
+            userService.isGuest = true;
 
-    // Pass the treeDirective to the app
-    angular
-        .module('y')
-        .directive('treeDirective', treeDirective);
-
-
-    // Define the treeDirective
-    function treeDirective() {
-
-        // Define directive
-        var directive = {
-            restrict: 'E',
-            template: '<div id="cy" style="height:500px; width:500px;"></div>',
-            scope: {
-                nodes: '=',
-                relations: '='
-            },
-            controller: treeDirectiveController
-        };
-
-        // Return directive
-        return directive;
-    }
-
-    // Define directive controller
-    function treeDirectiveController($scope) {
-        var container = angular.element(document.querySelector("#cy"));
-
-        cytoscape({
-            container: container,
-            elements: $scope.nodes.concat($scope.relations),
-            layout: {
-                name: "breadthfirst",
-                directed: true,
-                padding: 30,
-                avoidOverlap: true
-            },
-            style: [
-            {
-                selector: "node",
-                style: {
-                    shape: "circle",
-                    "background-color": "red",
-                    label: "data(name)"
-                }
-            }]
-        });
+            $rootScope.$broadcast("user.logout");
+        }
     }
 })();
 
@@ -2927,7 +2733,7 @@
 
 
     // Define the accountsShowCtrl
-    function accountsShowCtrl(accountsFactory, $stateParams) {
+    function accountsShowCtrl(accountsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -2954,7 +2760,6 @@
 
         initLog();
         show($stateParams.id);
-		console.log($stateParams.id)
 
 
         /*
@@ -2966,6 +2771,11 @@
         |
         */
 
+        accountsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -7590,4 +7400,240 @@
         }
     }
 
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the footerDirective to the app
+    angular
+        .module('y')
+        .directive('footerDirective', footerDirective);
+
+
+    // Define the footerDirective
+    function footerDirective() {
+
+        // Define directive
+        var directive = {
+
+                restrict: 'EA',
+                templateUrl: 'app/shared/components/footer-component/footer-component.html',
+                scope: {
+                    footerString: '@',                      // Isolated scope string
+                    footerAttribute: '=',                   // Isolated scope two-way data binding
+                    footerAction: '&'                       // Isolated scope action
+                },
+                link: linkFunc,
+                controller: footerDirectiveController,
+                controllerAs: 'footerDirective'
+        };
+
+        // Return directive
+        return directive;
+
+        // Define link function
+        function linkFunc(scope, el, attr, ctrl) {
+
+            // Do stuff...
+        }
+    }
+
+    // Define directive controller
+    function footerDirectiveController($scope) {
+		$scope.twitter='http://www.twitter.com',
+		$scope.facebook='http://www.facebook.com'
+        // Do stuff...
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the navbarDirective to the app
+    angular
+        .module('y')
+        .directive('navbarDirective', navbarDirective);
+
+
+    // Define the navbarDirective
+    function navbarDirective() {
+
+        // Define directive
+        var directive = {
+                restrict: 'EA',
+                templateUrl: 'app/shared/components/navbar-component/navbar-component.html',
+                scope: {
+                    navbarString: '@',                      // Isolated scope string
+                    navbarAttribute: '=',                   // Isolated scope two-way data binding
+                    navbarAction: '&'                       // Isolated scope action
+                },
+                link: linkFunc,
+                controller: navbarDirectiveController,
+                controllerAs: 'navbarDirective'
+        };
+
+        // Return directive
+        return directive;
+
+        // Define link function
+        function linkFunc(scope, el, attr, ctrl) {
+
+            // Do stuff...
+        }
+    }
+
+    // Define directive controller
+    function navbarDirectiveController(userService, $scope) {
+        var self = this;
+        self.title = "Tree";
+        self.guest = userService.isGuest;
+        self.role = userService.getRole();
+
+        self.disable = true;
+
+        userService.cookieLogin(function(){
+            self.disable = false;
+        });
+
+        self.login = function(){
+            userService.login(self.form, function(err, success){
+                if(err){
+                    console.error(err);
+                }
+
+                if(success){
+                    self.guest = !success;
+                    self.role = userService.getRole();
+                }
+            });
+        };
+
+        $scope.$on("user.login", function(ev, success, data){
+           if(success){
+                self.guest = !success;
+                self.role = userService.getRole();
+            }
+        });
+    }
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the sidenavDirective to the app
+    angular
+        .module('y')
+        .directive('sidenavDirective', sidenavDirective);
+
+
+    // Define the sidenavDirective
+    function sidenavDirective() {
+
+        // Define directive
+        var directive = {
+
+                restrict: 'EA',
+                templateUrl: 'app/shared/components/sidenav-component/sidenav-component.html',
+                scope: {
+                    navbarString: '@',                      // Isolated scope string
+                    navbarAttribute: '=',                   // Isolated scope two-way data binding
+                    navbarAction: '&'                       // Isolated scope action
+                },
+                link: linkFunc,
+                controller: sidenavDirectiveController,
+                controllerAs: 'sidenavDirective'
+        };
+
+        // Return directive
+        return directive;
+
+        // Define link function
+        function linkFunc(scope, el, attr, ctrl) {
+
+            // Do stuff...
+        }
+    }
+
+    // Define directive controller
+    function sidenavDirectiveController(userService, $state) {
+		
+		this.home = function(){
+			console.log("hola")
+			var self = this;
+        	self.guest = userService.isGuest;
+        	self.role = userService.getRole();
+			if(self.guest = "false"){
+				if(self.role = "admin"){
+					$state.go('biodynamics-home');
+				}else{
+					$state.go('dynamics-home');
+				}
+			}else{
+				$state.go('estatico-home');
+			}
+		}
+		
+        this.logout = function(){
+            userService.logout()
+        }
+    }
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the treeDirective to the app
+    angular
+        .module('y')
+        .directive('treeDirective', treeDirective);
+
+
+    // Define the treeDirective
+    function treeDirective() {
+
+        // Define directive
+        var directive = {
+            restrict: 'E',
+            template: '<div id="cy" style="height:500px; width:500px;"></div>',
+            scope: {
+                nodes: '=',
+                relations: '='
+            },
+            controller: treeDirectiveController
+        };
+
+        // Return directive
+        return directive;
+    }
+
+    // Define directive controller
+    function treeDirectiveController($scope) {
+        var container = angular.element(document.querySelector("#cy"));
+
+        cytoscape({
+            container: container,
+            elements: $scope.nodes.concat($scope.relations),
+            layout: {
+                name: "breadthfirst",
+                directed: true,
+                padding: 30,
+                avoidOverlap: true
+            },
+            style: [
+            {
+                selector: "node",
+                style: {
+                    shape: "circle",
+                    "background-color": "red",
+                    label: "data(name)"
+                }
+            }]
+        });
+    }
 })();

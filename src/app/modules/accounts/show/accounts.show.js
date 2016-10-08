@@ -9,7 +9,7 @@
 
 
     // Define the accountsShowCtrl
-    function accountsShowCtrl(accountsFactory, $stateParams) {
+    function accountsShowCtrl(accountsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -36,7 +36,6 @@
 
         initLog();
         show($stateParams.id);
-		console.log($stateParams.id)
 
 
         /*
@@ -48,6 +47,11 @@
         |
         */
 
+        accountsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
