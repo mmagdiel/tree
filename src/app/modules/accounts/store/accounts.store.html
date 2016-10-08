@@ -5,30 +5,35 @@
 	<div flex="20"></div>
 	<div flex>
 		<h2>Registro de Cuentas</h2>
-		<div>
-			<md-input-container>
-				<label>Username</label>
-				<input type="text">
-			</md-input-container>
-		</div>
-		<div>
-			<md-input-container>
-				<label>Password</label>
-				<input type="text">
-			</md-input-container>
-		</div>
-		<div>
-			<md-input-container>
-				<label>Re-Password</label>
-				<input type="text">
-			</md-input-container>
-		</div>
-		<div>
-			He leido todos los terminos y consiciones
-			<md-input-container>
-				<md-switch ng-model="bandera">Conforme: {{bandera ? "No": "Si"}}</md-switch>
-			</md-input-container>
-		</div>
+		<form ng-submit="accountsStore.register()">
+			<div>
+				<md-input-container>
+					<label>Username</label>
+					<input type="text" ng-model="accountsStore.form.username" required>
+				</md-input-container>
+			</div>
+			<div>
+				<md-input-container>
+					<label>Password</label>
+					<input type="password" ng-model="accountsStore.form.password" required>
+				</md-input-container>
+			</div>
+			<div>
+				<md-input-container>
+					<label>Re-Password</label>
+					<input type="password" ng-model="accountsStore.form.repassword" required>
+				</md-input-container>
+			</div>
+			<div>
+				He leido todos los terminos y consiciones
+				<md-input-container>
+					<md-switch ng-model="accountsStore.bandera">Conforme: {{accountsStore.bandera ? "Si": "No"}}</md-switch>
+				</md-input-container>
+			</div>
+			<div>
+				<md-button class="md-raised" type="submit">Submit</md-button>
+			</div>
+		</form>
 		<h2>Términos y condiciones.</h2>
 		
 			<ol>	
