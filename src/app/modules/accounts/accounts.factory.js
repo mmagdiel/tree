@@ -30,6 +30,7 @@
             index: index,
             show: show,
             store: store,
+            stores: stores,
             update: update,
             destroy: destroy,
 
@@ -68,6 +69,13 @@
 
         // Store a newly created account in storage.
         function store(data) {
+
+            return resource.save(data)
+                        .then(function(data){ return data.data; });
+        }
+
+        // Store a newly created account in storage.
+        function stores(data) {
 
             return resource.save(data)
                         .then(function(data){ return data.data; });
