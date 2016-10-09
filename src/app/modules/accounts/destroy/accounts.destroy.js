@@ -9,7 +9,7 @@
 
 
     // Define the accountsDestroyCtrl
-    function accountsDestroyCtrl(accountsFactory, $stateParams) {
+    function accountsDestroyCtrl(accountsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -48,6 +48,9 @@
         |
         */
 
+        accountsDestroy.goo = function(){
+            $state.go('accounts-index');
+        }
 
         // Sample for init function
         function initLog() {
