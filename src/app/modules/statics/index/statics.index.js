@@ -9,7 +9,7 @@
 
 
     // Define the staticsIndexCtrl
-    function staticsIndexCtrl(staticsFactory) {
+    function staticsIndexCtrl(staticsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -46,6 +46,11 @@
         |
         */
 
+        staticsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

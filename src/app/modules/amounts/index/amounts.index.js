@@ -9,7 +9,7 @@
 
 
     // Define the amountsIndexCtrl
-    function amountsIndexCtrl(amountsFactory) {
+    function amountsIndexCtrl(amountsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -46,6 +46,11 @@
         |
         */
 
+        amountsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

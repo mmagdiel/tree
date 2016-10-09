@@ -9,7 +9,7 @@
 
 
     // Define the advertisementsIndexCtrl
-    function advertisementsIndexCtrl(advertisementsFactory) {
+    function advertisementsIndexCtrl(advertisementsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -46,6 +46,11 @@
         |
         */
 
+        advertisementsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

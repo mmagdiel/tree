@@ -9,7 +9,7 @@
 
 
     // Define the documentsIndexCtrl
-    function documentsIndexCtrl(documentsFactory) {
+    function documentsIndexCtrl(documentsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -46,6 +46,11 @@
         |
         */
 
+        documentsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

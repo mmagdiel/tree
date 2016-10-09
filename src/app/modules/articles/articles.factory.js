@@ -9,16 +9,19 @@
 
 
     // Define the articlesFactory
-    function articlesFactory($http) {
+    function articlesFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for article article
-        var articleBase = '/api/articles/';
-
+        // Define resource instance
+        var resource = new $resource("articles", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
         // Define the article factory object to return
         var articlesFactory = {
@@ -49,7 +52,7 @@
         // Display a listing of articles.
         function index() {
 
-            return $http.get(articleBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -57,7 +60,7 @@
         // Display a specified article.
         function show(id) {
 
-            return $http.get(articleBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -65,7 +68,7 @@
         // Store a newly created article in storage.
         function store(data) {
 
-            return $http.post(articleBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -73,7 +76,7 @@
         // Update the specified article in storage.
         function update(id, data) {
 
-            return $http.put(articleBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -81,7 +84,7 @@
         // Remove the specified article from storage.
         function destroy(id) {
 
-            return $http.delete(articleBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 

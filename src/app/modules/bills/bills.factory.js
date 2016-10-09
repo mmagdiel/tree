@@ -9,15 +9,19 @@
 
 
     // Define the billsFactory
-    function billsFactory($http) {
+    function billsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for bill bill
-        var billBase = '/api/bills/';
+        // Define resource instance
+        var resource = new $resource("bills", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the bill factory object to return
@@ -49,7 +53,7 @@
         // Display a listing of bills.
         function index() {
 
-            return $http.get(billBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -57,7 +61,7 @@
         // Display a specified bill.
         function show(id) {
 
-            return $http.get(billBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -65,7 +69,7 @@
         // Store a newly created bill in storage.
         function store(data) {
 
-            return $http.post(billBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -73,7 +77,7 @@
         // Update the specified bill in storage.
         function update(id, data) {
 
-            return $http.put(billBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -81,7 +85,7 @@
         // Remove the specified bill from storage.
         function destroy(id) {
 
-            return $http.delete(billBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 

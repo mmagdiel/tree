@@ -9,7 +9,7 @@
 
 
     // Define the ticketsIndexCtrl
-    function ticketsIndexCtrl(ticketsFactory) {
+    function ticketsIndexCtrl(ticketsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -46,6 +46,11 @@
         |
         */
 
+        ticketsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

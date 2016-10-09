@@ -2,8 +2,20 @@
 
 <div flex layout="row">
 	<sidenav-directive></sidenav-directive>
-	<h1>document index view</h1>
-
+	<div layout="row">
+	  <div flex="10"></div>
+	  <div flex="90">
+		<h1>document index view</h1>
+		<md-content>
+			<md-list flex>
+				<md-list-item class="md-2-line" ng-repeat="item in documentsIndex.documents" ng-click="documentsIndex.go('documents-show',item.id)">
+					<p>{{item.id}}</p>
+					<p>{{item.name}}</p>
+				</md-list-item>
+			</md-list>
+		</md-content>
+	  </div>
+	</div>
 </div>
 
 <footer-directive></footer-directive>

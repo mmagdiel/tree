@@ -9,7 +9,7 @@
 
 
     // Define the usersIndexCtrl
-    function usersIndexCtrl(usersFactory) {
+    function usersIndexCtrl(usersFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -45,6 +45,12 @@
         | Declaring all functions used in the usersIndexCtrl
         |
         */
+
+        usersIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
 
         // Sample for init function
