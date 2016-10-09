@@ -24,10 +24,6 @@ Class Ticket extends ActiveRecord
 	public function rules()
 	{
 		return [
-			"amount" => [
-				"required" => true,
-				"message" => "amount field is required"
-			],
 			"status_id" => [
 				"required" => true,
 				"message" => "status_id field is required"
@@ -52,8 +48,7 @@ Class Ticket extends ActiveRecord
 		return [
 			"batch" => [
 				"id",
-				"ip",
-				"amount"
+				"ip"
 			]
 		];
 	}
