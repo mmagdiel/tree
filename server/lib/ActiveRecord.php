@@ -425,6 +425,17 @@ Class ActiveRecord
 	}
 
 	/**
+	 * Executes a plain sql query to database
+	 * 
+	 * @param  String $query The SQL query to execute
+	 * @return Array         The result of the executed SQL query
+	 */
+	public function query(String $query)
+	{
+		return $this->_database->query($query)->fetch();
+	}
+
+	/**
 	 * Validates the whole data set in the instance with the rules from the model
 	 * 
 	 * @return Boolean Whether the validation passes
@@ -432,6 +443,8 @@ Class ActiveRecord
 	public function validate()
 	{
 		$rules = $this->rules();
+
+		$this->triggerEvent("beforeValidate");
 
 		foreach ($rules as $key => $value)
 		{
@@ -445,6 +458,8 @@ Class ActiveRecord
 				}
 			}
 		}
+
+		$this->triggerEvent("afterValidate");
 
 		return !$this->hasErrors();
 	}
@@ -460,12 +475,16 @@ Class ActiveRecord
 		{
 			$data = (Array) $this->getData();
 
+			$this->triggerEvent("beforeSave");
+
 			if($this->new)
 			{
 				$id = $this->_database->insert($this->tableName(), $data);
 
 				$this->_dbError = $this->_database->error();
 				$this->_dbLog = $this->_database->log();
+
+				$this->triggerEvent("afterSave");
 
 				return $this->findById($id);
 			}
@@ -478,6 +497,8 @@ Class ActiveRecord
 				$this->_database->update($this->tableName(), $data,[
 					"id" => $this->id
 				]);
+
+				$this->triggerEvent("afterSave");
 
 				return $this->findById($this->id);
 			}
@@ -497,16 +518,35 @@ Class ActiveRecord
 	 */
 	public function delete()
 	{
+		$this->triggerEvent("beforeDelete");
+
 		if(!$this->new)
 		{
-			return $this->_database->delete($this->tableName(), [
+			$result = $this->_database->delete($this->tableName(), [
 				"id" => $this->id
 			]) > 0; //Turn integer into boolean as it returns only the number of affected rows
+
+			$this->triggerEvent("afterDelete");
+
+			return $result;
 		}
 
 		else
 		{
 			throw new Error("This record cannot be deleted because it's new");
+		}
+	}
+
+	/**
+	 * Triggers events on activeRecord class methods
+	 * 
+	 * @param  String $event The name of the method event
+	 */
+	private function triggerEvent(String $event)
+	{
+		if(method_exists($this, $event))
+		{
+			$this->$event();
 		}
 	}
 }
