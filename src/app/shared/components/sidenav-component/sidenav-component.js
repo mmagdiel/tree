@@ -40,7 +40,6 @@
     function sidenavDirectiveController(userService, $state) {
 		
 		this.home = function(){
-			console.log("hola")
 			var self = this;
         	self.guest = userService.isGuest;
         	self.role = userService.getRole();

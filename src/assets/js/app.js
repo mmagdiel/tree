@@ -1,8 +1,3 @@
-(function(){
-	"use strict";
-
-	angular.module("core.cookie", ["ngCookies"]);
-})();
 // (function(){
 
 // 	'use strict';
@@ -18,6 +13,11 @@
 	// Define angular core.theming module
 	angular.module('core.rest', ['ngRestful']);
 
+})();
+(function(){
+	"use strict";
+
+	angular.module("core.cookie", ["ngCookies"]);
 })();
 (function(){
 
@@ -2599,7 +2599,7 @@
 
 
     // Define the accountsDestroyCtrl
-    function accountsDestroyCtrl(accountsFactory, $stateParams) {
+    function accountsDestroyCtrl(accountsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -2638,6 +2638,9 @@
         |
         */
 
+        accountsDestroy.goo = function(){
+            $state.go('accounts-index');
+        }
 
         // Sample for init function
         function initLog() {
@@ -2759,6 +2762,91 @@
             	// Assign data to array and return them
 	            accountsIndex.accounts = data.data;
 	            return accountsIndex.accounts;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the accountsShowCtrl to the app
+    angular
+        .module('y')
+        .controller('accountsShowCtrl', accountsShowCtrl);
+
+
+    // Define the accountsShowCtrl
+    function accountsShowCtrl(accountsFactory, $stateParams, $state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define accountsShow as this for ControllerAs and auto-$scope
+        var accountsShow = this;
+
+
+        // Define the accountsShow functions and objects that will be passed to the view
+        accountsShow.account = {};                                                // Object for show the account
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the accountsShowCtrl
+        |
+        */
+
+        accountsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('accountsShowCtrl init');
+        }
+
+
+        // Get the account
+        function show(id) {
+
+            return accountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            accountsShow.account = data;
+	            return accountsShow.account;
 
             }, function(data) {
 
@@ -4835,75 +4923,10 @@
         "ngInject";
 
         // Define staticsHome as this for ControllerAs and auto-$scope
-        var biodynamicsHome = this;
-            biodynamicsHome.title =    "Tree app";
-
-            biodynamicsHome.nodes = [
-                {data: {id: "a", name:"1"}},
-                {data: {id: "b", name:"2"}},
-                {data: {id: "c", name:"3"}},
-                {data: {id: "d", name:"4"}},
-                {data: {id: "e", name:"5"}},
-                {data: {id: "f", name:"6"}},
-                {data: {id: "g", name:"7"}}
-            ];
-
-            biodynamicsHome.relations = [
-                {
-                    data: {
-                        source: "a",
-                        target: "b"
-                    }
-                },{
-                    data: {
-                        source: "a",
-                        target: "c"
-                    }
-                },{
-                    data: {
-                        source: "b",
-                        target: "d"
-                    }
-                },{
-                    data: {
-                        source: "b",
-                        target: "e"
-                    }
-                },{
-                    data: {
-                        source: "c",
-                        target: "f"
-                    }
-                },{
-                    data: {
-                        source: "c",
-                        target: "g"
-                    }
-                }
-            ];
+ 
     }
 })();
 
-(function(){
-	"use strict";
-
-	var app = angular.module("core.cookie");
-
-	app.config(["$cookiesProvider", function($cookie){
-		/*
-		 * Set cookies to expire in 1 month
-		 */
-		
-		// define current date
-		var current = new Date();
-
-		// define 1 month later date
-		var later = new Date(new Date(current).setMonth(current.getMonth() + 1));
-
-		// Set cookie expiration
-		$cookie.expires = later;
-	}]);
-})();
 // (function(){
 
 // 	'use strict';
@@ -4984,6 +5007,26 @@
       app.config(["ngRestful", function($restful){
         $restful.setDomain("http://api.unn.com.ve");
       }]);
+})();
+(function(){
+	"use strict";
+
+	var app = angular.module("core.cookie");
+
+	app.config(["$cookiesProvider", function($cookie){
+		/*
+		 * Set cookies to expire in 1 month
+		 */
+		
+		// define current date
+		var current = new Date();
+
+		// define 1 month later date
+		var later = new Date(new Date(current).setMonth(current.getMonth() + 1));
+
+		// Set cookie expiration
+		$cookie.expires = later;
+	}]);
 })();
 (function(){
 
@@ -7710,7 +7753,6 @@
     function sidenavDirectiveController(userService, $state) {
 		
 		this.home = function(){
-			console.log("hola")
 			var self = this;
         	self.guest = userService.isGuest;
         	self.role = userService.getRole();
@@ -7783,89 +7825,4 @@
             }]
         });
     }
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the accountsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('accountsShowCtrl', accountsShowCtrl);
-
-
-    // Define the accountsShowCtrl
-    function accountsShowCtrl(accountsFactory, $stateParams, $state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define accountsShow as this for ControllerAs and auto-$scope
-        var accountsShow = this;
-
-
-        // Define the accountsShow functions and objects that will be passed to the view
-        accountsShow.account = {};                                                // Object for show the account
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the accountsShowCtrl
-        |
-        */
-
-        accountsShow.go = function(state,id){
-            $state.go(state,{
-                id: id
-            });
-        }
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('accountsShowCtrl init');
-        }
-
-
-        // Get the account
-        function show(id) {
-
-            return accountsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            accountsShow.account = data;
-	            return accountsShow.account;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
 })();
