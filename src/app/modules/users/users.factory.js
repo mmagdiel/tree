@@ -9,15 +9,19 @@
 
 
     // Define the usersFactory
-    function usersFactory($http) {
+    function usersFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for user user
-        var userBase = '/api/users/';
+        // Define resource instance
+        var resource = new $resource("users", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the user factory object to return
@@ -49,7 +53,7 @@
         // Display a listing of users.
         function index() {
 
-            return $http.get(userBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -57,7 +61,7 @@
         // Display a specified user.
         function show(id) {
 
-            return $http.get(userBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -65,7 +69,7 @@
         // Store a newly created user in storage.
         function store(data) {
 
-            return $http.post(userBase, data)
+             return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -73,7 +77,7 @@
         // Update the specified user in storage.
         function update(id, data) {
 
-            return $http.put(userBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -81,7 +85,7 @@
         // Remove the specified user from storage.
         function destroy(id) {
 
-            return $http.delete(userBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 

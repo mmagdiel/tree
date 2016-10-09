@@ -9,7 +9,7 @@
 
 
     // Define the billsIndexCtrl
-    function billsIndexCtrl(billsFactory) {
+    function billsIndexCtrl(billsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -46,6 +46,11 @@
         |
         */
 
+        billsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

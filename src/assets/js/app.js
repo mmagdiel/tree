@@ -140,7 +140,7 @@
         // Store a newly created account in storage.
         function store(data) {
 
-            return resource.save(data)
+            return resource.save(null, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -316,15 +316,19 @@
 
 
     // Define the advertisementsFactory
-    function advertisementsFactory($http) {
+    function advertisementsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for advertisement advertisement
-        var advertisementBase = '/api/advertisements/';
+        // Define resource instance
+        var resource = new $resource("advertisements", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the advertisement factory object to return
@@ -356,7 +360,7 @@
         // Display a listing of advertisements.
         function index() {
 
-            return $http.get(advertisementBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -364,7 +368,7 @@
         // Display a specified advertisement.
         function show(id) {
 
-            return $http.get(advertisementBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -372,7 +376,7 @@
         // Store a newly created advertisement in storage.
         function store(data) {
 
-            return $http.post(advertisementBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -380,7 +384,7 @@
         // Update the specified advertisement in storage.
         function update(id, data) {
 
-            return $http.put(advertisementBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -388,7 +392,7 @@
         // Remove the specified advertisement from storage.
         function destroy(id) {
 
-            return $http.delete(advertisementBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -533,15 +537,19 @@
 
 
     // Define the amountsFactory
-    function amountsFactory($http) {
+    function amountsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for amount amount
-        var amountBase = '/api/amounts/';
+        // Define resource instance
+        var resource = new $resource("amounts", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the amount factory object to return
@@ -573,7 +581,7 @@
         // Display a listing of amounts.
         function index() {
 
-            return $http.get(amountBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -581,7 +589,7 @@
         // Display a specified amount.
         function show(id) {
 
-            return $http.get(amountBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -589,7 +597,7 @@
         // Store a newly created amount in storage.
         function store(data) {
 
-            return $http.post(amountBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -597,7 +605,7 @@
         // Update the specified amount in storage.
         function update(id, data) {
 
-            return $http.put(amountBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -605,7 +613,7 @@
         // Remove the specified amount from storage.
         function destroy(id) {
 
-            return $http.delete(amountBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -750,16 +758,19 @@
 
 
     // Define the articlesFactory
-    function articlesFactory($http) {
+    function articlesFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for article article
-        var articleBase = '/api/articles/';
-
+        // Define resource instance
+        var resource = new $resource("articles", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
         // Define the article factory object to return
         var articlesFactory = {
@@ -790,7 +801,7 @@
         // Display a listing of articles.
         function index() {
 
-            return $http.get(articleBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -798,7 +809,7 @@
         // Display a specified article.
         function show(id) {
 
-            return $http.get(articleBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -806,7 +817,7 @@
         // Store a newly created article in storage.
         function store(data) {
 
-            return $http.post(articleBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -814,7 +825,7 @@
         // Update the specified article in storage.
         function update(id, data) {
 
-            return $http.put(articleBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -822,7 +833,7 @@
         // Remove the specified article from storage.
         function destroy(id) {
 
-            return $http.delete(articleBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -967,15 +978,19 @@
 
 
     // Define the billsFactory
-    function billsFactory($http) {
+    function billsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for bill bill
-        var billBase = '/api/bills/';
+        // Define resource instance
+        var resource = new $resource("bills", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the bill factory object to return
@@ -1007,7 +1022,7 @@
         // Display a listing of bills.
         function index() {
 
-            return $http.get(billBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -1015,7 +1030,7 @@
         // Display a specified bill.
         function show(id) {
 
-            return $http.get(billBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -1023,7 +1038,7 @@
         // Store a newly created bill in storage.
         function store(data) {
 
-            return $http.post(billBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -1031,7 +1046,7 @@
         // Update the specified bill in storage.
         function update(id, data) {
 
-            return $http.put(billBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -1039,7 +1054,7 @@
         // Remove the specified bill from storage.
         function destroy(id) {
 
-            return $http.delete(billBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -1224,15 +1239,19 @@
 
 
     // Define the documentsFactory
-    function documentsFactory($http) {
+    function documentsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for document document
-        var documentBase = '/api/documents/';
+        // Define resource instance
+        var resource = new $resource("documents", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the document factory object to return
@@ -1264,7 +1283,7 @@
         // Display a listing of documents.
         function index() {
 
-            return $http.get(documentBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -1272,7 +1291,7 @@
         // Display a specified document.
         function show(id) {
 
-            return $http.get(documentBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -1280,7 +1299,7 @@
         // Store a newly created document in storage.
         function store(data) {
 
-            return $http.post(documentBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -1288,7 +1307,7 @@
         // Update the specified document in storage.
         function update(id, data) {
 
-            return $http.put(documentBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -1296,7 +1315,7 @@
         // Remove the specified document from storage.
         function destroy(id) {
 
-            return $http.delete(documentBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -1521,15 +1540,19 @@
 
 
     // Define the responsesFactory
-    function responsesFactory($http) {
+    function responsesFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for response response
-        var responseBase = '/api/responses/';
+        // Define resource instance
+        var resource = new $resource("responses", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the response factory object to return
@@ -1561,7 +1584,7 @@
         // Display a listing of responses.
         function index() {
 
-            return $http.get(responseBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -1569,7 +1592,7 @@
         // Display a specified response.
         function show(id) {
 
-            return $http.get(responseBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -1577,15 +1600,15 @@
         // Store a newly created response in storage.
         function store(data) {
 
-            return $http.post(responseBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
 
         // Update the specified response in storage.
         function update(id, data) {
-
-            return $http.put(responseBase + id, data)
+            
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -1738,16 +1761,19 @@
 
 
     // Define the staticsFactory
-    function staticsFactory($http) {
+    function staticsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for static static
-        var staticBase = '/api/statics/';
-
+        // Define resource instance
+        var resource = new $resource("statics", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
         // Define the static factory object to return
         var staticsFactory = {
@@ -1778,7 +1804,7 @@
         // Display a listing of statics.
         function index() {
 
-            return $http.get(staticBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -1786,7 +1812,7 @@
         // Display a specified static.
         function show(id) {
 
-            return $http.get(staticBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -1794,7 +1820,7 @@
         // Store a newly created static in storage.
         function store(data) {
 
-            return $http.post(staticBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -1802,7 +1828,7 @@
         // Update the specified static in storage.
         function update(id, data) {
 
-            return $http.put(staticBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -1810,7 +1836,7 @@
         // Remove the specified static from storage.
         function destroy(id) {
 
-            return $http.delete(staticBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -1955,16 +1981,19 @@
 
 
     // Define the ticketsFactory
-    function ticketsFactory($http) {
+    function ticketsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for ticket ticket
-        var ticketBase = '/api/tickets/';
-
+        // Define resource instance
+        var resource = new $resource("tickets", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
         // Define the ticket factory object to return
         var ticketsFactory = {
@@ -1995,7 +2024,7 @@
         // Display a listing of tickets.
         function index() {
 
-            return $http.get(ticketBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -2003,7 +2032,7 @@
         // Display a specified ticket.
         function show(id) {
 
-            return $http.get(ticketBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -2011,7 +2040,7 @@
         // Store a newly created ticket in storage.
         function store(data) {
 
-            return $http.post(ticketBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -2019,7 +2048,7 @@
         // Update the specified ticket in storage.
         function update(id, data) {
 
-            return $http.put(ticketBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -2027,7 +2056,7 @@
         // Remove the specified ticket from storage.
         function destroy(id) {
 
-            return $http.delete(ticketBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -2172,15 +2201,19 @@
 
 
     // Define the usersFactory
-    function usersFactory($http) {
+    function usersFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for user user
-        var userBase = '/api/users/';
+        // Define resource instance
+        var resource = new $resource("users", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the user factory object to return
@@ -2212,7 +2245,7 @@
         // Display a listing of users.
         function index() {
 
-            return $http.get(userBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -2220,7 +2253,7 @@
         // Display a specified user.
         function show(id) {
 
-            return $http.get(userBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -2228,7 +2261,7 @@
         // Store a newly created user in storage.
         function store(data) {
 
-            return $http.post(userBase, data)
+             return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -2236,7 +2269,7 @@
         // Update the specified user in storage.
         function update(id, data) {
 
-            return $http.put(userBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -2244,7 +2277,7 @@
         // Remove the specified user from storage.
         function destroy(id) {
 
-            return $http.delete(userBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -2664,7 +2697,7 @@
 
 
     // Define the accountsIndexCtrl
-    function accountsIndexCtrl(accountsFactory,$state) {
+    function accountsIndexCtrl(accountsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -2742,91 +2775,6 @@
 
   'use strict';
 
-    // Pass the accountsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('accountsShowCtrl', accountsShowCtrl);
-
-
-    // Define the accountsShowCtrl
-    function accountsShowCtrl(accountsFactory, $stateParams, $state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define accountsShow as this for ControllerAs and auto-$scope
-        var accountsShow = this;
-
-
-        // Define the accountsShow functions and objects that will be passed to the view
-        accountsShow.account = {};                                                // Object for show the account
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the accountsShowCtrl
-        |
-        */
-
-        accountsShow.go = function(state,id){
-            $state.go(state,{
-                id: id
-            });
-        }
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('accountsShowCtrl init');
-        }
-
-
-        // Get the account
-        function show(id) {
-
-            return accountsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            accountsShow.account = data;
-	            return accountsShow.account;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the accountsStoreCtrl to the app
     angular
         .module('y')
@@ -2834,8 +2782,7 @@
 
 
     // Define the accountsStoreCtrl
-    function accountsStoreCtrl(accountsFactory,$scope) {
-		$scope.bandera=false;
+    function accountsStoreCtrl(accountsFactory, $mdDialog) {
 
         // Inject with ng-annotate
         "ngInject";
@@ -2847,6 +2794,41 @@
 
         // Define the accountsStore functions and objects that will be passed to the view
         accountsStore.store = store;                                           // Store a resource
+
+        accountsStore.bandera = false;
+
+        accountsStore.form = {
+            username: null,
+            password: null,
+            repassword: null
+        };
+
+        accountsStore.register = function(){
+            console.log(accountsStore);
+            if(!accountsStore.bandera){
+                var dialogAlert = $mdDialog.alert({
+                    title: "Error",
+                    textContent: "Usted no ha aceptado los terminos y condiciones",
+                    ok: "Ok"
+                });
+
+                $mdDialog.show(dialogAlert);
+            }
+
+            else if(accountsStore.form.password != accountsStore.form.repassword){
+                var dialogAlert = $mdDialog.alert({
+                    title: "Error",
+                    textContent: "Las contrasenas no coinciden",
+                    ok: "Ok"
+                });
+
+                $mdDialog.show(dialogAlert);
+            }
+
+            else{
+                store(accountsStore.form);
+            }
+        }
 
 
         /*
@@ -2887,10 +2869,38 @@
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
+                var dialogAlert;
+
+                if(data.passed){
+                    dialogAlert = $mdDialog.alert({
+                        title: "Registro",
+                        textContent: "Usuario registrado con exito",
+                        ok: "Ok"
+                    });
+                }
+
+                else{
+                    dialogAlert = $mdDialog.alert({
+                        title: "Error",
+                        textContent: "Uno de los campos no cumple los requerimientos",
+                        ok: "Ok"
+                    });
+                }
+
+                $mdDialog.show(dialogAlert);
+
             }, function(data) {
 
                 // Custom function for error handling
                 console.log('Result form API with ERROR', data);
+
+                var dialogAlert = $mdDialog.alert({
+                    title: "Error",
+                    textContent: "Error en la comunicacion con el servicio, intente de nuevo mas tarde.",
+                    ok: "Ok"
+                });
+
+                $mdDialog.show(dialogAlert);
 
             });
         }
@@ -3180,7 +3190,7 @@
 
 
     // Define the advertisementsIndexCtrl
-    function advertisementsIndexCtrl(advertisementsFactory) {
+    function advertisementsIndexCtrl(advertisementsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -3217,6 +3227,11 @@
         |
         */
 
+        advertisementsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -3610,7 +3625,7 @@
 
 
     // Define the amountsIndexCtrl
-    function amountsIndexCtrl(amountsFactory) {
+    function amountsIndexCtrl(amountsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -3647,6 +3662,11 @@
         |
         */
 
+        amountsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -4040,7 +4060,7 @@
 
 
     // Define the articlesIndexCtrl
-    function articlesIndexCtrl(articlesFactory) {
+    function articlesIndexCtrl(articlesFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -4077,6 +4097,11 @@
         |
         */
 
+        articlesIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -4470,7 +4495,7 @@
 
 
     // Define the billsIndexCtrl
-    function billsIndexCtrl(billsFactory) {
+    function billsIndexCtrl(billsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -4507,6 +4532,11 @@
         |
         */
 
+        billsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -4952,7 +4982,7 @@
             .module('core.rest');
       // Define global domain for resource
       app.config(["ngRestful", function($restful){
-        $restful.setDomain("http://unn.com.ve/server");
+        $restful.setDomain("http://api.unn.com.ve");
       }]);
 })();
 (function(){
@@ -5252,7 +5282,7 @@
 
 
     // Define the documentsIndexCtrl
-    function documentsIndexCtrl(documentsFactory) {
+    function documentsIndexCtrl(documentsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -5289,6 +5319,11 @@
         |
         */
 
+        documentsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -5811,7 +5846,7 @@
 
 
     // Define the responsesIndexCtrl
-    function responsesIndexCtrl(responsesFactory) {
+    function responsesIndexCtrl(responsesFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -5848,6 +5883,11 @@
         |
         */
 
+        responsesIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -6312,7 +6352,7 @@
 
 
     // Define the staticsIndexCtrl
-    function staticsIndexCtrl(staticsFactory) {
+    function staticsIndexCtrl(staticsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -6349,6 +6389,11 @@
         |
         */
 
+        staticsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -6742,7 +6787,7 @@
 
 
     // Define the ticketsIndexCtrl
-    function ticketsIndexCtrl(ticketsFactory) {
+    function ticketsIndexCtrl(ticketsFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -6779,6 +6824,11 @@
         |
         */
 
+        ticketsIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -7172,7 +7222,7 @@
 
 
     // Define the usersIndexCtrl
-    function usersIndexCtrl(usersFactory) {
+    function usersIndexCtrl(usersFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -7208,6 +7258,12 @@
         | Declaring all functions used in the usersIndexCtrl
         |
         */
+
+        usersIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
 
         // Sample for init function
@@ -7727,4 +7783,89 @@
             }]
         });
     }
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the accountsShowCtrl to the app
+    angular
+        .module('y')
+        .controller('accountsShowCtrl', accountsShowCtrl);
+
+
+    // Define the accountsShowCtrl
+    function accountsShowCtrl(accountsFactory, $stateParams, $state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define accountsShow as this for ControllerAs and auto-$scope
+        var accountsShow = this;
+
+
+        // Define the accountsShow functions and objects that will be passed to the view
+        accountsShow.account = {};                                                // Object for show the account
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the accountsShowCtrl
+        |
+        */
+
+        accountsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('accountsShowCtrl init');
+        }
+
+
+        // Get the account
+        function show(id) {
+
+            return accountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            accountsShow.account = data;
+	            return accountsShow.account;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
 })();

@@ -9,16 +9,19 @@
 
 
     // Define the ticketsFactory
-    function ticketsFactory($http) {
+    function ticketsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for ticket ticket
-        var ticketBase = '/api/tickets/';
-
+        // Define resource instance
+        var resource = new $resource("tickets", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
         // Define the ticket factory object to return
         var ticketsFactory = {
@@ -49,7 +52,7 @@
         // Display a listing of tickets.
         function index() {
 
-            return $http.get(ticketBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -57,7 +60,7 @@
         // Display a specified ticket.
         function show(id) {
 
-            return $http.get(ticketBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -65,7 +68,7 @@
         // Store a newly created ticket in storage.
         function store(data) {
 
-            return $http.post(ticketBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -73,7 +76,7 @@
         // Update the specified ticket in storage.
         function update(id, data) {
 
-            return $http.put(ticketBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -81,7 +84,7 @@
         // Remove the specified ticket from storage.
         function destroy(id) {
 
-            return $http.delete(ticketBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 

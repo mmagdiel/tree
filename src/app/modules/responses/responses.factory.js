@@ -9,15 +9,19 @@
 
 
     // Define the responsesFactory
-    function responsesFactory($http) {
+    function responsesFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for response response
-        var responseBase = '/api/responses/';
+        // Define resource instance
+        var resource = new $resource("responses", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the response factory object to return
@@ -49,7 +53,7 @@
         // Display a listing of responses.
         function index() {
 
-            return $http.get(responseBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -57,7 +61,7 @@
         // Display a specified response.
         function show(id) {
 
-            return $http.get(responseBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -65,15 +69,15 @@
         // Store a newly created response in storage.
         function store(data) {
 
-            return $http.post(responseBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
 
         // Update the specified response in storage.
         function update(id, data) {
-
-            return $http.put(responseBase + id, data)
+            
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 

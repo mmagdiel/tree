@@ -9,16 +9,19 @@
 
 
     // Define the staticsFactory
-    function staticsFactory($http) {
+    function staticsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for static static
-        var staticBase = '/api/statics/';
-
+        // Define resource instance
+        var resource = new $resource("statics", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
         // Define the static factory object to return
         var staticsFactory = {
@@ -49,7 +52,7 @@
         // Display a listing of statics.
         function index() {
 
-            return $http.get(staticBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -57,7 +60,7 @@
         // Display a specified static.
         function show(id) {
 
-            return $http.get(staticBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -65,7 +68,7 @@
         // Store a newly created static in storage.
         function store(data) {
 
-            return $http.post(staticBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -73,7 +76,7 @@
         // Update the specified static in storage.
         function update(id, data) {
 
-            return $http.put(staticBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -81,7 +84,7 @@
         // Remove the specified static from storage.
         function destroy(id) {
 
-            return $http.delete(staticBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 

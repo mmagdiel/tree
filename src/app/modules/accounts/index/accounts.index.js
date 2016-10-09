@@ -9,7 +9,7 @@
 
 
     // Define the accountsIndexCtrl
-    function accountsIndexCtrl(accountsFactory,$state) {
+    function accountsIndexCtrl(accountsFactory, $state) {
 
 
         // Inject with ng-annotate

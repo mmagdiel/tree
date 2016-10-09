@@ -9,15 +9,19 @@
 
 
     // Define the amountsFactory
-    function amountsFactory($http) {
+    function amountsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for amount amount
-        var amountBase = '/api/amounts/';
+        // Define resource instance
+        var resource = new $resource("amounts", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the amount factory object to return
@@ -49,7 +53,7 @@
         // Display a listing of amounts.
         function index() {
 
-            return $http.get(amountBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -57,7 +61,7 @@
         // Display a specified amount.
         function show(id) {
 
-            return $http.get(amountBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -65,7 +69,7 @@
         // Store a newly created amount in storage.
         function store(data) {
 
-            return $http.post(amountBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -73,7 +77,7 @@
         // Update the specified amount in storage.
         function update(id, data) {
 
-            return $http.put(amountBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -81,7 +85,7 @@
         // Remove the specified amount from storage.
         function destroy(id) {
 
-            return $http.delete(amountBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 

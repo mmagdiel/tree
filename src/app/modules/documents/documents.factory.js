@@ -9,15 +9,19 @@
 
 
     // Define the documentsFactory
-    function documentsFactory($http) {
+    function documentsFactory($resource, userService) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Define base URI for document document
-        var documentBase = '/api/documents/';
+        // Define resource instance
+        var resource = new $resource("documents", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
 
 
         // Define the document factory object to return
@@ -49,7 +53,7 @@
         // Display a listing of documents.
         function index() {
 
-            return $http.get(documentBase)
+            return resource.fetch()
                         .then(function(data){ return data; });
         }
 
@@ -57,7 +61,7 @@
         // Display a specified document.
         function show(id) {
 
-            return $http.get(documentBase + id)
+            return resource.fetch(id)
                         .then(function(data){ return data.data; });
         }
 
@@ -65,7 +69,7 @@
         // Store a newly created document in storage.
         function store(data) {
 
-            return $http.post(documentBase, data)
+            return resource.save(data)
                         .then(function(data){ return data.data; });
         }
 
@@ -73,7 +77,7 @@
         // Update the specified document in storage.
         function update(id, data) {
 
-            return $http.put(documentBase + id, data)
+            return resource.update(id, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -81,7 +85,7 @@
         // Remove the specified document from storage.
         function destroy(id) {
 
-            return $http.delete(documentBase + id)
+            return resource.delete(id)
                         .then(function(data){ return data.data; });
         }
 

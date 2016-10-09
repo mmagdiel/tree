@@ -9,7 +9,7 @@
 
 
     // Define the responsesIndexCtrl
-    function responsesIndexCtrl(responsesFactory) {
+    function responsesIndexCtrl(responsesFactory, $state) {
 
 
         // Inject with ng-annotate
@@ -46,6 +46,11 @@
         |
         */
 
+        responsesIndex.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
