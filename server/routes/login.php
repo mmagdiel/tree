@@ -23,12 +23,17 @@ $app->post("/login", function($request, $response)
 	// Find account with the given criteria from post
 	$model = Account::model()->findByAttributes($criteria);
 
-	$result = [];
+	$result = (Object) [
+		"passed" => false,
+		"data" => (Object) []
+	];
 
 	// Fill response data if account was found in Database
 	if($model)
 	{
-		$result = (Object) [
+		$result->passed = true;
+
+		$result->data = (Object) [
 			"username" => $model[0]["username"],
 			"user_id" => $model[0]["user_id"],
 			"access_token" => $model[0]["access_token"],
