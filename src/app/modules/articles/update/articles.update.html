@@ -1,1 +1,39 @@
-<h1>article update view</h1>
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+<sidenav-directive></sidenav-directive>
+	<div flex="5"></div>
+	<div flex>
+		<h1>article update view</h1>
+		<div>
+			<md-input-container>
+				<label>Name </label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<label>Content</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<label>Name Photo</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<label>Path Photo</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-button class="md-raised md-warn" ui-sref="articles-index">Cancel</md-button>
+			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
+		</div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

@@ -2592,107 +2592,6 @@
 
   'use strict';
 
-    // Pass the accountsDestroyCtrl to the app
-    angular
-        .module('y')
-        .controller('accountsDestroyCtrl', accountsDestroyCtrl);
-
-
-    // Define the accountsDestroyCtrl
-    function accountsDestroyCtrl(accountsFactory, $stateParams, $state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define accountsDestroy as this for ControllerAs and auto-$scope
-        var accountsDestroy = this;
-
-
-        // Define the accountsDestroy functions and objects that will be passed to the view
-        accountsDestroy.account = {};                                                 // Object for show the account
-        accountsDestroy.destroy = destroy;                                         // Delete a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the accountsDestroyCtrl
-        |
-        */
-
-        accountsDestroy.goo = function(){
-            $state.go('accounts-index');
-        }
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('accountsDestroyCtrl init');
-        }
-
-
-        // Delete a resource
-        function destroy(id) {
-
-            return accountsFactory.destroy(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-            	// Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the account
-        function show(id) {
-
-            return accountsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                accountsDestroy.account = data;
-                return accountsDestroy.account;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the accountsIndexCtrl to the app
     angular
         .module('y')
@@ -2989,6 +2888,107 @@
                 });
 
                 $mdDialog.show(dialogAlert);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the accountsDestroyCtrl to the app
+    angular
+        .module('y')
+        .controller('accountsDestroyCtrl', accountsDestroyCtrl);
+
+
+    // Define the accountsDestroyCtrl
+    function accountsDestroyCtrl(accountsFactory, $stateParams, $state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define accountsDestroy as this for ControllerAs and auto-$scope
+        var accountsDestroy = this;
+
+
+        // Define the accountsDestroy functions and objects that will be passed to the view
+        accountsDestroy.account = {};                                                 // Object for show the account
+        accountsDestroy.destroy = destroy;                                         // Delete a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the accountsDestroyCtrl
+        |
+        */
+
+        accountsDestroy.goo = function(){
+            $state.go('accounts-index');
+        }
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('accountsDestroyCtrl init');
+        }
+
+
+        // Delete a resource
+        function destroy(id) {
+
+            return accountsFactory.destroy(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+            	// Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the account
+        function show(id) {
+
+            return accountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                accountsDestroy.account = data;
+                return accountsDestroy.account;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
 
             });
         }
@@ -4947,295 +4947,6 @@
     }
 })();
 
-(function(){
-	"use strict";
-
-	var app = angular.module("core.cookie");
-
-	app.config(["$cookiesProvider", function($cookie){
-		/*
-		 * Set cookies to expire in 1 month
-		 */
-		
-		// define current date
-		var current = new Date();
-
-		// define 1 month later date
-		var later = new Date(new Date(current).setMonth(current.getMonth() + 1));
-
-		// Set cookie expiration
-		$cookie.expires = later;
-	}]);
-})();
-// (function(){
-
-// 	'use strict';
-
-// 	// Pass the mockHelperProvider to the app
-// 	angular
-// 		.module('core.mocking')
-// 		.provider('mockHelper', mockHelperProvider);
-
-
-//     // Define the mockHelperProvider
-// 	function mockHelperProvider() {
-
-
-// 		// Holds the service factory function
-// 		this.$get = MockHelper;
-
-
-// 		// Define the mockHelperProvider
-// 		function MockHelper($httpBackend) {
-
-
-// 			// Inject with ng-annotate
-// 			"ngInject";
-
-
-// 			// Pass through this extension
-// 			$httpBackend.whenGET(/\.html$/).passThrough();
-// 			$httpBackend.whenGET(/\.png$/).passThrough();
-// 			$httpBackend.whenGET(/\.svg$/).passThrough();
-// 			$httpBackend.whenGET(/\.jpg$/).passThrough();
-// 			$httpBackend.whenGET(/\.jpeg$/).passThrough();
-// 			$httpBackend.whenGET(/\.css$/).passThrough();
-
-
-// 			// Define the object to return
-// 			var service = {
-
-// 				configureMocks: configureMocks,		// Configure all the states for the route
-// 			};
-
-
-// 			// Return the object
-// 			return service;
-
-
-// 	        /*
-// 	        |--------------------------------------------------------------------------
-// 	        | Functions
-// 	        |--------------------------------------------------------------------------
-// 	        |
-// 	        | Declaring all functions used in the MockHelper
-// 	        |
-// 	        */
-
-
-// 			// Configure all the mocks for the route
-// 			function configureMocks(mocks) {
-
-// 				// Foreach mocks, create a fake backend interaction
-// 				// mocks.forEach(function(mock){
-
-// 				// 	$httpBackend.when(mock.method, mock.url).respond(mock.respond);
-// 				// });
-// 			}
-// 		}
-// 	}
-
-// })();
-
-(function(){
-	'use strict';
-
-	// Pass the configuration theming to the app
-	var app = angular
-            .module('core.rest');
-      // Define global domain for resource
-      app.config(["ngRestful", function($restful){
-        $restful.setDomain("http://api.unn.com.ve");
-      }]);
-})();
-(function(){
-
-	'use strict';
-
-	// Pass the routerHelperProvider to the app
-	angular
-		.module('core.routing')
-		.provider('routerHelper', routerHelperProvider);
-
-
-    // Define the routerHelperProvider
-	function routerHelperProvider($locationProvider, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
-
-
-		// Inject with ng-annotate
-		"ngInject";
-
-
-		// Holds the service factory function
-		this.$get = RouterHelper;
-
-
-		// Declare html5Mode true for a clean url
-		$locationProvider.html5Mode(true);
-
-
-		// Declare strict to false for remove trailing slash
-		$urlMatcherFactoryProvider.strictMode(false);
-
-
-		// Declare the otherwise, go here if no state is found
-		$urlRouterProvider.otherwise('/404');
-
-
-		// Define the routerHelperProvider
-		function RouterHelper($state) {
-
-
-			// Define the object to return
-			var service = {
-
-				configureStates: configureStates,			// Configure all the states for the route
-				getStates: getStates 						// Return the lists of states
-
-			};
-
-
-			// Return the object
-			return service;
-
-
-	        /*
-	        |--------------------------------------------------------------------------
-	        | Functions
-	        |--------------------------------------------------------------------------
-	        |
-	        | Declaring all functions used in the RouterHelper
-	        |
-	        */
-
-
-			// Configure all the states for the route
-			function configureStates(states) {
-
-				// Add to the routing the state passed trought array of objects
-				states.forEach(function(state) {
-
-					$stateProvider.state(state.state, state.config);
-
-				});
-			}
-
-
-			// Return the lists of states
-			function getStates() {
-
-				return $state.get();
-			}
-		}
-	}
-
-})();
-
-(function(){
-
-	'use strict';
-
-	// Pass the configuration theming to the app
-	var app = angular
-            .module('core.theming');
-    app.config(['$mdThemingProvider', function($mdThemingProvider){
-	   $mdThemingProvider.definePalette('red-wine', {
-		   '50':'82142d',
-		   '100': 'ffcdd2',
-    	   '200': 'ef9a9a',
-		   '300': 'e57373',
-  		   '400': 'ef5350',
-		   '500': 'f44336',
-		   '600': 'e53935',
-		   '700': 'd32f2f',
-		   '800': 'c62828',
-	 	   '900': 'b71c1c',
-		   'A100': 'ff8a80',
-		   'A200': 'ff5252',
-		   'A400': 'ff1744',
-		   'A700': 'd50000',
-		   'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
-											// on this palette should be dark or light
-     	   'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
-		 	'200', '300', '400', 'A100'],
-		   'contrastLightColors': undefined    // could also specify this if default was 'dark'
-	   });
-       $mdThemingProvider.theme('default')
-         .primaryPalette('blue',{
-            'default':'600'
-       })
-         .accentPalette('light-green',{
-            'default':'500' 
-       })
-         .warnPalette('red-wine',{
-            'default':'50'
-       });
-    }]);
-   
-    // Define the routerHelperProvider
-	
-
-})();
-
-(function() {
-
-    'use strict';
-
-    // Pass the validatorHelperProvider to the app
-    angular
-        .module('core.validator')
-        .provider('validatorHelper', validatorHelperProvider);
-
-
-    // Define the validatorHelperProvider
-    function validatorHelperProvider(valdrProvider, valdrMessageProvider) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Holds the service factory function
-        this.$get = validatorHelper;
-
-
-        // Define the validatorHelperProvider
-        function validatorHelper() {
-
-
-            valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
-
-            // Define the object to return
-            var service = {
-
-                configureValidators: configureValidators, // Configure all models to validate
-            };
-
-
-            // Return the object
-            return service;
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Functions
-            |--------------------------------------------------------------------------
-            |
-            | Declaring all functions used in the ValidatorHelper
-            |
-            */
-
-
-            // Configure all the validators for the models
-            function configureValidators(validator) {
-
-                valdrProvider.addConstraints(validator);
-            }
-        }
-    }
-
-})();
-
 (function() {
 
   'use strict';
@@ -5671,6 +5382,295 @@
                 console.log('Result form API with ERROR', data);
 
             });
+        }
+    }
+
+})();
+
+(function(){
+	"use strict";
+
+	var app = angular.module("core.cookie");
+
+	app.config(["$cookiesProvider", function($cookie){
+		/*
+		 * Set cookies to expire in 1 month
+		 */
+		
+		// define current date
+		var current = new Date();
+
+		// define 1 month later date
+		var later = new Date(new Date(current).setMonth(current.getMonth() + 1));
+
+		// Set cookie expiration
+		$cookie.expires = later;
+	}]);
+})();
+// (function(){
+
+// 	'use strict';
+
+// 	// Pass the mockHelperProvider to the app
+// 	angular
+// 		.module('core.mocking')
+// 		.provider('mockHelper', mockHelperProvider);
+
+
+//     // Define the mockHelperProvider
+// 	function mockHelperProvider() {
+
+
+// 		// Holds the service factory function
+// 		this.$get = MockHelper;
+
+
+// 		// Define the mockHelperProvider
+// 		function MockHelper($httpBackend) {
+
+
+// 			// Inject with ng-annotate
+// 			"ngInject";
+
+
+// 			// Pass through this extension
+// 			$httpBackend.whenGET(/\.html$/).passThrough();
+// 			$httpBackend.whenGET(/\.png$/).passThrough();
+// 			$httpBackend.whenGET(/\.svg$/).passThrough();
+// 			$httpBackend.whenGET(/\.jpg$/).passThrough();
+// 			$httpBackend.whenGET(/\.jpeg$/).passThrough();
+// 			$httpBackend.whenGET(/\.css$/).passThrough();
+
+
+// 			// Define the object to return
+// 			var service = {
+
+// 				configureMocks: configureMocks,		// Configure all the states for the route
+// 			};
+
+
+// 			// Return the object
+// 			return service;
+
+
+// 	        /*
+// 	        |--------------------------------------------------------------------------
+// 	        | Functions
+// 	        |--------------------------------------------------------------------------
+// 	        |
+// 	        | Declaring all functions used in the MockHelper
+// 	        |
+// 	        */
+
+
+// 			// Configure all the mocks for the route
+// 			function configureMocks(mocks) {
+
+// 				// Foreach mocks, create a fake backend interaction
+// 				// mocks.forEach(function(mock){
+
+// 				// 	$httpBackend.when(mock.method, mock.url).respond(mock.respond);
+// 				// });
+// 			}
+// 		}
+// 	}
+
+// })();
+
+(function(){
+	'use strict';
+
+	// Pass the configuration theming to the app
+	var app = angular
+            .module('core.rest');
+      // Define global domain for resource
+      app.config(["ngRestful", function($restful){
+        $restful.setDomain("http://api.unn.com.ve");
+      }]);
+})();
+(function(){
+
+	'use strict';
+
+	// Pass the routerHelperProvider to the app
+	angular
+		.module('core.routing')
+		.provider('routerHelper', routerHelperProvider);
+
+
+    // Define the routerHelperProvider
+	function routerHelperProvider($locationProvider, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+
+
+		// Inject with ng-annotate
+		"ngInject";
+
+
+		// Holds the service factory function
+		this.$get = RouterHelper;
+
+
+		// Declare html5Mode true for a clean url
+		$locationProvider.html5Mode(true);
+
+
+		// Declare strict to false for remove trailing slash
+		$urlMatcherFactoryProvider.strictMode(false);
+
+
+		// Declare the otherwise, go here if no state is found
+		$urlRouterProvider.otherwise('/404');
+
+
+		// Define the routerHelperProvider
+		function RouterHelper($state) {
+
+
+			// Define the object to return
+			var service = {
+
+				configureStates: configureStates,			// Configure all the states for the route
+				getStates: getStates 						// Return the lists of states
+
+			};
+
+
+			// Return the object
+			return service;
+
+
+	        /*
+	        |--------------------------------------------------------------------------
+	        | Functions
+	        |--------------------------------------------------------------------------
+	        |
+	        | Declaring all functions used in the RouterHelper
+	        |
+	        */
+
+
+			// Configure all the states for the route
+			function configureStates(states) {
+
+				// Add to the routing the state passed trought array of objects
+				states.forEach(function(state) {
+
+					$stateProvider.state(state.state, state.config);
+
+				});
+			}
+
+
+			// Return the lists of states
+			function getStates() {
+
+				return $state.get();
+			}
+		}
+	}
+
+})();
+
+(function(){
+
+	'use strict';
+
+	// Pass the configuration theming to the app
+	var app = angular
+            .module('core.theming');
+    app.config(['$mdThemingProvider', function($mdThemingProvider){
+	   $mdThemingProvider.definePalette('red-wine', {
+		   '50':'82142d',
+		   '100': 'ffcdd2',
+    	   '200': 'ef9a9a',
+		   '300': 'e57373',
+  		   '400': 'ef5350',
+		   '500': 'f44336',
+		   '600': 'e53935',
+		   '700': 'd32f2f',
+		   '800': 'c62828',
+	 	   '900': 'b71c1c',
+		   'A100': 'ff8a80',
+		   'A200': 'ff5252',
+		   'A400': 'ff1744',
+		   'A700': 'd50000',
+		   'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+											// on this palette should be dark or light
+     	   'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+		 	'200', '300', '400', 'A100'],
+		   'contrastLightColors': undefined    // could also specify this if default was 'dark'
+	   });
+       $mdThemingProvider.theme('default')
+         .primaryPalette('blue',{
+            'default':'600'
+       })
+         .accentPalette('light-green',{
+            'default':'500' 
+       })
+         .warnPalette('red-wine',{
+            'default':'50'
+       });
+    }]);
+   
+    // Define the routerHelperProvider
+	
+
+})();
+
+(function() {
+
+    'use strict';
+
+    // Pass the validatorHelperProvider to the app
+    angular
+        .module('core.validator')
+        .provider('validatorHelper', validatorHelperProvider);
+
+
+    // Define the validatorHelperProvider
+    function validatorHelperProvider(valdrProvider, valdrMessageProvider) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Holds the service factory function
+        this.$get = validatorHelper;
+
+
+        // Define the validatorHelperProvider
+        function validatorHelper() {
+
+
+            valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
+
+            // Define the object to return
+            var service = {
+
+                configureValidators: configureValidators, // Configure all models to validate
+            };
+
+
+            // Return the object
+            return service;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Functions
+            |--------------------------------------------------------------------------
+            |
+            | Declaring all functions used in the ValidatorHelper
+            |
+            */
+
+
+            // Configure all the validators for the models
+            function configureValidators(validator) {
+
+                valdrProvider.addConstraints(validator);
+            }
         }
     }
 
@@ -7121,7 +7121,7 @@
 
 
         // Define the ticketsUpdate functions and objects that will be passed to the view
-        ticketsUpdate.ticket = {};                                                  // Object for show the ticket
+        ticketsUpdate.ticket = {};                                                // Object for show the ticket
         ticketsUpdate.update = update;                                            // Update a resource
 
 
@@ -7148,6 +7148,9 @@
         |
         */
 
+        ticketsUpdate.view = function(){
+            console.log(ticketsUpdate.ticket);
+        }
 
         // Sample for init function
         function initLog() {
@@ -7183,6 +7186,7 @@
 
                 // Assign data to array and return them
                 ticketsUpdate.ticket = data;
+                ticketsUpdate.ticket.targeta = ['VISA','MASTERCARD'];
                 return ticketsUpdate.ticket;
 
             }, function(data) {
@@ -7624,6 +7628,8 @@
 
                 // Assign data to array and return them
                 usersUpdate.user = data;
+                usersUpdate.user.state = ['ad','ac'];
+                usersUpdate.user.city = ['sd','se'];
                 return usersUpdate.user;
 
             }, function(data) {

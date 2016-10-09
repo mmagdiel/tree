@@ -21,7 +21,7 @@
 
 
         // Define the ticketsUpdate functions and objects that will be passed to the view
-        ticketsUpdate.ticket = {};                                                  // Object for show the ticket
+        ticketsUpdate.ticket = {};                                                // Object for show the ticket
         ticketsUpdate.update = update;                                            // Update a resource
 
 
@@ -48,6 +48,9 @@
         |
         */
 
+        ticketsUpdate.view = function(){
+            console.log(ticketsUpdate.ticket);
+        }
 
         // Sample for init function
         function initLog() {
@@ -83,6 +86,7 @@
 
                 // Assign data to array and return them
                 ticketsUpdate.ticket = data;
+                ticketsUpdate.ticket.targeta = ['VISA','MASTERCARD'];
                 return ticketsUpdate.ticket;
 
             }, function(data) {

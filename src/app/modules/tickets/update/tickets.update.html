@@ -1,1 +1,44 @@
-<h1>ticket update view</h1>
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+<sidenav-directive></sidenav-directive>
+	<div flex="5"></div>
+	<div flex>
+		<h1>ticket update view</h1>
+		<div>
+			<md-input-container>
+				<label>No. Targeta </label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<label>Cod. Seguridad </label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<label>Nombre targeta</label>
+				<md-select ng-model="ticketsUpdate.ticket.targetaSeleciona">
+              		<md-option ng-repeat="item in ticketsUpdate.ticket.targeta" value="{{$index}}">
+                	{{item}}
+              		</md-option>
+            	</md-select>
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<label>Cedula o Rif</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-button class="md-raised md-warn" ng-click="ticketsUpdate.view()"><!--ui-sref="ticket-index"> -->
+			Cancel</md-button>
+			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
+		</div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

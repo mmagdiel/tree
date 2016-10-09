@@ -83,6 +83,8 @@
 
                 // Assign data to array and return them
                 usersUpdate.user = data;
+                usersUpdate.user.state = ['ad','ac'];
+                usersUpdate.user.city = ['sd','se'];
                 return usersUpdate.user;
 
             }, function(data) {
