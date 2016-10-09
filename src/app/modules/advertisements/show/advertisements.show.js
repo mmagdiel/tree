@@ -9,7 +9,7 @@
 
 
     // Define the advertisementsShowCtrl
-    function advertisementsShowCtrl(advertisementsFactory, $stateParams) {
+    function advertisementsShowCtrl(advertisementsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -47,6 +47,11 @@
         |
         */
 
+        advertisementsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }        
 
         // Sample for init function
         function initLog() {

@@ -9,7 +9,7 @@
 
 
     // Define the responsesShowCtrl
-    function responsesShowCtrl(responsesFactory, $stateParams) {
+    function responsesShowCtrl(responsesFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -47,6 +47,11 @@
         |
         */
 
+        responsesShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

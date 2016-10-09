@@ -9,7 +9,7 @@
 
 
     // Define the billsShowCtrl
-    function billsShowCtrl(billsFactory, $stateParams) {
+    function billsShowCtrl(billsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -47,6 +47,11 @@
         |
         */
 
+        billsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

@@ -9,7 +9,7 @@
 
 
     // Define the staticsShowCtrl
-    function staticsShowCtrl(staticsFactory, $stateParams) {
+    function staticsShowCtrl(staticsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -47,6 +47,11 @@
         |
         */
 
+        staticsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

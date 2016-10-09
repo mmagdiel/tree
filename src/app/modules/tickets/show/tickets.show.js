@@ -9,7 +9,7 @@
 
 
     // Define the ticketsShowCtrl
-    function ticketsShowCtrl(ticketsFactory, $stateParams) {
+    function ticketsShowCtrl(ticketsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -47,6 +47,11 @@
         |
         */
 
+        ticketsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

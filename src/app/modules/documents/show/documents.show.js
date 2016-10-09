@@ -9,7 +9,7 @@
 
 
     // Define the documentsShowCtrl
-    function documentsShowCtrl(documentsFactory, $stateParams) {
+    function documentsShowCtrl(documentsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -47,6 +47,11 @@
         |
         */
 
+        documentsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

@@ -1,1 +1,33 @@
-<h1>article show view</h1>
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="row">
+	  <div flex="10"></div>
+	  <div flex="90">
+		<h1>article show view</h1>
+		
+		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{articlesShow.article.name}}</span>
+            <p> Role: {{articlesShow.article.content}}</p>
+            <p> Role: {{articlesShow.article.name_photo}}</p>
+			<p>User id: {{articlesShow.article.path_photo}}</p>
+			<p>Create at: {{articlesShow.article.create_at}}</p>
+			<p>Update at:{{articlesShow.article.update_at}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="articlesShow.go('articles-update',articlesShow.article.id)">Update</md-button>
+          <md-button class="md-raised md-warn" ng-click="articlesShow.go('articles-destroy',articlesShow.article.id)">Destroy</md-button>
+        </md-card-actions>
+        
+      </md-card>					
+					
+	  </div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

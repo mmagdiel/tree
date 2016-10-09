@@ -1,3 +1,8 @@
+(function(){
+	"use strict";
+
+	angular.module("core.cookie", ["ngCookies"]);
+})();
 // (function(){
 
 // 	'use strict';
@@ -13,11 +18,6 @@
 	// Define angular core.theming module
 	angular.module('core.rest', ['ngRestful']);
 
-})();
-(function(){
-	"use strict";
-
-	angular.module("core.cookie", ["ngCookies"]);
 })();
 (function(){
 
@@ -3362,7 +3362,7 @@
 
 
     // Define the advertisementsShowCtrl
-    function advertisementsShowCtrl(advertisementsFactory, $stateParams) {
+    function advertisementsShowCtrl(advertisementsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -3400,6 +3400,11 @@
         |
         */
 
+        advertisementsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }        
 
         // Sample for init function
         function initLog() {
@@ -3797,7 +3802,7 @@
 
 
     // Define the amountsShowCtrl
-    function amountsShowCtrl(amountsFactory, $stateParams) {
+    function amountsShowCtrl(amountsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -3835,6 +3840,11 @@
         |
         */
 
+        amountsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -4232,7 +4242,7 @@
 
 
     // Define the articlesShowCtrl
-    function articlesShowCtrl(articlesFactory, $stateParams) {
+    function articlesShowCtrl(articlesFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -4270,6 +4280,11 @@
         |
         */
 
+        articlesShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -4667,7 +4682,7 @@
 
 
     // Define the billsShowCtrl
-    function billsShowCtrl(billsFactory, $stateParams) {
+    function billsShowCtrl(billsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -4705,6 +4720,11 @@
         |
         */
 
+        billsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -4927,6 +4947,26 @@
     }
 })();
 
+(function(){
+	"use strict";
+
+	var app = angular.module("core.cookie");
+
+	app.config(["$cookiesProvider", function($cookie){
+		/*
+		 * Set cookies to expire in 1 month
+		 */
+		
+		// define current date
+		var current = new Date();
+
+		// define 1 month later date
+		var later = new Date(new Date(current).setMonth(current.getMonth() + 1));
+
+		// Set cookie expiration
+		$cookie.expires = later;
+	}]);
+})();
 // (function(){
 
 // 	'use strict';
@@ -5007,26 +5047,6 @@
       app.config(["ngRestful", function($restful){
         $restful.setDomain("http://api.unn.com.ve");
       }]);
-})();
-(function(){
-	"use strict";
-
-	var app = angular.module("core.cookie");
-
-	app.config(["$cookiesProvider", function($cookie){
-		/*
-		 * Set cookies to expire in 1 month
-		 */
-		
-		// define current date
-		var current = new Date();
-
-		// define 1 month later date
-		var later = new Date(new Date(current).setMonth(current.getMonth() + 1));
-
-		// Set cookie expiration
-		$cookie.expires = later;
-	}]);
 })();
 (function(){
 
@@ -5409,7 +5429,7 @@
 
 
     // Define the documentsShowCtrl
-    function documentsShowCtrl(documentsFactory, $stateParams) {
+    function documentsShowCtrl(documentsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -5447,6 +5467,11 @@
         |
         */
 
+        documentsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -5973,7 +5998,7 @@
 
 
     // Define the responsesShowCtrl
-    function responsesShowCtrl(responsesFactory, $stateParams) {
+    function responsesShowCtrl(responsesFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -6011,6 +6036,11 @@
         |
         */
 
+        responsesShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -6479,7 +6509,7 @@
 
 
     // Define the staticsShowCtrl
-    function staticsShowCtrl(staticsFactory, $stateParams) {
+    function staticsShowCtrl(staticsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -6517,6 +6547,11 @@
         |
         */
 
+        staticsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -6914,7 +6949,7 @@
 
 
     // Define the ticketsShowCtrl
-    function ticketsShowCtrl(ticketsFactory, $stateParams) {
+    function ticketsShowCtrl(ticketsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -6952,6 +6987,11 @@
         |
         */
 
+        ticketsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
@@ -7350,7 +7390,7 @@
 
 
     // Define the usersShowCtrl
-    function usersShowCtrl(usersFactory, $stateParams) {
+    function usersShowCtrl(usersFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -7388,6 +7428,11 @@
         |
         */
 
+        usersShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {

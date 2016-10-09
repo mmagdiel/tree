@@ -9,7 +9,7 @@
 
 
     // Define the usersShowCtrl
-    function usersShowCtrl(usersFactory, $stateParams) {
+    function usersShowCtrl(usersFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -47,6 +47,11 @@
         |
         */
 
+        usersShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
 
         // Sample for init function
         function initLog() {
