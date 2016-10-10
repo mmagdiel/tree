@@ -9,7 +9,7 @@
 
 
     // Define the billsDestroyCtrl
-    function billsDestroyCtrl(billsFactory, $stateParams) {
+    function billsDestroyCtrl(billsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -55,6 +55,9 @@
             console.log('billsDestroyCtrl init');
         }
 
+        billsDestroy.goo = function(){
+            $state.go('bills-index');
+        }
 
         // Delete a resource
         function destroy(id) {

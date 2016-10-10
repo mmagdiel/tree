@@ -1,1 +1,40 @@
-<h1>Response delete view</h1>
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="row">
+	  <div flex="10"></div>
+	  <div flex="90">
+		<h1>Response delete view</h1>
+		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{responsesDestroy.response.success}}</span>
+            <p> Role: {{responsesDestroy.response.message}}</p>
+			<p>Create at: {{responsesDestroy.response.code}}</p>
+			<p>Update at:{{responsesDestroy.response.reference}}</p>
+			<p>User id: {{responsesDestroy.response.voucher}}</p>
+			<p> Role: {{responsesDestroy.response.ordernumber}}</p>
+			<p>Create at: {{responsesDestroy.response.sequence}}</p>
+			<p>Update at:{{responsesDestroy.response.approval}}</p>
+			<p>User id: {{responsesDestroy.response.lote}}</p>
+			<p> Role: {{responsesDestroy.response.deferred}}</p>
+			<p>Create at: {{responsesDestroy.response.datetime}}</p>
+			<p>Update at:{{responsesDestroy.response.amount}}</p>
+			<p>User id: {{responsesDestroy.response.responsecode_id}}</p>
+            <p> Role: {{responsesDestroy.response.ticket_id}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="responsesDestroy.goo()">Cancel</md-button>
+          <md-button class="md-raised md-warn" ng-click="">Confirm</md-button>
+        </md-card-actions>
+        
+      </md-card>					
+					
+	  </div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

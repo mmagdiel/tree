@@ -9,7 +9,7 @@
 
 
     // Define the advertisementsDestroyCtrl
-    function advertisementsDestroyCtrl(advertisementsFactory, $stateParams) {
+    function advertisementsDestroyCtrl(advertisementsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -48,6 +48,9 @@
         |
         */
 
+        advertisementsDestroy.goo = function(){
+            $state.go('advertisements-index');
+        }
 
         // Sample for init function
         function initLog() {

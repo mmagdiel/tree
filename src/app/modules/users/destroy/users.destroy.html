@@ -1,1 +1,36 @@
-<h1>User delete view</h1>
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="row">
+	  <div flex="10"></div>
+	  <div flex="90">
+		<h1>User delete view</h1>
+		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{usersDestroy.user.first_name}}</span>
+            <p> Role: {{usersDestroy.user.last_name}}</p>
+			<p>Create at: {{usersDestroy.user.biography}}</p>
+			<p>Update at:{{usersDestroy.user.email}}</p>
+			<p>User id: {{usersDestroy.user.email_token}}</p>
+            <p> Role: {{usersDestroy.user.bithday}}</p>
+			<p>Create at: {{usersDestroy.user.create_at}}</p>
+			<p>Update at:{{usersDestroy.user.update_at}}</p>
+			<p>User id: {{usersDestroy.user.state_id}}</p>
+			<p>User id: {{usersDestroy.user.city_id}}</p
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="usersDestroy.goo()">Cancel</md-button>
+          <md-button class="md-raised md-warn" ng-click="">Confirm</md-button>
+        </md-card-actions>
+        
+      </md-card>					
+					
+	  </div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

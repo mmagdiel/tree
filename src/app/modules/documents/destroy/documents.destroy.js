@@ -9,7 +9,7 @@
 
 
     // Define the documentsDestroyCtrl
-    function documentsDestroyCtrl(documentsFactory, $stateParams) {
+    function documentsDestroyCtrl(documentsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -48,6 +48,9 @@
         |
         */
 
+        documentsDestroy.goo = function(){
+            $state.go('documents-index');
+        }
 
         // Sample for init function
         function initLog() {

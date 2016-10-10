@@ -9,7 +9,7 @@
 
 
     // Define the staticsDestroyCtrl
-    function staticsDestroyCtrl(staticsFactory, $stateParams) {
+    function staticsDestroyCtrl(staticsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -55,6 +55,9 @@
             console.log('staticsDestroyCtrl init');
         }
 
+        staticsDestroy.goo = function(){
+            $state.go('statics-index');
+        }
 
         // Delete a resource
         function destroy(id) {

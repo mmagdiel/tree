@@ -9,7 +9,7 @@
 
 
     // Define the ticketsDestroyCtrl
-    function ticketsDestroyCtrl(ticketsFactory, $stateParams) {
+    function ticketsDestroyCtrl(ticketsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -48,6 +48,9 @@
         |
         */
 
+        ticketsDestroy.goo = function(){
+            $state.go('tickets-index');
+        }
 
         // Sample for init function
         function initLog() {

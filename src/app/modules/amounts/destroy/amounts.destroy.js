@@ -9,7 +9,7 @@
 
 
     // Define the amountsDestroyCtrl
-    function amountsDestroyCtrl(amountsFactory, $stateParams) {
+    function amountsDestroyCtrl(amountsFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -48,6 +48,9 @@
         |
         */
 
+        amountsDestroy.goo = function(){
+            $state.go('amounts-index');
+        }
 
         // Sample for init function
         function initLog() {

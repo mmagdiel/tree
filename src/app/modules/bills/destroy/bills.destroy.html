@@ -1,1 +1,30 @@
-<h1>bill delete view</h1>
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="row">
+	  <div flex="10"></div>
+	  <div flex="90">
+		<h1>bill delete view</h1>
+		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{billsDestroy.bill.account_id}}</span>
+            <p> Role: {{billsDestroy.bill.tickets_id}}</p>
+			<p>Create at: {{billsDestroy.bill.amount_id}}</p>
+			<p>Update at:{{billsDestroy.bill.create_at}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="billsDestroy.goo()">Cancel</md-button>
+          <md-button class="md-raised md-warn" ng-click="">Confirm</md-button>
+        </md-card-actions>
+        
+      </md-card>					
+					
+	  </div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

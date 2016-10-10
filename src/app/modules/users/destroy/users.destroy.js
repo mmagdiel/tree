@@ -9,7 +9,7 @@
 
 
     // Define the usersDestroyCtrl
-    function usersDestroyCtrl(usersFactory, $stateParams) {
+    function usersDestroyCtrl(usersFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -48,6 +48,9 @@
         |
         */
 
+        usersDestroy.goo = function(){
+            $state.go('users-index');
+        }
 
         // Sample for init function
         function initLog() {

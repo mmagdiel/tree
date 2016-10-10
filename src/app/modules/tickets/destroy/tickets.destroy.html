@@ -1,1 +1,35 @@
-<h1>ticket delete view</h1>
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="row">
+	  <div flex="10"></div>
+	  <div flex="90">	
+		<h1>ticket delete view</h1>
+		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{ticketsDestroy.ticket.description}}</span>
+            <p> Role: {{ticketsDestroy.ticket.amount}}</p>
+			<p>Create at: {{ticketsDestroy.ticket.status_id}}</p>
+			<p>Update at:{{ticketsDestroy.ticket.ip}}</p>
+			<p>User id: {{ticketsDestroy.ticket.create_at}}</p>
+			<p>Create at: {{ticketsDestroy.ticket.create_at}}</p>
+            <p> Role: {{ticketsDestroy.ticket.ticketcol}}</p>
+			<p>Update at:{{ticketsDestroy.ticket.account_id}}</p>
+			<p>User id: {{ticketsDestroy.ticket.amount_id}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="ticketsDestroy.goo()">Cancel</md-button>
+          <md-button class="md-raised md-warn" ng-click="">Confirm</md-button>
+        </md-card-actions>
+        
+      </md-card>					
+					
+	  </div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

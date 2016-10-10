@@ -9,7 +9,7 @@
 
 
     // Define the responsesDestroyCtrl
-    function responsesDestroyCtrl(responsesFactory, $stateParams) {
+    function responsesDestroyCtrl(responsesFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -47,6 +47,10 @@
         | Declaring all functions used in the responsesDestroyCtrl
         |
         */
+
+        responsesDestroy.goo = function(){
+            $state.go('responses-index');
+        }
 
 
         // Sample for init function

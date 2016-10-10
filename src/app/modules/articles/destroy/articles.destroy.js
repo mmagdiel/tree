@@ -9,7 +9,7 @@
 
 
     // Define the articlesDestroyCtrl
-    function articlesDestroyCtrl(articlesFactory, $stateParams) {
+    function articlesDestroyCtrl(articlesFactory, $stateParams, $state) {
 
 
         // Inject with ng-annotate
@@ -53,6 +53,10 @@
         function initLog() {
 
             console.log('articlesDestroyCtrl init');
+        }
+
+        articlesDestroy.goo = function(){
+            $state.go('articles-index');
         }
 
 
