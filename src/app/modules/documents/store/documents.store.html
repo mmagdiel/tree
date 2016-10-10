@@ -1,1 +1,27 @@
-<h1>document store view</h1>
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+<sidenav-directive></sidenav-directive>
+	<div flex="5"></div>
+	<div flex>
+		<h1>document store view</h1>
+		<div>
+			<md-input-container>
+				<label>Name </label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<label>Path</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-button class="md-raised md-warn" ui-sref="documents-index">Cancel</md-button>
+			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
+		</div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>
