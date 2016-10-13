@@ -147,6 +147,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `tree`.`responsecode` (
   `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `motivo` VARCHAR(23) NOT NULL,
+  `codigo` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -168,16 +169,10 @@ CREATE TABLE IF NOT EXISTS `tree`.`response` (
   `deferred` ENUM('true', 'false') NOT NULL,
   `datetime` TIMESTAMP NOT NULL,
   `amount` FLOAT(14,2) NOT NULL,
-  `responsecode_id` TINYINT UNSIGNED NOT NULL,
+  `responsecode` VARCHAR(2) NOT NULL,
   `ticket_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_response_responsecode1_idx` (`responsecode_id` ASC),
   INDEX `fk_response_ticket1_idx` (`ticket_id` ASC),
-  CONSTRAINT `fk_response_responsecode1`
-    FOREIGN KEY (`responsecode_id`)
-    REFERENCES `tree`.`responsecode` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_response_ticket1`
     FOREIGN KEY (`ticket_id`)
     REFERENCES `tree`.`ticket` (`id`)
