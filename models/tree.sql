@@ -157,6 +157,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tree`.`response` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `banco` VARCHAR(32) NOT NULL, 
   `success` ENUM('true', 'false') NOT NULL,
   `message` VARCHAR(211) NOT NULL,
   `code` VARCHAR(3) NOT NULL,
