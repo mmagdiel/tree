@@ -232,11 +232,6 @@ Class ActiveRecord
 				}
 			}
 
-			else
-			{
-				$form->id = intval($form->id);
-			}
-
 			foreach ($form as $key => $value) {
 				$this->$key = $value;
 			}
@@ -484,9 +479,11 @@ Class ActiveRecord
 				$this->_dbError = $this->_database->error();
 				$this->_dbLog = $this->_database->log();
 
+				$this->setData($this->findById($id), true);
+
 				$this->triggerEvent("afterSave");
 
-				return $this->findById($id);
+				return $this;
 			}
 
 			else

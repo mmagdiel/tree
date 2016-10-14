@@ -57,7 +57,7 @@ Class Helper
 		if(is_object($var))
 		{
 			foreach ($var as $key => $value) {
-				if($value == null)
+				if(is_null($value))
 				{
 					unset($var->$key);
 				}
@@ -67,7 +67,7 @@ Class Helper
 		if(is_array($var))
 		{
 			foreach ($var as $key => $value) {
-				if($value == null)
+				if(is_null($value))
 				{
 					unset($var[$key]);
 				}
