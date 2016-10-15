@@ -38,50 +38,41 @@ Class Bill_has_bill extends ActiveRecord
 
 	private function find_odd_parent(int $parent)
 	{
-		return $this->database->query("SELECT find_odd_parent($parent)")->fetch()[0];
+		return $this->query("SELECT find_odd_parent($parent)")[0];
 	}
 
 	private function get_leaves_count(int $parent)
 	{
-		return $this->database->query("SELECT get_leaves_count($parent)")->fetch()[0];
+		return $this->query("SELECT get_leaves_count($parent)")[0];
 	}
 
 	private function insert_node($node, $parent)
 	{
 
-		$this->database->query("call insert_node($node, $parent);");
+		$this->query("call insert_node($node, $parent);");
 
 		// Return whether the db query was successful
-		return $this->database->error()[0] == "00000";
+		return $this->getErrors()[0] == "00000";
 	}
 
 	private function get_max_tree($parent)
 	{
 
-		return $this->database->query("SELECT get_tree_max_length($parent)")->fetch()[0];
+		return $this->query("SELECT get_tree_max_length($parent)")[0];
 	}
 
 	private function get_new_parent()
 	{
-		return $this->database->query("SELECT get_new_parent()")->fetch()[0];
+		return $this->query("SELECT get_new_parent()")[0];
 	}
 
 	private function get_new_parent_level()
 	{
-		return $this->database->query("SELECT get_new_parent_level()")->fetch()[0];
+		return $this->query("SELECT get_new_parent_level()")[0];
 	}
 
 	public function create_node($node)
 	{
-		$this->database = new Medoo([
-			"database_type" => "mysql",
-			"database_name" => "tree",
-			"server" => "localhost",
-			"username" => "nosthertus",
-			"password" => "61748810",
-			"charset" => "utf8"
-		]);
-
 
 		$leaves_count = $this->get_leaves_count(1);
 		$max_length = $this->get_max_tree(1);
@@ -89,15 +80,7 @@ Class Bill_has_bill extends ActiveRecord
 		// Find odd parent
 		if(($leaves_count % 2) == 1)
 		{
-			if(insert_node($node, find_odd_parent(1)))
-			{
-				print("insertion successfull");
-			}
-
-			else
-			{
-				print("insertion failed");
-			}
+			insert_node($node, find_odd_parent(1));
 		}
 		
 		// Find even parent
@@ -106,29 +89,13 @@ Class Bill_has_bill extends ActiveRecord
 			// Start new level when current level is full
 			if(pow(2, $max_length) == $leaves_count)
 			{
-				if(insert_node($node, get_new_parent()))
-				{
-					print("insertion successfull");
-				}
-
-				else
-				{
-					print("insertion failed");
-				}
+				insert_node($node, get_new_parent());
 			}
 
 			// Find node for new parent in current level
 			else
 			{
-				if(insert_node($node, get_new_parent_level()))
-				{
-					print("insertion successfull");
-				}
-
-				else
-				{
-					print("insertion failed");
-				}
+				insert_node($node, get_new_parent_level());
 			}
 		}
 	}
