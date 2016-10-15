@@ -1,6 +1,7 @@
 <?php
 
 require_once "lib/ActiveRecord.php";
+require_once "lib/Helper.php";
 require_once "models/Bill.php";
 require_once "models/Account.php";
 require_once "models/User.php";
@@ -57,6 +58,14 @@ Class Ticket extends ActiveRecord
 				"ip"
 			]
 		];
+	}
+
+	public function beforeValidate()
+	{
+		// Set request IP in model data
+		$this->setData((Object) [
+			"ip" => Helper::get_ip()
+		]);
 	}
 
 	public function afterSave()
