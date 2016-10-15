@@ -1,6 +1,7 @@
 <?php
 
 require "models/Bill.php";
+require_once "models/Bill_has_bill.php";
 
 require_once "lib/Helper.php";
 
@@ -20,6 +21,15 @@ $app->get("/bills", function($request, $response)
 	$response = $response->withJson($model);
 
 	return $response;
+});
+
+$app->get("/billsRelations", function($request, $response)
+{
+	$model = Bill_has_bill::model()->findAll();
+
+	$response = $response->withJson($model);
+
+	return $response;	
 });
 
 /*
