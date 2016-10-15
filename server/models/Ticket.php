@@ -128,8 +128,6 @@ Class Ticket extends ActiveRecord
 		]);
 
 		$response->save();
-
-		var_dump($response->getErrors());
 	}
 
 	public static function model($className = __CLASS__)

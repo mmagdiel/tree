@@ -52,7 +52,7 @@ Class Bill_has_bill extends ActiveRecord
 		$this->query("call insert_node($node, $parent);");
 
 		// Return whether the db query was successful
-		return $this->getErrors()[0] == "00000";
+		return $this->getQueryErrors()[0] == "00000";
 	}
 
 	private function get_max_tree($parent)
@@ -80,7 +80,7 @@ Class Bill_has_bill extends ActiveRecord
 		// Find odd parent
 		if(($leaves_count % 2) == 1)
 		{
-			insert_node($node, find_odd_parent(1));
+			$this->insert_node($node, $this->find_odd_parent(1));
 		}
 		
 		// Find even parent
@@ -89,13 +89,13 @@ Class Bill_has_bill extends ActiveRecord
 			// Start new level when current level is full
 			if(pow(2, $max_length) == $leaves_count)
 			{
-				insert_node($node, get_new_parent());
+				$this->insert_node($node, $this->get_new_parent());
 			}
 
 			// Find node for new parent in current level
 			else
 			{
-				insert_node($node, get_new_parent_level());
+				$this->insert_node($node, $this->get_new_parent_level());
 			}
 		}
 	}

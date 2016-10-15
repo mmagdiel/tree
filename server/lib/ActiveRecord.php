@@ -296,6 +296,16 @@ Class ActiveRecord
 	}
 
 	/**
+	 * Gets a list of errors from PDO database
+	 * 
+	 * @return Array List of PDO errors
+	 */
+	public function getQueryErrors()
+	{
+		$this->_database->error();
+	}
+
+	/**
 	 * Fetches a list of records from the database
 	 * 
 	 * @param  Array   $filter The filter to pass into SQL
