@@ -79,5 +79,6 @@ include "routes/responses.php";
 include "routes/statics.php";
 include "routes/tickets.php";
 include "routes/login.php";
+include "routes/documents.php";
 
 $app->run();
