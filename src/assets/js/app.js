@@ -2958,7 +2958,6 @@
                 console.log('Result form API with SUCCESS', data);
 
                 var dialogAlert;
-
                 if(data.passed){
                     dialogAlert = $mdDialog.alert({
                         title: "Registro",
@@ -2966,7 +2965,6 @@
                         ok: "Ok"
                     });
                 }
-
                 else{
                     dialogAlert = $mdDialog.alert({
                         title: "Error",
@@ -2974,7 +2972,6 @@
                         ok: "Ok"
                     });
                 }
-
                 $mdDialog.show(dialogAlert);
 
             }, function(data) {
@@ -2987,9 +2984,7 @@
                     textContent: "Error en la comunicacion con el servicio, intente de nuevo mas tarde.",
                     ok: "Ok"
                 });
-
                 $mdDialog.show(dialogAlert);
-
             });
         }
     }
@@ -3021,7 +3016,41 @@
         // Define the accountsStore functions and objects that will be passed to the view
         accountsStores.stores = store;                                           // Store a resource
 
+        accountsStore.bandera = false;
 
+        accountsStore.form = {
+            username: null,
+            password: null,
+            repassword: null
+        };
+
+        accountsStore.register = function(){
+            console.log(accountsStore);
+            if(!accountsStore.bandera){
+                var dialogAlert = $mdDialog.alert({
+                    title: "Error",
+                    textContent: "Usted no ha aceptado los terminos y condiciones",
+                    ok: "Ok"
+                });
+
+                $mdDialog.show(dialogAlert);
+            }
+
+            else if(accountsStore.form.password != accountsStore.form.repassword){
+                var dialogAlert = $mdDialog.alert({
+                    title: "Error",
+                    textContent: "Las contrasenas no coinciden",
+                    ok: "Ok"
+                });
+
+                $mdDialog.show(dialogAlert);
+            }
+
+            else{
+                store(accountsStore.form);
+            }
+        }
+        
         /*
         |--------------------------------------------------------------------------
         | Contrsucts function
@@ -3060,11 +3089,33 @@
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
+                var dialogAlert;
+                if(data.passed){
+                    dialogAlert = $mdDialog.alert({
+                        title: "Registro",
+                        textContent: "Usuario registrado con exito",
+                        ok: "Ok"
+                    });
+                }
+                else{
+                    dialogAlert = $mdDialog.alert({
+                        title: "Error",
+                        textContent: "Uno de los campos no cumple los requerimientos",
+                        ok: "Ok"
+                    });
+                }
+                $mdDialog.show(dialogAlert);                
+
             }, function(data) {
 
                 // Custom function for error handling
                 console.log('Result form API with ERROR', data);
-
+                var dialogAlert = $mdDialog.alert({
+                    title: "Error",
+                    textContent: "Error en la comunicacion con el servicio, intente de nuevo mas tarde.",
+                    ok: "Ok"
+                });
+                $mdDialog.show(dialogAlert);
             });
         }
     }
@@ -6364,77 +6415,6 @@
         }
     }
 
-})();
-
-(function() {
-  'use strict';
-
-    // Pass the staticsHomeCtrl to the app
-    angular
-        .module('y')
-        .controller('staticsHomeCtrl', staticsHomeCtrl);
-
-    // Define the staticsHomeCtrl
-    function staticsHomeCtrl(userService, $scope){
-
-        // Inject with ng-annotate
-        "ngInject";
-
-        // Define staticsHome as this for ControllerAs and auto-$scope
-        var staticsHome = this;
-            staticsHome.title =    "Tree app";
-            staticsHome.sideMenu = false;
-
-            $scope.$on("user.login", function(ev, success, data){
-                if(data){
-                    staticsHome.sideMenu = (data.role == "admin");
-                }
-            });
-
-            staticsHome.nodes = [
-                {data: {id: "a", name:"1"}},
-                {data: {id: "b", name:"2"}},
-                {data: {id: "c", name:"3"}},
-                {data: {id: "d", name:"4"}},
-                {data: {id: "e", name:"5"}},
-                {data: {id: "f", name:"6"}},
-                {data: {id: "g", name:"7"}}
-            ];
-
-            staticsHome.relations = [
-                {
-                    data: {
-                        source: "a",
-                        target: "b"
-                    }
-                },{
-                    data: {
-                        source: "a",
-                        target: "c"
-                    }
-                },{
-                    data: {
-                        source: "b",
-                        target: "d"
-                    }
-                },{
-                    data: {
-                        source: "b",
-                        target: "e"
-                    }
-                },{
-                    data: {
-                        source: "c",
-                        target: "f"
-                    }
-                },{
-                    data: {
-                        source: "c",
-                        target: "g"
-                    }
-                }
-            ];
-    }
 })();
 
 (function() {

@@ -97,7 +97,6 @@
                 console.log('Result form API with SUCCESS', data);
 
                 var dialogAlert;
-
                 if(data.passed){
                     dialogAlert = $mdDialog.alert({
                         title: "Registro",
@@ -105,7 +104,6 @@
                         ok: "Ok"
                     });
                 }
-
                 else{
                     dialogAlert = $mdDialog.alert({
                         title: "Error",
@@ -113,7 +111,6 @@
                         ok: "Ok"
                     });
                 }
-
                 $mdDialog.show(dialogAlert);
 
             }, function(data) {
@@ -126,9 +123,7 @@
                     textContent: "Error en la comunicacion con el servicio, intente de nuevo mas tarde.",
                     ok: "Ok"
                 });
-
                 $mdDialog.show(dialogAlert);
-
             });
         }
     }
