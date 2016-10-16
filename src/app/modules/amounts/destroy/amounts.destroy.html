@@ -2,17 +2,19 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>Amount delete view</h1>
-		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Eliminar Monto</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline">{{amountsDestroy.amount.name}}</span>
-            <p> Role: {{amountsDestroy.amount.number}}</p>
-			<p>Create at: {{amountsDestroy.amount.create_at}}</p>
-			<p>Update at:{{amountsDestroy.amount.update_at}}</p>
+            <p><span class="md-subhead">Monto:</span>	 {{amountsDestroy.amount.number}}</p>
+			<p><span class="md-subhead">Fecha Creación:</span> {{amountsDestroy.amount.create_at}}</p>
+			<p><span class="md-subhead">Fecha Actualización:</span> {{amountsDestroy.amount.update_at}}</p>
           </md-card-title-text>
         </md-card-title>
         
@@ -20,10 +22,7 @@
           <md-button class="md-raised md-accent" ng-click="amountsDestroy.goo()">Cancel</md-button>
           <md-button class="md-raised md-warn" ng-click="Confirm">Confirm</md-button>
         </md-card-actions>
-        
       </md-card>					
-					
-	  </div>
 	</div>
 </div>
 

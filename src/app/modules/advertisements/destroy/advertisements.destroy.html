@@ -2,16 +2,18 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>advertisement delete view</h1>
-		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+  <div layout="column" layout-padding layout-margin layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+        <h1>Eliminar Anuncio</h1>
+        </div>
+      </md-toolbar>
+		<md-card>
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline">{{advertisementsDestroy.advertisement.name}}</span>
-            <p> Role: {{advertisementsDestroy.advertisement.content}}</p>
-			<p>Create at: {{advertisementsDestroy.advertisement.create_at}}</p>
+            <p><span class="md-subhead">Contenido:</span> {{advertisementsDestroy.advertisement.content}}</p>
+      <p><span class="md-subhead">Fecha de Creación:</span> {{advertisementsDestroy.advertisement.create_at}}</p>
           </md-card-title-text>
         </md-card-title>
         
@@ -21,8 +23,6 @@
         </md-card-actions>
         
       </md-card>					
-					
-	  </div>
 	</div>
 </div>
 

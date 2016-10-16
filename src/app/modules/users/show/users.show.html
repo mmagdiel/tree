@@ -2,24 +2,24 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>user show view</h1>
-		
-		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Detalle de Usuario</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">{{usersShow.user.first_name}}</span>
-            <p> Role: {{usersShow.user.last_name}}</p>
-			<p>Create at: {{usersShow.user.biography}}</p>
-			<p>Update at:{{usersShow.user.email}}</p>
-			<p>User id: {{usersShow.user.email_token}}</p>
-            <p> Role: {{usersShow.user.bithday}}</p>
-			<p>Create at: {{usersShow.user.create_at}}</p>
-			<p>Update at:{{usersShow.user.update_at}}</p>
-			<p>User id: {{usersShow.user.state_id}}</p>
-			<p>User id: {{usersShow.user.city_id}}</p
+            <span class="md-title">{{usersShow.user.first_name}}</span>
+            <p><span class="md-subhead">Apellido:</span> {{usersShow.user.last_name}}</p>
+			<p><span class="md-subhead">Biografia:</span> {{usersShow.user.biography}}</p>
+			<p><span class="md-subhead">Correo Electronico:</span> {{usersShow.user.email}}</p>
+			<p><span class="md-subhead">Cumpleaños:</span> {{usersShow.user.email_token}}</p>
+            <p><span class="md-subhead">Fecha Creación:</span> {{usersShow.user.bithday}}</p>
+			<p><span class="md-subhead">Fecha Actualización:</span> {{usersShow.user.create_at}}</p>
+			<p><span class="md-subhead">Estado:</span> {{usersShow.user.state}}</p>
+			<p><span class="md-subhead">Ciudad:</span> {{usersShow.user.city}}</p>
           </md-card-title-text>
         </md-card-title>
         
@@ -27,10 +27,7 @@
           <md-button class="md-raised md-accent" ng-click="usersShow.go('users-update',usersShow.user.id)">Update</md-button>
           <md-button class="md-raised md-warn" ng-click="usersShow.go('users-destroy',usersShow.user.id)">Destroy</md-button>
         </md-card-actions>
-        
-      </md-card>					
-					
-	  </div>
+      </md-card>				
 	</div>
 </div>
 

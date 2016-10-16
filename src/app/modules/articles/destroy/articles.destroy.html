@@ -2,19 +2,19 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>article delete view</h1>
-		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Eliminar Articulo</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline">{{articlesDestroy.article.name}}</span>
-            <p> Role: {{articlesDestroy.article.content}}</p>
-            <p> Role: {{articlesDestroy.article.name_photo}}</p>
-			<p>User id: {{articlesDestroy.article.path_photo}}</p>
-			<p>Create at: {{articlesDestroy.article.create_at}}</p>
-			<p>Update at:{{articlesDestroy.article.update_at}}</p>
+            <p><span class="md-subhead">Contenido:</span> {{articlesDestroy.article.content}}</p>
+            <p><span class="md-subhead">Fecha Creación:</span> {{articlesDestroy.article.name_photo}}</p>
+			<p><span class="md-subhead">Fecha Actualización:</span> {{articlesDestroy.article.path_photo}}</p>
           </md-card-title-text>
         </md-card-title>
         
@@ -22,10 +22,7 @@
           <md-button class="md-raised md-accent" ng-click="articlesDestroy.goo()">Cancel</md-button>
           <md-button class="md-raised md-warn" ng-click="">Confirm</md-button>
         </md-card-actions>
-        
       </md-card>					
-					
-	  </div>
 	</div>
 </div>
 

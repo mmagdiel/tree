@@ -2,17 +2,18 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>advertisement show view</h1>
-		
-		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Detalle de Anuncio</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">{{advertisementsShow.advertisement.name}}</span>
-            <p> Role: {{advertisementsShow.advertisement.content}}</p>
-			<p>Create at: {{advertisementsShow.advertisement.create_at}}</p>
+            <span class="md-title">{{advertisementsShow.advertisement.name}}</span>
+            <p><span class="md-subhead">Contenido:</span> {{advertisementsShow.advertisement.content}}</p>
+			<p><span class="md-subhead">Fecha de Creación:</span> {{advertisementsShow.advertisement.create_at}}</p>
           </md-card-title-text>
         </md-card-title>
         
@@ -20,10 +21,7 @@
           <md-button class="md-raised md-accent" ng-click="advertisementsShow.go('advertisements-update',advertisementsShow.advertisement.id)">Update</md-button>
           <md-button class="md-raised md-warn" ng-click="advertisementsShow.go('advertisements-destroy',advertisementsShow.advertisement.id)">Destroy</md-button>
         </md-card-actions>
-        
       </md-card>					
-					
-	  </div>
 	</div>
 </div>
 

@@ -2,19 +2,20 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>account show view</h1>
-		
-		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Detalle de Cuentas</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">{{accountsShow.account.username}}</span>
-            <p> Role: {{accountsShow.account.role}}</p>
-			<p>Create at: {{accountsShow.account.create_at}}</p>
-			<p>Update at:{{accountsShow.account.update_at}}</p>
-			<p>User id: {{accountsShow.account.user_id}}</p>
+            <span class="md-title">{{accountsShow.account.username}}</span>
+            <p><span class="md-subhead">Role:</span>  {{accountsShow.account.role}}</p>
+			<p><span class="md-subhead">Create at:</span> {{accountsShow.account.create_at}}</p>
+			<p><span class="md-subhead">Update at:</span> {{accountsShow.account.update_at}}</p>
+			<p><span class="md-subhead">User id:</span> {{accountsShow.account.user_id}}</p>
           </md-card-title-text>
         </md-card-title>
         
@@ -25,7 +26,8 @@
         
       </md-card>					
 					
-	  </div>
+
+
 	</div>
 </div>
 

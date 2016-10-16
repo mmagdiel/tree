@@ -2,20 +2,23 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>account index</h1>
+	<div layout="column" layout-padding layout-margin layout-fill>
+	  <md-toolbar>
+	  	<div class="md-toolbar-tools">
+			<h1>Índice de Cuentas</h1>
+	  	</div>
+	  </md-toolbar>
 		<md-content>
 			<md-list flex>
 				<md-list-item class="md-3-line" ng-repeat="item in accountsIndex.accounts" ng-click="accountsIndex.go('accounts-show',item.id)">
-					<p>{{item.id}}</p>
-					<p>{{item.username}}</p>
-					<p>{{item.role}}</p>
+					<div class="md-list-item-text">
+						<p><span class="md-subhead">Numero:</span> {{item.id}}</p>
+						<p><span class="md-subhead">Apodo:</span> {{item.username}}</p>
+						<p><span class="md-subhead">Role:</span> {{item.role}}</p>
+					</div>
 				</md-list-item>
 			</md-list>
 		</md-content>
-	  </div>
 	</div>
 </div>
 
