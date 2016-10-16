@@ -11,6 +11,8 @@ Class ActiveRecord
 	private $_scopes = ["default" => "*"];
 	private $className;
 	private $_database;
+	private $_dbError;
+	private $_dbLog;
 
 	/**
 	 * Construct model with data instance
@@ -232,11 +234,6 @@ Class ActiveRecord
 				}
 			}
 
-			else
-			{
-				$form->id = intval($form->id);
-			}
-
 			foreach ($form as $key => $value) {
 				$this->$key = $value;
 			}
@@ -298,6 +295,16 @@ Class ActiveRecord
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Gets a list of errors from PDO database
+	 * 
+	 * @return Array List of PDO errors
+	 */
+	public function getQueryErrors()
+	{
+		$this->_database->error();
 	}
 
 	/**
@@ -484,9 +491,11 @@ Class ActiveRecord
 				$this->_dbError = $this->_database->error();
 				$this->_dbLog = $this->_database->log();
 
+				$this->setData($this->findById($id), true);
+
 				$this->triggerEvent("afterSave");
 
-				return $this->findById($id);
+				return $this;
 			}
 
 			else

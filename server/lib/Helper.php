@@ -57,7 +57,7 @@ Class Helper
 		if(is_object($var))
 		{
 			foreach ($var as $key => $value) {
-				if($value == null)
+				if(is_null($value))
 				{
 					unset($var->$key);
 				}
@@ -67,7 +67,7 @@ Class Helper
 		if(is_array($var))
 		{
 			foreach ($var as $key => $value) {
-				if($value == null)
+				if(is_null($value))
 				{
 					unset($var[$key]);
 				}
@@ -75,5 +75,52 @@ Class Helper
 		}
 
 		return $var;
+	}
+
+	/**
+	 * Returns the ip from the client
+	 * 
+	 * @return String The ip value found from the client
+	 */
+	public static function get_ip()
+	{
+		$ip_address = "";
+
+		if(getenv("HTTP_CLIENT_IP"))
+		{
+			$ip_address = getenv("HTTP_CLIENT_IP");
+		}
+
+		else if (getenv("HTTP_X_FORWARDED_FOR"))
+		{
+			$ip_address = getenv("HTTP_X_FORWARDED_FOR");
+		}
+
+		else if (getenv("HTTP_X_FORWARDED"))
+		{
+			$ip_address = getenv("HTTP_X_FORWARDED");
+		}
+
+		else if (getenv("HTTP_FORWARDED_FOR"))
+		{
+			$ip_address = getenv("HTTP_FORWARDED_FOR");
+		}
+
+		else if (getenv("HTTP_FORWARDED"))
+		{
+			$ip_address = getenv("HTTP_FORWARDED");
+		}
+
+		else if (getenv("REMOTE_ADDR"))
+		{
+			$ip_address = getenv("REMOTE_ADDR");
+		}
+
+		else
+		{
+			$ip_address = "UNKNOWN";
+		}
+
+		return $ip_address;
 	}
 }

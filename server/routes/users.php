@@ -27,9 +27,31 @@ $app->get("/users", function($request, $response)
  */
 $app->get("/users/{id}", function($request, $response, $args)
 {
-	$model = User::model()->findById($args["id"], "detail");
+	$data = User::model()->findByQuery(null, [
+		"user.id",
+		"user.first_name",
+		"user.last_name",
+		"user.biography",
+		"user.email",
+		"user.birthday",
+		"user.create_at",
+		"user.update_at",
+		"city.name(city)",
+		"state.name(state)"
+	], [
+		"user.id" => $args["id"]
+	], [
+		"[>]city" => ["city_id" => "id"],
+		"[>]state" => ["state_id" => "id"]
+	])[0];
 
-	$response = $response->withJson($model);
+	if(!$data)
+	{
+		$response = $response->withStatus(404);
+		$data = (Object) [];
+	}
+
+	$response = $response->withJson($data);
 
 	return $response;
 });

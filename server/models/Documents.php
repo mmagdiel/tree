@@ -2,7 +2,7 @@
 
 require_once "lib/ActiveRecord.php";
 
-Class documents extends ActiveRecord
+Class Document extends ActiveRecord
 {
 	public function tableName()
 	{

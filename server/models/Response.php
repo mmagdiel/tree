@@ -11,6 +11,7 @@ Class Response extends ActiveRecord
 
 	protected $attributes = [
 		"id",
+		"banco",
 		"success",
 		"message",
 		"code",
@@ -19,20 +20,20 @@ Class Response extends ActiveRecord
 		"ordernumber",
 		"sequence",
 		"approval",
-		"late",
+		"lote",
 		"deferred",
 		"datetime",
 		"amount",
-		"responsecode_id",
+		"responsecode",
 		"ticket_id"
 	];
 
 	public function rules()
 	{
 		return [
-			"id" => [
+			"banco" => [
 				"required" =>true,
-				"message" => "id field is required"
+				"message" => "banco field is required"
 			],
 			"success" => [
 				"required" =>true,
@@ -66,9 +67,9 @@ Class Response extends ActiveRecord
 				"required" =>true,
 				"message" => "approval field is required"
 			],
-			"late" => [
+			"lote" => [
 				"required" =>true,
-				"message" => "late field is required"
+				"message" => "lote field is required"
 			],
 			"deferred" => [
 				"required" =>true,

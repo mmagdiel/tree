@@ -14,7 +14,7 @@ Class Instapago
 	 * @param String $key        The api key id generated in the page
 	 * @param String $public_key The public api key sent to the email
 	 */
-	public function __construct(String $key, String $public_key)
+	public function __construct(String $key = "7F346BD3-179E-4F05-8602-0264D50A02BC", String $public_key = "26a360ce16ed3308aa8e96bce86468e3")
 	{
 		$this->key = $key;
 		$this->public_key = $public_key;
@@ -38,7 +38,8 @@ Class Instapago
 			"CardHolderId"=> $info->CardHolderId,
 			"CardNumber" => $info->CardNumber,
 			"CVC" => $info->CVC,
-			"ExpirationDate" => $info->ExpirationDate
+			"ExpirationDate" => $info->ExpirationDate,
+			"IP" => $info->IP
 		];
 
 		$this->send("payment", $fields, "POST");

@@ -45,7 +45,7 @@ CREATE FUNCTION get_new_parent ()
 CREATE FUNCTION get_new_parent_level ()
 	RETURNS INT
 	RETURN (
-		SELECT descendant FROM bill_has_bill WHERE length = (
+		SELECT MIN(descendant) FROM bill_has_bill WHERE length = (
 			SELECT get_tree_max_length(1) - 1
 		) AND ancestor = 1 AND descendant NOT IN (
 			SELECT ancestor FROM bill_has_bill WHERE descendant IN (
