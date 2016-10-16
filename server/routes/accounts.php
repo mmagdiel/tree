@@ -30,7 +30,28 @@ $app->get("/accounts/{id}", function($request, $response, $args)
 {
 	$query = $_GET;
 
-	$account = Account::model()->findById($args["id"], "detail");
+	$account = Account::model()->findByQuery(null, [
+		"account.id",
+		"account.username",
+		"account.role",
+		"account.create_at",
+		"account.update_at",
+		"user" => [
+			"user.first_name",
+			"user.last_name"
+		]
+	], [
+		"account.id" => $args["id"]
+	], [
+		"[>]user" => ["user_id" => "id"]
+	])[0];
+
+	if(!$account)
+	{
+		$response = $response->withStatus(404);
+
+		$account = (Object) [];
+	}
 
 	$response = $response->withJson($account);
 
