@@ -27,7 +27,41 @@ $app->get("/responses", function($request, $response)
  */
 $app->get("/responses/{id}", function($request, $response, $args)
 {
-	$model = Response::model()->findById($args["id"]);
+	$model = Response::model()->findByQuery(null, [
+		"response.id",
+		"response.banco",
+		"response.success",
+		"response.message",
+		"response.code",
+		"response.reference",
+		"response.voucher",
+		"response.ordernumber",
+		"response.sequence",
+		"response.approval",
+		"response.lote",
+		"response.deferred",
+		"response.datetime",
+		"response.amount",
+		"response" => [
+			"responsecode.motivo",
+			"responsecode.codigo"
+		],
+		"ticket" => [
+			"ticket.status_id"
+		]
+	], [
+		"response.id" => $args["id"]
+	], [
+		"[>]responsecode" => ["responsecode" => "codigo"],
+		"[>]ticket" => ["ticket_id" => "id"]
+	])[0];
+
+	if(!$model)
+	{
+		$response = $response->withStatus(404);
+
+		$model = (Object) [];
+	}
 
 	$response = $response->withJson($model);
 

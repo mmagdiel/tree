@@ -23,7 +23,6 @@ Class Ticket extends ActiveRecord
 		"status_id",
 		"ip",
 		"create_at",
-		"ticketcol",
 		"account_id",
 		"amount_id"
 	];
