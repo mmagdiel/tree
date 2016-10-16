@@ -2,18 +2,19 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>bill show view</h1>
-		
-		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Detalle de Pago</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">{{billsShow.bill.account_id}}</span>
-            <p> Role: {{billsShow.bill.tickets_id}}</p>
-			<p>Create at: {{billsShow.bill.amount_id}}</p>
-			<p>Update at:{{billsShow.bill.create_at}}</p>
+            <span class="md-title">{{billsShow.bill.account_id}}</span>
+            <p><span class="md-subhead">Role:</span> {{billsShow.bill.tickets_id}}</p>
+			<p><span class="md-subhead">Monto:</span> {{billsShow.bill.amount_id}}</p>
+			<p><span class="md-subhead">Fecha de Creación:</span>{{billsShow.bill.create_at}}</p>
           </md-card-title-text>
         </md-card-title>
         
@@ -21,10 +22,7 @@
           <md-button class="md-raised md-accent" ng-click="billsShow.go('bills-update',billsShow.bill.id)">Update</md-button>
           <md-button class="md-raised md-warn" ng-click="billsShow.go('bills-destroy',billsShow.bill.id)">Destroy</md-button>
         </md-card-actions>
-        
       </md-card>					
-					
-	  </div>
 	</div>
 </div>
 

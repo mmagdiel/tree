@@ -2,19 +2,22 @@
 
 <div flex layout="row">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>Static index view</h1>
+	<div layout="column" layout-padding layout-margin layout-fill>
+	  <md-toolbar>
+	  	<div class="md-toolbar-tools">
+			<h1>Índice de Informes</h1>
+	  	</div>
+	  </md-toolbar>
 		<md-content>
 			<md-list flex>
 				<md-list-item class="md-3-line" ng-repeat="item in staticsIndex.statics" ng-click="staticsIndex.go('statics-show',item.id)">
-					<p>{{item.id}}</p>
-					<p>{{item.name}}</p>
+				<div class="md-list-item-text">
+					<p><span class="md-subhead">Numero:</span> {{item.id}}</p>
+					<p><span class="md-subhead">Titulo:</span> {{item.name}}</p>
+				</div>
 				</md-list-item>
 			</md-list>
 		</md-content>
-	  </div>
 	</div>
 </div>
 

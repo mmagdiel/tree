@@ -2,15 +2,17 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>Static delete view</h1>
-		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Eliminar Informe</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline">{{staticsDestroy.static.name}}</span>
-            <p> Role: {{staticsDestroy.static.content}}</p>
+            <p>Role: {{staticsDestroy.static.content}}</p>
 			<p>Create at: {{staticsDestroy.static.create_at}}</p>
 			<p>Update at:{{staticsDestroy.static.update_at}}</p>
           </md-card-title-text>
@@ -20,10 +22,7 @@
           <md-button class="md-raised md-accent" ng-click="staticsDestroy.goo()">Cancel</md-button>
           <md-button class="md-raised md-warn" ng-click="">Confirm</md-button>
         </md-card-actions>
-        
       </md-card>					
-					
-	  </div>
 	</div>
 </div>
 

@@ -2,28 +2,26 @@
 
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-	  	<h1>document show view</h1>
-		
-		<md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch>
+	<div layout="column" layout-padding layout-margin layout-fill>				
+	  </div>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Detalle de Documento</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">{{documentsShow.document.name}}</span>
-            <p> Role: {{documentsShow.document.path}}</p>
-			<p>Create at: {{documentsShow.document.create_at}}</p>
+            <span class="md-title">{{documentsShow.document.name}}</span>
+            <p><span class="md-subhead">Fecha Creación</span> {{documentsShow.document.path}}</p>
           </md-card-title-text>
         </md-card-title>
         
         <md-card-actions layout="row" layout-align="end center">
           <md-button class="md-raised md-accent" ng-click="documentsShow.go('documents-update',documentsShow.document.id)">Update</md-button>
           <md-button class="md-raised md-warn" ng-click="documentsShow.go('documents-destroy',documentsShow.document.id)">Destroy</md-button>
-        </md-card-actions>
-        
+        </md-card-actions>       
       </md-card>					
-					
-	  </div>
 	</div>
 </div>
 

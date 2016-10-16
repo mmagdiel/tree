@@ -2,20 +2,23 @@
 
 <div flex layout="row">
 	<sidenav-directive></sidenav-directive>
-	<div layout="row">
-	  <div flex="10"></div>
-	  <div flex="90">
-		<h1>ticket index view</h1>
+	<div layout="column" layout-padding layout-margin layout-fill>
+	  <md-toolbar>
+	  	<div class="md-toolbar-tools">
+			<h1>Índice de Tickets</h1>
+	  	</div>
+	  </md-toolbar>
 		<md-content>
 			<md-list flex>
 				<md-list-item class="md-3-line" ng-repeat="item in ticketsIndex.tickets" ng-click="ticketsIndex.go('tickets-show',item.id)">
-					<p>{{item.id}}</p>
-					<p>{{item.ip}}</p>
-					<p>{{item.amount}}</p>
+				<div class="md-list-item-text">
+					<p><span class="md-subhead">Numero:</span>{{item.id}}</p>
+					<p><span class="md-subhead">Dirección IPNumero:</span> {{item.ip}}</p>
+					<p><span class="md-subhead">Monto:</span> {{item.amount}}</p>
+				</div>
 				</md-list-item>
 			</md-list>
 		</md-content>
-	  </div>
 	</div>
 </div>
 
