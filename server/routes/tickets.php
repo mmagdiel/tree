@@ -27,7 +27,33 @@ $app->get("/tickets", function($request, $response)
  */
 $app->get("/tickets/{id}", function($request, $response, $args)
 {
-	$model = Ticket::model()->findById($args["id"]);
+	$model = Ticket::model()->findByQuery(null, [
+		"ticket.id",
+		"ticket.description",
+		"ticket.amount",
+		"ticket.status_id",
+		"ticket.ip",
+		"ticket.create_at",
+		"account" => [
+			"account.username"
+		],
+		"amount" => [
+			"amount.name",
+			"amount.number"
+		]
+	], [
+		"ticket.id" => $args["id"]
+	], [
+		"[>]account" => ["account_id" => "id"],
+		"[>]amount" => ["amount_id" => "id"]
+	])[0];
+
+	if(!$model)
+	{
+		$response = $response->withStatus(404);
+
+		$model = (Object) [];
+	}
 
 	$response = $response->withJson($model);
 

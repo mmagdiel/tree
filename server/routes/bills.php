@@ -37,7 +37,33 @@ $app->get("/billsRelations", function($request, $response)
  */
 $app->get("/bills/{id}", function($request, $response, $args)
 {
-	$model = Bill::model()->findById($args["id"]);
+	$model = Bill::model()->findByQuery(null, [
+		"bill.id",
+		"bill.create_at",
+		"account" => [
+			"account.username"
+		],
+		"ticket" => [
+			"ticket.status_id"
+		],
+		"amount" => [
+			"amount.name",
+			"amount.number"
+		]
+	], [
+		"bill.id" => $args["id"]
+	], [
+		"[>]account" => ["account_id" => "id"],
+		"[>]ticket" => ["ticket_id" => "id"],
+		"[>]amount" => ["amount_id" => "id"]
+	])[0];
+
+	if(!$model)
+	{
+		$response = $response->withStatus(404);
+
+		$model = (Object) [];
+	}
 
 	$response = $response->withJson($model);
 
