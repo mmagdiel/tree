@@ -23,6 +23,31 @@ $app->get("/documents", function($request, $response)
 	return $response;
 });
 
+$app->get("/documents/{id}", function($request, $response, $args)
+{
+	$model = Document::model()->findById($args["id"]);
+
+	return $response->withJson($model);
+});
+
+$app->get("/documents/{id}/download", function($request, $response, $args)
+{
+	$model = Document::model()->findById($args["id"]);
+
+	$extension = (new SplFileInfo($model->path))->getExtension();
+
+	$mime = $extension == "pdf" ? "application/pdf" : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+	$fh = fopen($model->path, "rb");
+
+	$stream = new \Slim\Http\Stream($fh);
+
+	$response = $response->withHeader("Content-Type", $mime);
+	$response = $response->withHeader("Content-Length", filesize($model->path));
+
+	return $response->withBody($stream);
+});
+
 $app->post("/documents", function($request, $response)
 {
 	// Get form body data
@@ -41,7 +66,7 @@ $app->post("/documents", function($request, $response)
 	}
 
 	// File field not found within upload
-	else if(isset($_FILES["file"]))
+	else if(!isset($_FILES["file"]))
 	{
 		$res["errors"]["file"] = "File field is required";
 	}
@@ -65,7 +90,6 @@ $app->post("/documents", function($request, $response)
 			{
 				$res["passed"] = true;
 				$res["data"] = $row;
-				$res["file"] = $file->savedPath;
 			}
 
 			// There was an error saving, validation probably failed
