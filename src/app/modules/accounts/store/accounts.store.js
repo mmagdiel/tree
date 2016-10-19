@@ -31,7 +31,6 @@
         };
 
         accountsStore.register = function(){
-            console.log(accountsStore);
             if(!accountsStore.bandera){
                 var dialogAlert = $mdDialog.alert({
                     title: "Error",
