@@ -26,15 +26,12 @@
 
         // Define the document factory object to return
         var documentsFactory = {
-
             index: index,
             show: show,
             store: store,
             update: update,
             destroy: destroy,
-
         };
-
 
         // Return the document factory
         return documentsFactory;
@@ -69,7 +66,7 @@
         // Store a newly created document in storage.
         function store(data) {
 
-            return resource.save(data)
+            return resource.save(null, data)
                         .then(function(data){ return data.data; });
         }
 

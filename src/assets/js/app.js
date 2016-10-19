@@ -3,14 +3,6 @@
 
 	angular.module("core.cookie", ["ngCookies"]);
 })();
-// (function(){
-
-// 	'use strict';
-
-// 	// Define angular core.mocking module
-// 	angular.module('core.mocking', ['ngMockE2E']);
-
-// })();
 (function(){
 
 	'use strict';
@@ -19,6 +11,14 @@
 	angular.module('core.rest', ['ngRestful']);
 
 })();
+// (function(){
+
+// 	'use strict';
+
+// 	// Define angular core.mocking module
+// 	angular.module('core.mocking', ['ngMockE2E']);
+
+// })();
 (function(){
 
 	'use strict';
@@ -1256,15 +1256,12 @@
 
         // Define the document factory object to return
         var documentsFactory = {
-
             index: index,
             show: show,
             store: store,
             update: update,
             destroy: destroy,
-
         };
-
 
         // Return the document factory
         return documentsFactory;
@@ -1299,7 +1296,7 @@
         // Store a newly created document in storage.
         function store(data) {
 
-            return resource.save(data)
+            return resource.save(null, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -2910,91 +2907,6 @@
 
   'use strict';
 
-    // Pass the accountsIndexCtrl to the app
-    angular
-        .module('y')
-        .controller('accountsIndexCtrl', accountsIndexCtrl);
-
-
-    // Define the accountsIndexCtrl
-    function accountsIndexCtrl(accountsFactory, $state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define accountsIndex as this for ControllerAs and auto-$scope
-        var accountsIndex = this;
-
-
-        // Define the accountsIndex functions and objects that will be passed to the view
-        accountsIndex.accounts = [];                                              // Array for list of accounts
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        index();
-		
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the accountsIndexCtrl
-        |
-        */
-
-		accountsIndex.go = function(state,id){
-			$state.go(state,{
-				id: id
-			});
-		}
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('accountsIndexCtrl init');
-        }
-
-
-        // Get all accounts.
-        function index() {
-
-            return accountsFactory.index().then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            accountsIndex.accounts = data.data;
-	            return accountsIndex.accounts;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the accountsShowCtrl to the app
     angular
         .module('y')
@@ -3064,6 +2976,91 @@
             	// Assign data to array and return them
 	            accountsShow.account = data;
 	            return accountsShow.account;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the accountsIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('accountsIndexCtrl', accountsIndexCtrl);
+
+
+    // Define the accountsIndexCtrl
+    function accountsIndexCtrl(accountsFactory, $state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define accountsIndex as this for ControllerAs and auto-$scope
+        var accountsIndex = this;
+
+
+        // Define the accountsIndex functions and objects that will be passed to the view
+        accountsIndex.accounts = [];                                              // Array for list of accounts
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+		
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the accountsIndexCtrl
+        |
+        */
+
+		accountsIndex.go = function(state,id){
+			$state.go(state,{
+				id: id
+			});
+		}
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('accountsIndexCtrl init');
+        }
+
+
+        // Get all accounts.
+        function index() {
+
+            return accountsFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            accountsIndex.accounts = data.data;
+	            return accountsIndex.accounts;
 
             }, function(data) {
 
@@ -5248,6 +5245,17 @@
 		$cookie.expires = later;
 	}]);
 })();
+(function(){
+	'use strict';
+
+	// Pass the configuration theming to the app
+	var app = angular
+            .module('core.rest');
+      // Define global domain for resource
+      app.config(["ngRestful", function($restful){
+        $restful.setDomain("http://api.unn.com.ve");
+      }]);
+})();
 // (function(){
 
 // 	'use strict';
@@ -5318,17 +5326,6 @@
 
 // })();
 
-(function(){
-	'use strict';
-
-	// Pass the configuration theming to the app
-	var app = angular
-            .module('core.rest');
-      // Define global domain for resource
-      app.config(["ngRestful", function($restful){
-        $restful.setDomain("http://api.unn.com.ve");
-      }]);
-})();
 (function(){
 
 	'use strict';
@@ -5460,65 +5457,6 @@
 
 (function() {
 
-    'use strict';
-
-    // Pass the validatorHelperProvider to the app
-    angular
-        .module('core.validator')
-        .provider('validatorHelper', validatorHelperProvider);
-
-
-    // Define the validatorHelperProvider
-    function validatorHelperProvider(valdrProvider, valdrMessageProvider) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Holds the service factory function
-        this.$get = validatorHelper;
-
-
-        // Define the validatorHelperProvider
-        function validatorHelper() {
-
-
-            valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
-
-            // Define the object to return
-            var service = {
-
-                configureValidators: configureValidators, // Configure all models to validate
-            };
-
-
-            // Return the object
-            return service;
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Functions
-            |--------------------------------------------------------------------------
-            |
-            | Declaring all functions used in the ValidatorHelper
-            |
-            */
-
-
-            // Configure all the validators for the models
-            function configureValidators(validator) {
-
-                valdrProvider.addConstraints(validator);
-            }
-        }
-    }
-
-})();
-
-(function() {
-
   'use strict';
 
     // Pass the documentsDestroyCtrl to the app
@@ -5613,6 +5551,65 @@
                 console.log('Result form API with ERROR', data);
 
             });
+        }
+    }
+
+})();
+
+(function() {
+
+    'use strict';
+
+    // Pass the validatorHelperProvider to the app
+    angular
+        .module('core.validator')
+        .provider('validatorHelper', validatorHelperProvider);
+
+
+    // Define the validatorHelperProvider
+    function validatorHelperProvider(valdrProvider, valdrMessageProvider) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Holds the service factory function
+        this.$get = validatorHelper;
+
+
+        // Define the validatorHelperProvider
+        function validatorHelper() {
+
+
+            valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
+
+            // Define the object to return
+            var service = {
+
+                configureValidators: configureValidators, // Configure all models to validate
+            };
+
+
+            // Return the object
+            return service;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Functions
+            |--------------------------------------------------------------------------
+            |
+            | Declaring all functions used in the ValidatorHelper
+            |
+            */
+
+
+            // Configure all the validators for the models
+            function configureValidators(validator) {
+
+                valdrProvider.addConstraints(validator);
+            }
         }
     }
 
@@ -5787,78 +5784,65 @@
 
 })();
 
-(function() {
-
+(function(){
   'use strict';
 
-    // Pass the documentsStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('documentsStoreCtrl', documentsStoreCtrl);
+	// Pass the documentsStoreCtrl to the app
+	angular
+		.module('y')
+		.controller('documentsStoreCtrl', documentsStoreCtrl);
 
 
-    // Define the documentsStoreCtrl
-    function documentsStoreCtrl(documentsFactory) {
+	// Define the documentsStoreCtrl
+	function documentsStoreCtrl(documentsFactory){
+		// Inject with ng-annotate
+		"ngInject";
+
+		// Define documentsStore as this for ControllerAs and auto-$scope
+		var documentsStore = this;
+
+		documentsStore.form = {};
+
+		// Define the documentsStore functions and objects that will be passed to the view
+		documentsStore.store = store;                                           // Store a resource
+
+		/*
+		|--------------------------------------------------------------------------
+		| Contrsucts function
+		|--------------------------------------------------------------------------
+		|
+		| All functions that should be init when the controller start
+		|
+		*/
+
+		initLog();
 
 
-        // Inject with ng-annotate
-        "ngInject";
+		/*
+		|--------------------------------------------------------------------------
+		| Functions
+		|--------------------------------------------------------------------------
+		|
+		| Declaring all functions used in the documentsStoreCtrl
+		|
+		*/
 
+		// Sample for init function
+		function initLog(){
+			console.log('documentsStoreCtrl init');
+		}
 
-        // Define documentsStore as this for ControllerAs and auto-$scope
-        var documentsStore = this;
-
-
-        // Define the documentsStore functions and objects that will be passed to the view
-        documentsStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the documentsStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('documentsStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return documentsFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
+		// Delete a resource
+		function store(data) {
+			return documentsFactory.store(data).then(function(data) {
+				// Custom function for success handling
+				console.log('Result form API with SUCCESS', data);
+			}, function(data) {
+				// Custom function for error handling
+				console.log('Result form API with ERROR', data);
+			});
+		}
+	}
 
 })();
 
@@ -6279,6 +6263,81 @@
 
   'use strict';
 
+    // Pass the responsesStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('responsesStoreCtrl', responsesStoreCtrl);
+
+
+    // Define the responsesStoreCtrl
+    function responsesStoreCtrl(responsesFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define responsesStore as this for ControllerAs and auto-$scope
+        var responsesStore = this;
+
+
+        // Define the responsesStore functions and objects that will be passed to the view
+        responsesStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the responsesStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('responsesStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+
+            return responsesFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the responsesShowCtrl to the app
     angular
         .module('y')
@@ -6348,81 +6407,6 @@
             	// Assign data to array and return them
 	            responsesShow.response = data;
 	            return responsesShow.response;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the responsesStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('responsesStoreCtrl', responsesStoreCtrl);
-
-
-    // Define the responsesStoreCtrl
-    function responsesStoreCtrl(responsesFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define responsesStore as this for ControllerAs and auto-$scope
-        var responsesStore = this;
-
-
-        // Define the responsesStore functions and objects that will be passed to the view
-        responsesStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the responsesStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('responsesStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return responsesFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
 
             }, function(data) {
 
@@ -8300,49 +8284,35 @@
 })();
 
 (function() {
-
   'use strict';
 
-    // Pass the fileDirective to the app
-    angular
-        .module('y')
-        .directive('fileDirective', fileDirective);
+	// Pass the fileDirective to the app
+	angular
+		.module('y')
+		.directive('fileModel', fileDirective);
 
+	// Define the fileDirective
+	function fileDirective(){
+		// Define directive
+		var directive = {
+			restrict: 'A',
+			scope: {
+				fileModel: '=',
+			},
+			link: linkFunc
+		};
 
-    // Define the fileDirective
-    function fileDirective() {
+		// Return directive
+		return directive;
 
-        // Define directive
-        var directive = {
-
-                restrict: 'EA',
-                templateUrl: 'app/shared/components/file-component/file-component.html',
-                scope: {
-                    fileString: '@',                      // Isolated scope string
-                    fileAttribute: '=',                   // Isolated scope two-way data binding
-                    fileAction: '&'                       // Isolated scope action
-                },
-                link: linkFunc,
-                controller: fileDirectiveController,
-                controllerAs: 'fileDirective'
-        };
-
-        // Return directive
-        return directive;
-
-        // Define link function
-        function linkFunc(scope, el, attr, ctrl) {
-
-            // Do stuff...
-        }
-    }
-
-    // Define directive controller
-    function fileDirectiveController() {
-
-        // Do stuff...
-    }
-
+		function linkFunc(scope, el){
+			el.bind("change", function(){
+				scope.$apply(function(){
+					scope.fileModel = el[0].files[0];
+				});
+			});
+		}
+	}
 })();
 
 (function() {
