@@ -9,7 +9,8 @@
 		'core.validator',
 		'core.cookie',
 		'ngMaterial',
-		'ui.router'
+		'ui.router',
+		'ngFileSaver'
 	])
 	.controller("mainController", ["$scope", "$state", "userService", "$location", function($scope, $state, $user, $location){
 		if(!$user.hasCookie()){

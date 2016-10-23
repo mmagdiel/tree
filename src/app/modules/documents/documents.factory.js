@@ -31,6 +31,7 @@
             store: store,
             update: update,
             destroy: destroy,
+            download: download
         };
 
         // Return the document factory
@@ -84,6 +85,10 @@
 
             return resource.delete(id)
                         .then(function(data){ return data.data; });
+        }
+
+        function download(id){
+            return resource.fetch(id + "/download");
         }
 
     }

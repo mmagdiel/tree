@@ -3,14 +3,6 @@
 
 	angular.module("core.cookie", ["ngCookies"]);
 })();
-(function(){
-
-	'use strict';
-
-	// Define angular core.theming module
-	angular.module('core.rest', ['ngRestful']);
-
-})();
 // (function(){
 
 // 	'use strict';
@@ -19,6 +11,14 @@
 // 	angular.module('core.mocking', ['ngMockE2E']);
 
 // })();
+(function(){
+
+	'use strict';
+
+	// Define angular core.theming module
+	angular.module('core.rest', ['ngRestful']);
+
+})();
 (function(){
 
 	'use strict';
@@ -55,7 +55,8 @@
 		'core.validator',
 		'core.cookie',
 		'ngMaterial',
-		'ui.router'
+		'ui.router',
+		'ngFileSaver'
 	])
 	.controller("mainController", ["$scope", "$state", "userService", "$location", function($scope, $state, $user, $location){
 		if(!$user.hasCookie()){
@@ -66,6 +67,183 @@
 			$state.go("estatico-home");
 		});
 	}])
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the userService to the app
+    angular
+        .module('y')
+        .factory('userService', userService);
+
+
+    // Define the userService
+    function userService($resource, $rootScope, $cookies) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+        // Define the user factory object to return
+        var userService = {
+            $user: {
+                id: null,
+                username: null,
+                access_token: null,
+                role: null
+            },
+            isGuest: true,
+            init: init,
+            login: login,
+            hasCookie: hasCookie,
+            getId: getId,
+            getToken: getToken,
+            getName: getName,
+            getRole: getRole,
+            cookieLogin: cookieLogin,
+            logout: logout
+        };
+
+        // Return the user factory
+        return userService;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the userService
+        |
+        */
+
+
+        // Display a listing of user.
+        function init() {
+            console.log('Init user factory');
+        }
+
+        // Logins a current user
+        function login(data, cb = null){
+            var login = new $resource("login");
+
+            var success = false;
+
+            login.save(null, data)
+                .then(function(response){
+                    if(response.status == 200 && response.data.passed)
+                    {
+                        userService.$user = response.data.data;
+                        userService.isGuest = false;
+                        success = true;
+
+                        if(data.cookie){
+                            storeCookie("access_token", response.data.data.access_token);
+                        }
+
+                        $rootScope.$broadcast("user.login", success, userService.$user);
+                    }
+
+                    cb(null, success);
+                })
+                .catch(function(err){
+                    cb(err, false);
+                });
+        }
+
+        // Checks if the current session has a cookie stored
+        function hasCookie()
+        {
+            return ($cookies.get("access_token") !== undefined);
+        }
+
+        // Gets the id of the current logged user
+        function getId(){
+            return userService.$user.id;
+        }
+
+        // Gets the access_token of the current logged user
+        function getToken(){
+            return userService.$user.access_token;
+        }
+
+        // Gets the username of the current logged user
+        function getName(){
+            return userService.$user.username;
+        }
+
+        // Gets the username of the current logged user
+        function getRole(){
+            return userService.$user.role;
+        }
+
+        // Store a cookie value
+        function storeCookie(key, value){
+            $cookies.put(key, value);
+        }
+
+        // Try to login through cookie if defined
+        function cookieLogin(cb){
+            if($cookies.get("access_token")){
+                var login = new $resource("login");
+
+                var data = {
+                    access_token: $cookies.get("access_token")
+                }
+
+                var success = false;
+
+                login.save(null, data)
+                    .then(function(response){
+                        if(response.status == 200 && response.data.passed)
+                        {
+                            userService.$user = response.data.data;
+                            userService.isGuest = false;
+                            success = true;
+
+                            $rootScope.$broadcast("user.login", success, userService.$user);
+                        }
+
+                        if(cb){
+                            cb(null, success, userService.$user);
+                        }
+                    })
+                    .catch(function(err){
+                        console.error(err);
+                    })
+
+            }
+            else{
+                cb(null, false, null);
+            }
+        }
+
+        // Restore the users's data to default
+        function restoreUser(){
+            userService.$user = {
+                id: null,
+                username: null,
+                access_token: null,
+                role: null
+            };
+        }
+
+        // Logout the current user
+        function logout(){
+            restoreUser();
+
+            // Remove the cookie token if it's stored
+            if($cookies.get("access_token")){
+                $cookies.remove("access_token");
+            }
+
+            userService.isGuest = true;
+
+            $rootScope.$broadcast("user.logout");
+        }
+    }
 })();
 
 (function() {
@@ -1261,6 +1439,7 @@
             store: store,
             update: update,
             destroy: destroy,
+            download: download
         };
 
         // Return the document factory
@@ -1314,6 +1493,10 @@
 
             return resource.delete(id)
                         .then(function(data){ return data.data; });
+        }
+
+        function download(id){
+            return resource.fetch(id + "/download");
         }
 
     }
@@ -2626,179 +2809,269 @@
 })();
 
 (function() {
+  'use strict';
+
+	// Pass the fileDirective to the app
+	angular
+		.module('y')
+		.directive('fileModel', fileDirective);
+
+	// Define the fileDirective
+	function fileDirective(){
+		// Define directive
+		var directive = {
+			restrict: 'A',
+			scope: {
+				fileModel: '=',
+			},
+			link: linkFunc
+		};
+
+		// Return directive
+		return directive;
+
+		function linkFunc(scope, el){
+			el.bind("change", function(){
+				scope.$apply(function(){
+					scope.fileModel = el[0].files[0];
+				});
+			});
+		}
+	}
+})();
+
+(function() {
 
   'use strict';
 
-    // Pass the userService to the app
+    // Pass the footerDirective to the app
     angular
         .module('y')
-        .factory('userService', userService);
+        .directive('footerDirective', footerDirective);
 
 
-    // Define the userService
-    function userService($resource, $rootScope, $cookies) {
+    // Define the footerDirective
+    function footerDirective() {
 
+        // Define directive
+        var directive = {
 
-        // Inject with ng-annotate
-        "ngInject";
-
-        // Define the user factory object to return
-        var userService = {
-            $user: {
-                id: null,
-                username: null,
-                access_token: null,
-                role: null
-            },
-            isGuest: true,
-            init: init,
-            login: login,
-            hasCookie: hasCookie,
-            getId: getId,
-            getToken: getToken,
-            getName: getName,
-            getRole: getRole,
-            cookieLogin: cookieLogin,
-            logout: logout
+                restrict: 'EA',
+                templateUrl: 'app/shared/components/footer-component/footer-component.html',
+                scope: {
+                    footerString: '@',                      // Isolated scope string
+                    footerAttribute: '=',                   // Isolated scope two-way data binding
+                    footerAction: '&'                       // Isolated scope action
+                },
+                link: linkFunc,
+                controller: footerDirectiveController,
+                controllerAs: 'footerDirective'
         };
 
-        // Return the user factory
-        return userService;
+        // Return directive
+        return directive;
 
+        // Define link function
+        function linkFunc(scope, el, attr, ctrl) {
 
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the userService
-        |
-        */
-
-
-        // Display a listing of user.
-        function init() {
-            console.log('Init user factory');
+            // Do stuff...
         }
+    }
 
-        // Logins a current user
-        function login(data, cb = null){
-            var login = new $resource("login");
+    // Define directive controller
+    function footerDirectiveController($scope) {
+		$scope.twitter='http://www.twitter.com',
+		$scope.facebook='http://www.facebook.com'
+        // Do stuff...
+    }
 
-            var success = false;
+})();
 
-            login.save(null, data)
-                .then(function(response){
-                    if(response.status == 200 && response.data.passed)
-                    {
-                        userService.$user = response.data.data;
-                        userService.isGuest = false;
-                        success = true;
+(function() {
 
-                        if(data.cookie){
-                            storeCookie("access_token", response.data.data.access_token);
-                        }
+  'use strict';
 
-                        $rootScope.$broadcast("user.login", success, userService.$user);
-                    }
+    // Pass the navbarDirective to the app
+    angular
+        .module('y')
+        .directive('navbarDirective', navbarDirective);
 
-                    cb(null, success);
-                })
-                .catch(function(err){
-                    cb(err, false);
-                });
+
+    // Define the navbarDirective
+    function navbarDirective() {
+
+        // Define directive
+        var directive = {
+                restrict: 'EA',
+                templateUrl: 'app/shared/components/navbar-component/navbar-component.html',
+                scope: {
+                    navbarString: '@',                      // Isolated scope string
+                    navbarAttribute: '=',                   // Isolated scope two-way data binding
+                    navbarAction: '&'                       // Isolated scope action
+                },
+                link: linkFunc,
+                controller: navbarDirectiveController,
+                controllerAs: 'navbarDirective'
+        };
+
+        // Return directive
+        return directive;
+
+        // Define link function
+        function linkFunc(scope, el, attr, ctrl) {
+
+            // Do stuff...
         }
+    }
 
-        // Checks if the current session has a cookie stored
-        function hasCookie()
-        {
-            return ($cookies.get("access_token") !== undefined);
-        }
+    // Define directive controller
+    function navbarDirectiveController(userService, $scope) {
+        var self = this;
+        self.title = "Tree";
+        self.guest = userService.isGuest;
+        self.role = userService.getRole();
 
-        // Gets the id of the current logged user
-        function getId(){
-            return userService.$user.id;
-        }
+        self.disable = true;
 
-        // Gets the access_token of the current logged user
-        function getToken(){
-            return userService.$user.access_token;
-        }
+        userService.cookieLogin(function(){
+            self.disable = false;
+        });
 
-        // Gets the username of the current logged user
-        function getName(){
-            return userService.$user.username;
-        }
-
-        // Gets the username of the current logged user
-        function getRole(){
-            return userService.$user.role;
-        }
-
-        // Store a cookie value
-        function storeCookie(key, value){
-            $cookies.put(key, value);
-        }
-
-        // Try to login through cookie if defined
-        function cookieLogin(cb){
-            if($cookies.get("access_token")){
-                var login = new $resource("login");
-
-                var data = {
-                    access_token: $cookies.get("access_token")
+        self.login = function(){
+            userService.login(self.form, function(err, success){
+                if(err){
+                    console.error(err);
                 }
 
-                var success = false;
+                if(success){
+                    self.guest = !success;
+                    self.role = userService.getRole();
+                }
+            });
+        };
 
-                login.save(null, data)
-                    .then(function(response){
-                        if(response.status == 200 && response.data.passed)
-                        {
-                            userService.$user = response.data.data;
-                            userService.isGuest = false;
-                            success = true;
-
-                            $rootScope.$broadcast("user.login", success, userService.$user);
-                        }
-
-                        if(cb){
-                            cb(null, success, userService.$user);
-                        }
-                    })
-                    .catch(function(err){
-                        console.error(err);
-                    })
-
+        $scope.$on("user.login", function(ev, success, data){
+           if(success){
+                self.guest = !success;
+                self.role = userService.getRole();
             }
-            else{
-                cb(null, false, null);
-            }
+        });
+    }
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the sidenavDirective to the app
+    angular
+        .module('y')
+        .directive('sidenavDirective', sidenavDirective);
+
+
+    // Define the sidenavDirective
+    function sidenavDirective() {
+
+        // Define directive
+        var directive = {
+
+                restrict: 'EA',
+                templateUrl: 'app/shared/components/sidenav-component/sidenav-component.html',
+                scope: {
+                    navbarString: '@',                      // Isolated scope string
+                    navbarAttribute: '=',                   // Isolated scope two-way data binding
+                    navbarAction: '&'                       // Isolated scope action
+                },
+                link: linkFunc,
+                controller: sidenavDirectiveController,
+                controllerAs: 'sidenavDirective'
+        };
+
+        // Return directive
+        return directive;
+
+        // Define link function
+        function linkFunc(scope, el, attr, ctrl) {
+
+            // Do stuff...
         }
+    }
 
-        // Restore the users's data to default
-        function restoreUser(){
-            userService.$user = {
-                id: null,
-                username: null,
-                access_token: null,
-                role: null
-            };
+    // Define directive controller
+    function sidenavDirectiveController(userService, $state) {
+		
+		this.home = function(){
+			var self = this;
+        	self.guest = userService.isGuest;
+        	self.role = userService.getRole();
+			if(self.guest = "false"){
+				if(self.role = "admin"){
+					$state.go('biodynamics-home');
+				}else{
+					$state.go('dynamics-home');
+				}
+			}else{
+				$state.go('estatico-home');
+			}
+		}
+		
+        this.logout = function(){
+            userService.logout()
         }
+    }
+})();
 
-        // Logout the current user
-        function logout(){
-            restoreUser();
+(function() {
 
-            // Remove the cookie token if it's stored
-            if($cookies.get("access_token")){
-                $cookies.remove("access_token");
-            }
+  'use strict';
 
-            userService.isGuest = true;
+    // Pass the treeDirective to the app
+    angular
+        .module('y')
+        .directive('treeDirective', treeDirective);
 
-            $rootScope.$broadcast("user.logout");
-        }
+
+    // Define the treeDirective
+    function treeDirective() {
+
+        // Define directive
+        var directive = {
+            restrict: 'E',
+            template: '<div id="cy" style="height:500px; width:500px;"></div>',
+            scope: {
+                nodes: '=',
+                relations: '='
+            },
+            controller: treeDirectiveController
+        };
+
+        // Return directive
+        return directive;
+    }
+
+    // Define directive controller
+    function treeDirectiveController($scope) {
+        var container = angular.element(document.querySelector("#cy"));
+
+        cytoscape({
+            container: container,
+            elements: $scope.nodes.concat($scope.relations),
+            layout: {
+                name: "breadthfirst",
+                directed: true,
+                padding: 30,
+                avoidOverlap: true
+            },
+            style: [
+            {
+                selector: "node",
+                style: {
+                    shape: "circle",
+                    "background-color": "red",
+                    label: "data(name)"
+                }
+            }]
+        });
     }
 })();
 
@@ -2907,91 +3180,6 @@
 
   'use strict';
 
-    // Pass the accountsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('accountsShowCtrl', accountsShowCtrl);
-
-
-    // Define the accountsShowCtrl
-    function accountsShowCtrl(accountsFactory, $stateParams, $state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define accountsShow as this for ControllerAs and auto-$scope
-        var accountsShow = this;
-
-
-        // Define the accountsShow functions and objects that will be passed to the view
-        accountsShow.account = {};                                                // Object for show the account
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the accountsShowCtrl
-        |
-        */
-
-        accountsShow.go = function(state,id){
-            $state.go(state,{
-                id: id
-            });
-        }
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('accountsShowCtrl init');
-        }
-
-
-        // Get the account
-        function show(id) {
-
-            return accountsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            accountsShow.account = data;
-	            return accountsShow.account;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the accountsIndexCtrl to the app
     angular
         .module('y')
@@ -3077,6 +3265,91 @@
 
   'use strict';
 
+    // Pass the accountsShowCtrl to the app
+    angular
+        .module('y')
+        .controller('accountsShowCtrl', accountsShowCtrl);
+
+
+    // Define the accountsShowCtrl
+    function accountsShowCtrl(accountsFactory, $stateParams, $state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define accountsShow as this for ControllerAs and auto-$scope
+        var accountsShow = this;
+
+
+        // Define the accountsShow functions and objects that will be passed to the view
+        accountsShow.account = {};                                                // Object for show the account
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the accountsShowCtrl
+        |
+        */
+
+        accountsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('accountsShowCtrl init');
+        }
+
+
+        // Get the account
+        function show(id) {
+
+            return accountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            accountsShow.account = data;
+	            return accountsShow.account;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the accountsStoreCtrl to the app
     angular
         .module('y')
@@ -3106,7 +3379,6 @@
         };
 
         accountsStore.register = function(){
-            console.log(accountsStore);
             if(!accountsStore.bandera){
                 var dialogAlert = $mdDialog.alert({
                     title: "Error",
@@ -5245,17 +5517,6 @@
 		$cookie.expires = later;
 	}]);
 })();
-(function(){
-	'use strict';
-
-	// Pass the configuration theming to the app
-	var app = angular
-            .module('core.rest');
-      // Define global domain for resource
-      app.config(["ngRestful", function($restful){
-        $restful.setDomain("http://api.unn.com.ve");
-      }]);
-})();
 // (function(){
 
 // 	'use strict';
@@ -5326,6 +5587,17 @@
 
 // })();
 
+(function(){
+	'use strict';
+
+	// Pass the configuration theming to the app
+	var app = angular
+            .module('core.rest');
+      // Define global domain for resource
+      app.config(["ngRestful", function($restful){
+        $restful.setDomain("http://api.unn.com.ve");
+      }]);
+})();
 (function(){
 
 	'use strict';
@@ -5457,6 +5729,65 @@
 
 (function() {
 
+    'use strict';
+
+    // Pass the validatorHelperProvider to the app
+    angular
+        .module('core.validator')
+        .provider('validatorHelper', validatorHelperProvider);
+
+
+    // Define the validatorHelperProvider
+    function validatorHelperProvider(valdrProvider, valdrMessageProvider) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Holds the service factory function
+        this.$get = validatorHelper;
+
+
+        // Define the validatorHelperProvider
+        function validatorHelper() {
+
+
+            valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
+
+            // Define the object to return
+            var service = {
+
+                configureValidators: configureValidators, // Configure all models to validate
+            };
+
+
+            // Return the object
+            return service;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Functions
+            |--------------------------------------------------------------------------
+            |
+            | Declaring all functions used in the ValidatorHelper
+            |
+            */
+
+
+            // Configure all the validators for the models
+            function configureValidators(validator) {
+
+                valdrProvider.addConstraints(validator);
+            }
+        }
+    }
+
+})();
+
+(function() {
+
   'use strict';
 
     // Pass the documentsDestroyCtrl to the app
@@ -5558,58 +5889,111 @@
 
 (function() {
 
-    'use strict';
+  'use strict';
 
-    // Pass the validatorHelperProvider to the app
+    // Pass the documentsShowCtrl to the app
     angular
-        .module('core.validator')
-        .provider('validatorHelper', validatorHelperProvider);
+        .module('y')
+        .controller('documentsShowCtrl', documentsShowCtrl);
 
 
-    // Define the validatorHelperProvider
-    function validatorHelperProvider(valdrProvider, valdrMessageProvider) {
+    // Define the documentsShowCtrl
+    function documentsShowCtrl(documentsFactory, $stateParams, $state, FileSaver) {
 
 
         // Inject with ng-annotate
         "ngInject";
 
 
-        // Holds the service factory function
-        this.$get = validatorHelper;
+        // Define documentsShow as this for ControllerAs and auto-$scope
+        var documentsShow = this;
 
 
-        // Define the validatorHelperProvider
-        function validatorHelper() {
+        // Define the documentsShow functions and objects that will be passed to the view
+        documentsShow.document = {};                                                // Object for show the document
 
 
-            valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
-
-            // Define the object to return
-            var service = {
-
-                configureValidators: configureValidators, // Configure all models to validate
-            };
-
-
-            // Return the object
-            return service;
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
 
 
-            /*
-            |--------------------------------------------------------------------------
-            | Functions
-            |--------------------------------------------------------------------------
-            |
-            | Declaring all functions used in the ValidatorHelper
-            |
-            */
+        initLog();
+        show($stateParams.id);
 
 
-            // Configure all the validators for the models
-            function configureValidators(validator) {
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the documentsShowCtrl
+        |
+        */
 
-                valdrProvider.addConstraints(validator);
+        documentsShow.go = function(state,id){
+            $state.go(state,{
+                id: id
+            });
+        }
+
+        // Download the file from the server
+        documentsShow.download = function(){
+            console.log("download", $stateParams.id);
+            documentsFactory.download($stateParams.id)
+                .then(function(data, status){
+                   // Save the data as file in browser
+                   saveFile(data.data, data.headers("Content-Type"));
+                })
+                .catch(function(err){
+                    console.error(err);
+                });
+        }
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('documentsShowCtrl init');
+        }
+
+
+        // Get the document
+        function show(id) {
+
+            return documentsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            documentsShow.document = data;
+	            return documentsShow.document;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+        // Prompt a file saving
+        function saveFile(data, header){
+            var extensions = {
+                "application/pdf": ".pdf",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document": ".docx"
             }
+
+            console.log(btoa(data));
+
+            // var file = new Blob(_base64ToArrayBuffer(data), {type: header});
+
+            // FileSaver.saveAs(file, documentsShow.document.name + extensions[header]);
         }
     }
 
@@ -5687,91 +6071,6 @@
             	// Assign data to array and return them
 	            documentsIndex.documents = data.data;
 	            return documentsIndex.documents;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the documentsShowCtrl to the app
-    angular
-        .module('y')
-        .controller('documentsShowCtrl', documentsShowCtrl);
-
-
-    // Define the documentsShowCtrl
-    function documentsShowCtrl(documentsFactory, $stateParams, $state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define documentsShow as this for ControllerAs and auto-$scope
-        var documentsShow = this;
-
-
-        // Define the documentsShow functions and objects that will be passed to the view
-        documentsShow.document = {};                                                // Object for show the document
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the documentsShowCtrl
-        |
-        */
-
-        documentsShow.go = function(state,id){
-            $state.go(state,{
-                id: id
-            });
-        }
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('documentsShowCtrl init');
-        }
-
-
-        // Get the document
-        function show(id) {
-
-            return documentsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            documentsShow.document = data;
-	            return documentsShow.document;
 
             }, function(data) {
 
@@ -7234,81 +7533,6 @@
 
   'use strict';
 
-    // Pass the ticketsStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('ticketsStoreCtrl', ticketsStoreCtrl);
-
-
-    // Define the ticketsStoreCtrl
-    function ticketsStoreCtrl(ticketsFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define ticketsStore as this for ControllerAs and auto-$scope
-        var ticketsStore = this;
-
-
-        // Define the ticketsStore functions and objects that will be passed to the view
-        ticketsStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the ticketsStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('ticketsStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return ticketsFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the ticketsUpdateCtrl to the app
     angular
         .module('y')
@@ -7395,6 +7619,81 @@
                 ticketsUpdate.ticket = data;
                 ticketsUpdate.ticket.targeta = ['VISA','MASTERCARD'];
                 return ticketsUpdate.ticket;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the ticketsStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('ticketsStoreCtrl', ticketsStoreCtrl);
+
+
+    // Define the ticketsStoreCtrl
+    function ticketsStoreCtrl(ticketsFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define ticketsStore as this for ControllerAs and auto-$scope
+        var ticketsStore = this;
+
+
+        // Define the ticketsStore functions and objects that will be passed to the view
+        ticketsStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the ticketsStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('ticketsStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+
+            return ticketsFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
 
             }, function(data) {
 
@@ -7743,104 +8042,6 @@
 
   'use strict';
 
-    // Pass the treesUpdateCtrl to the app
-    angular
-        .module('y')
-        .controller('treesUpdateCtrl', treesUpdateCtrl);
-
-
-    // Define the treesUpdateCtrl
-    function treesUpdateCtrl(treesFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define treesUpdate as this for ControllerAs and auto-$scope
-        var treesUpdate = this;
-
-
-        // Define the treesUpdate functions and objects that will be passed to the view
-        treesUpdate.tree = {};                                                  // Object for show the tree
-        treesUpdate.update = update;                                            // Update a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the treesUpdateCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('treesUpdateCtrl init');
-        }
-
-
-        // Delete a resource
-        function update(id, data) {
-
-            return treesFactory.update(id, data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the tree
-        function show(id) {
-
-            return treesFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                treesUpdate.tree = data;
-                return treesUpdate.tree;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the usersDestroyCtrl to the app
     angular
         .module('y')
@@ -7926,6 +8127,104 @@
                 // Assign data to array and return them
                 usersDestroy.user = data;
                 return usersDestroy.user;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the treesUpdateCtrl to the app
+    angular
+        .module('y')
+        .controller('treesUpdateCtrl', treesUpdateCtrl);
+
+
+    // Define the treesUpdateCtrl
+    function treesUpdateCtrl(treesFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define treesUpdate as this for ControllerAs and auto-$scope
+        var treesUpdate = this;
+
+
+        // Define the treesUpdate functions and objects that will be passed to the view
+        treesUpdate.tree = {};                                                  // Object for show the tree
+        treesUpdate.update = update;                                            // Update a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the treesUpdateCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('treesUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+
+            return treesFactory.update(id, data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the tree
+        function show(id) {
+
+            return treesFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                treesUpdate.tree = data;
+                return treesUpdate.tree;
 
             }, function(data) {
 
@@ -8281,271 +8580,4 @@
         }
     }
 
-})();
-
-(function() {
-  'use strict';
-
-	// Pass the fileDirective to the app
-	angular
-		.module('y')
-		.directive('fileModel', fileDirective);
-
-	// Define the fileDirective
-	function fileDirective(){
-		// Define directive
-		var directive = {
-			restrict: 'A',
-			scope: {
-				fileModel: '=',
-			},
-			link: linkFunc
-		};
-
-		// Return directive
-		return directive;
-
-		function linkFunc(scope, el){
-			el.bind("change", function(){
-				scope.$apply(function(){
-					scope.fileModel = el[0].files[0];
-				});
-			});
-		}
-	}
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the footerDirective to the app
-    angular
-        .module('y')
-        .directive('footerDirective', footerDirective);
-
-
-    // Define the footerDirective
-    function footerDirective() {
-
-        // Define directive
-        var directive = {
-
-                restrict: 'EA',
-                templateUrl: 'app/shared/components/footer-component/footer-component.html',
-                scope: {
-                    footerString: '@',                      // Isolated scope string
-                    footerAttribute: '=',                   // Isolated scope two-way data binding
-                    footerAction: '&'                       // Isolated scope action
-                },
-                link: linkFunc,
-                controller: footerDirectiveController,
-                controllerAs: 'footerDirective'
-        };
-
-        // Return directive
-        return directive;
-
-        // Define link function
-        function linkFunc(scope, el, attr, ctrl) {
-
-            // Do stuff...
-        }
-    }
-
-    // Define directive controller
-    function footerDirectiveController($scope) {
-		$scope.twitter='http://www.twitter.com',
-		$scope.facebook='http://www.facebook.com'
-        // Do stuff...
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the navbarDirective to the app
-    angular
-        .module('y')
-        .directive('navbarDirective', navbarDirective);
-
-
-    // Define the navbarDirective
-    function navbarDirective() {
-
-        // Define directive
-        var directive = {
-                restrict: 'EA',
-                templateUrl: 'app/shared/components/navbar-component/navbar-component.html',
-                scope: {
-                    navbarString: '@',                      // Isolated scope string
-                    navbarAttribute: '=',                   // Isolated scope two-way data binding
-                    navbarAction: '&'                       // Isolated scope action
-                },
-                link: linkFunc,
-                controller: navbarDirectiveController,
-                controllerAs: 'navbarDirective'
-        };
-
-        // Return directive
-        return directive;
-
-        // Define link function
-        function linkFunc(scope, el, attr, ctrl) {
-
-            // Do stuff...
-        }
-    }
-
-    // Define directive controller
-    function navbarDirectiveController(userService, $scope) {
-        var self = this;
-        self.title = "Tree";
-        self.guest = userService.isGuest;
-        self.role = userService.getRole();
-
-        self.disable = true;
-
-        userService.cookieLogin(function(){
-            self.disable = false;
-        });
-
-        self.login = function(){
-            userService.login(self.form, function(err, success){
-                if(err){
-                    console.error(err);
-                }
-
-                if(success){
-                    self.guest = !success;
-                    self.role = userService.getRole();
-                }
-            });
-        };
-
-        $scope.$on("user.login", function(ev, success, data){
-           if(success){
-                self.guest = !success;
-                self.role = userService.getRole();
-            }
-        });
-    }
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the sidenavDirective to the app
-    angular
-        .module('y')
-        .directive('sidenavDirective', sidenavDirective);
-
-
-    // Define the sidenavDirective
-    function sidenavDirective() {
-
-        // Define directive
-        var directive = {
-
-                restrict: 'EA',
-                templateUrl: 'app/shared/components/sidenav-component/sidenav-component.html',
-                scope: {
-                    navbarString: '@',                      // Isolated scope string
-                    navbarAttribute: '=',                   // Isolated scope two-way data binding
-                    navbarAction: '&'                       // Isolated scope action
-                },
-                link: linkFunc,
-                controller: sidenavDirectiveController,
-                controllerAs: 'sidenavDirective'
-        };
-
-        // Return directive
-        return directive;
-
-        // Define link function
-        function linkFunc(scope, el, attr, ctrl) {
-
-            // Do stuff...
-        }
-    }
-
-    // Define directive controller
-    function sidenavDirectiveController(userService, $state) {
-		
-		this.home = function(){
-			var self = this;
-        	self.guest = userService.isGuest;
-        	self.role = userService.getRole();
-			if(self.guest = "false"){
-				if(self.role = "admin"){
-					$state.go('biodynamics-home');
-				}else{
-					$state.go('dynamics-home');
-				}
-			}else{
-				$state.go('estatico-home');
-			}
-		}
-		
-        this.logout = function(){
-            userService.logout()
-        }
-    }
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the treeDirective to the app
-    angular
-        .module('y')
-        .directive('treeDirective', treeDirective);
-
-
-    // Define the treeDirective
-    function treeDirective() {
-
-        // Define directive
-        var directive = {
-            restrict: 'E',
-            template: '<div id="cy" style="height:500px; width:500px;"></div>',
-            scope: {
-                nodes: '=',
-                relations: '='
-            },
-            controller: treeDirectiveController
-        };
-
-        // Return directive
-        return directive;
-    }
-
-    // Define directive controller
-    function treeDirectiveController($scope) {
-        var container = angular.element(document.querySelector("#cy"));
-
-        cytoscape({
-            container: container,
-            elements: $scope.nodes.concat($scope.relations),
-            layout: {
-                name: "breadthfirst",
-                directed: true,
-                padding: 30,
-                avoidOverlap: true
-            },
-            style: [
-            {
-                selector: "node",
-                style: {
-                    shape: "circle",
-                    "background-color": "red",
-                    label: "data(name)"
-                }
-            }]
-        });
-    }
 })();

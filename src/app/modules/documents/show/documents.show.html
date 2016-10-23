@@ -3,13 +3,12 @@
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
 	<div layout="column" layout-padding layout-margin layout-fill>				
-	  </div>
-		<md-toolbar>
-	  		<div class="md-toolbar-tools">
-				<h1>Detalle de Documento</h1>
-	  		</div>
-	  	</md-toolbar>
-		<md-card>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+        <h1>Detalle de Documento</h1>
+        </div>
+      </md-toolbar>
+    <md-card>
         <md-card-title>
           <md-card-title-text>
             <span class="md-title">{{documentsShow.document.name}}</span>
@@ -18,11 +17,13 @@
         </md-card-title>
         
         <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-primary" ng-click="documentsShow.download()">Download</md-button>
           <md-button class="md-raised md-accent" ng-click="documentsShow.go('documents-update',documentsShow.document.id)">Update</md-button>
           <md-button class="md-raised md-warn" ng-click="documentsShow.go('documents-destroy',documentsShow.document.id)">Destroy</md-button>
         </md-card-actions>       
-      </md-card>					
-	</div>
+      </md-card>          
+	  </div>
+  </div>
 </div>
 
 <footer-directive></footer-directive>

@@ -20,6 +20,7 @@
     "angular-material": "^1.1.1",
     "font-awesome": "^4.6.3",
     "cytoscape": "^2.7.9",
-    "ng-restful": "ngrestful#^0.3.0"
+    "ng-restful": "ngrestful#^0.3.0",
+    "angular-file-saver": "^1.1.2"
   }
 }
