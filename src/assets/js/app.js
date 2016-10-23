@@ -3,14 +3,6 @@
 
 	angular.module("core.cookie", ["ngCookies"]);
 })();
-// (function(){
-
-// 	'use strict';
-
-// 	// Define angular core.mocking module
-// 	angular.module('core.mocking', ['ngMockE2E']);
-
-// })();
 (function(){
 
 	'use strict';
@@ -19,6 +11,14 @@
 	angular.module('core.rest', ['ngRestful']);
 
 })();
+// (function(){
+
+// 	'use strict';
+
+// 	// Define angular core.mocking module
+// 	angular.module('core.mocking', ['ngMockE2E']);
+
+// })();
 (function(){
 
 	'use strict';
@@ -1256,15 +1256,12 @@
 
         // Define the document factory object to return
         var documentsFactory = {
-
             index: index,
             show: show,
             store: store,
             update: update,
             destroy: destroy,
-
         };
-
 
         // Return the document factory
         return documentsFactory;
@@ -1299,7 +1296,7 @@
         // Store a newly created document in storage.
         function store(data) {
 
-            return resource.save(data)
+            return resource.save(null, data)
                         .then(function(data){ return data.data; });
         }
 
@@ -2194,6 +2191,223 @@
 
   'use strict';
 
+    // Pass the treesFactory to the app
+    angular
+        .module('y')
+        .factory('treesFactory', treesFactory);
+
+
+    // Define the treesFactory
+    function treesFactory($http) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define base URI for tree tree
+        var treeBase = '/api/trees/';
+
+
+        // Define the tree factory object to return
+        var treesFactory = {
+
+            index: index,
+            show: show,
+            store: store,
+            update: update,
+            destroy: destroy,
+
+        };
+
+
+        // Return the tree factory
+        return treesFactory;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the treesFactory
+        |
+        */
+
+
+        // Display a listing of trees.
+        function index() {
+
+            return $http.get(treeBase)
+                        .then(function(data){ return data; });
+        }
+
+
+        // Display a specified tree.
+        function show(id) {
+
+            return $http.get(treeBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Store a newly created tree in storage.
+        function store(data) {
+
+            return $http.post(treeBase, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Update the specified tree in storage.
+        function update(id, data) {
+
+            return $http.put(treeBase + id, data)
+                        .then(function(data){ return data.data; });
+        }
+
+
+        // Remove the specified tree from storage.
+        function destroy(id) {
+
+            return $http.delete(treeBase + id)
+                        .then(function(data){ return data.data; });
+        }
+
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the treesRoute to the app
+	angular
+	    .module('y')
+	    .run(treesRoute);
+
+
+	// Define the treesRoute
+    function treesRoute(routerHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+    	// Intercept all the states and add them to the routing
+    	routerHelper.configureStates(getStates());
+    }
+
+
+    // Define the getStates
+    function getStates() {
+
+		return [{
+
+		    state: 'trees-index',
+		    config: {
+		        url: '/trees',
+		        templateUrl: 'app/modules/trees/index/trees.index.html',
+		        controller: 'treesIndexCtrl',
+		        controllerAs: 'treesIndex'
+		    }
+		}, {
+		    state: 'trees-store',
+		    config: {
+		        url: '/trees/store',
+		        templateUrl: 'app/modules/trees/store/trees.store.html',
+		        controller: 'treesStoreCtrl',
+		        controllerAs: 'treesStore'
+		    }
+		}, {
+		    state: 'trees-show',
+		    config: {
+		        url: '/trees/:id',
+		        templateUrl: 'app/modules/trees/show/trees.show.html',
+		        controller: 'treesShowCtrl',
+		        controllerAs: 'treesShow'
+		    }
+		}, {
+		    state: 'trees-update',
+		    config: {
+		        url: '/trees/:id/update',
+		        templateUrl: 'app/modules/trees/update/trees.update.html',
+		        controller: 'treesUpdateCtrl',
+		        controllerAs: 'treesUpdate'
+		    }
+		}, {
+		    state: 'trees-destroy',
+		    config: {
+		        url: '/trees/:id/delete',
+		        templateUrl: 'app/modules/trees/destroy/trees.destroy.html',
+		        controller: 'treesDestroyCtrl',
+		        controllerAs: 'treesDestroy'
+		    }
+		}];
+	}
+
+})();
+
+(function() {
+
+    'use strict';
+
+    // Pass the treessValidator to the app
+    angular
+    .module('y')
+        .run(treessValidator);
+
+
+    // Define the treessValidator
+    function treessValidator(validatorHelper) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        validatorHelper.configureValidators(getValidators()); // Intercept all the api and add them to the httpBackend
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the treessValidator
+        |
+        */
+
+
+
+        // Function that pass the array that will create the model validator
+        function getValidators() {
+
+            // Object to pass with validation rules
+            return {};
+
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the usersFactory to the app
     angular
         .module('y')
@@ -2693,91 +2907,6 @@
 
   'use strict';
 
-    // Pass the accountsIndexCtrl to the app
-    angular
-        .module('y')
-        .controller('accountsIndexCtrl', accountsIndexCtrl);
-
-
-    // Define the accountsIndexCtrl
-    function accountsIndexCtrl(accountsFactory, $state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define accountsIndex as this for ControllerAs and auto-$scope
-        var accountsIndex = this;
-
-
-        // Define the accountsIndex functions and objects that will be passed to the view
-        accountsIndex.accounts = [];                                              // Array for list of accounts
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        index();
-		
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the accountsIndexCtrl
-        |
-        */
-
-		accountsIndex.go = function(state,id){
-			$state.go(state,{
-				id: id
-			});
-		}
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('accountsIndexCtrl init');
-        }
-
-
-        // Get all accounts.
-        function index() {
-
-            return accountsFactory.index().then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            	// Assign data to array and return them
-	            accountsIndex.accounts = data.data;
-	            return accountsIndex.accounts;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the accountsShowCtrl to the app
     angular
         .module('y')
@@ -2847,6 +2976,91 @@
             	// Assign data to array and return them
 	            accountsShow.account = data;
 	            return accountsShow.account;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the accountsIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('accountsIndexCtrl', accountsIndexCtrl);
+
+
+    // Define the accountsIndexCtrl
+    function accountsIndexCtrl(accountsFactory, $state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define accountsIndex as this for ControllerAs and auto-$scope
+        var accountsIndex = this;
+
+
+        // Define the accountsIndex functions and objects that will be passed to the view
+        accountsIndex.accounts = [];                                              // Array for list of accounts
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+		
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the accountsIndexCtrl
+        |
+        */
+
+		accountsIndex.go = function(state,id){
+			$state.go(state,{
+				id: id
+			});
+		}
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('accountsIndexCtrl init');
+        }
+
+
+        // Get all accounts.
+        function index() {
+
+            return accountsFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            accountsIndex.accounts = data.data;
+	            return accountsIndex.accounts;
 
             }, function(data) {
 
@@ -2958,7 +3172,6 @@
                 console.log('Result form API with SUCCESS', data);
 
                 var dialogAlert;
-
                 if(data.passed){
                     dialogAlert = $mdDialog.alert({
                         title: "Registro",
@@ -2966,7 +3179,6 @@
                         ok: "Ok"
                     });
                 }
-
                 else{
                     dialogAlert = $mdDialog.alert({
                         title: "Error",
@@ -2974,7 +3186,6 @@
                         ok: "Ok"
                     });
                 }
-
                 $mdDialog.show(dialogAlert);
 
             }, function(data) {
@@ -2987,9 +3198,7 @@
                     textContent: "Error en la comunicacion con el servicio, intente de nuevo mas tarde.",
                     ok: "Ok"
                 });
-
                 $mdDialog.show(dialogAlert);
-
             });
         }
     }
@@ -3021,7 +3230,41 @@
         // Define the accountsStore functions and objects that will be passed to the view
         accountsStores.stores = store;                                           // Store a resource
 
+        accountsStore.bandera = false;
 
+        accountsStore.form = {
+            username: null,
+            password: null,
+            repassword: null
+        };
+
+        accountsStore.register = function(){
+            console.log(accountsStore);
+            if(!accountsStore.bandera){
+                var dialogAlert = $mdDialog.alert({
+                    title: "Error",
+                    textContent: "Usted no ha aceptado los terminos y condiciones",
+                    ok: "Ok"
+                });
+
+                $mdDialog.show(dialogAlert);
+            }
+
+            else if(accountsStore.form.password != accountsStore.form.repassword){
+                var dialogAlert = $mdDialog.alert({
+                    title: "Error",
+                    textContent: "Las contrasenas no coinciden",
+                    ok: "Ok"
+                });
+
+                $mdDialog.show(dialogAlert);
+            }
+
+            else{
+                store(accountsStore.form);
+            }
+        }
+        
         /*
         |--------------------------------------------------------------------------
         | Contrsucts function
@@ -3060,11 +3303,33 @@
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
 
+                var dialogAlert;
+                if(data.passed){
+                    dialogAlert = $mdDialog.alert({
+                        title: "Registro",
+                        textContent: "Usuario registrado con exito",
+                        ok: "Ok"
+                    });
+                }
+                else{
+                    dialogAlert = $mdDialog.alert({
+                        title: "Error",
+                        textContent: "Uno de los campos no cumple los requerimientos",
+                        ok: "Ok"
+                    });
+                }
+                $mdDialog.show(dialogAlert);                
+
             }, function(data) {
 
                 // Custom function for error handling
                 console.log('Result form API with ERROR', data);
-
+                var dialogAlert = $mdDialog.alert({
+                    title: "Error",
+                    textContent: "Error en la comunicacion con el servicio, intente de nuevo mas tarde.",
+                    ok: "Ok"
+                });
+                $mdDialog.show(dialogAlert);
             });
         }
     }
@@ -4980,6 +5245,17 @@
 		$cookie.expires = later;
 	}]);
 })();
+(function(){
+	'use strict';
+
+	// Pass the configuration theming to the app
+	var app = angular
+            .module('core.rest');
+      // Define global domain for resource
+      app.config(["ngRestful", function($restful){
+        $restful.setDomain("http://api.unn.com.ve");
+      }]);
+})();
 // (function(){
 
 // 	'use strict';
@@ -5050,17 +5326,6 @@
 
 // })();
 
-(function(){
-	'use strict';
-
-	// Pass the configuration theming to the app
-	var app = angular
-            .module('core.rest');
-      // Define global domain for resource
-      app.config(["ngRestful", function($restful){
-        $restful.setDomain("http://api.unn.com.ve");
-      }]);
-})();
 (function(){
 
 	'use strict';
@@ -5192,65 +5457,6 @@
 
 (function() {
 
-    'use strict';
-
-    // Pass the validatorHelperProvider to the app
-    angular
-        .module('core.validator')
-        .provider('validatorHelper', validatorHelperProvider);
-
-
-    // Define the validatorHelperProvider
-    function validatorHelperProvider(valdrProvider, valdrMessageProvider) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Holds the service factory function
-        this.$get = validatorHelper;
-
-
-        // Define the validatorHelperProvider
-        function validatorHelper() {
-
-
-            valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
-
-            // Define the object to return
-            var service = {
-
-                configureValidators: configureValidators, // Configure all models to validate
-            };
-
-
-            // Return the object
-            return service;
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Functions
-            |--------------------------------------------------------------------------
-            |
-            | Declaring all functions used in the ValidatorHelper
-            |
-            */
-
-
-            // Configure all the validators for the models
-            function configureValidators(validator) {
-
-                valdrProvider.addConstraints(validator);
-            }
-        }
-    }
-
-})();
-
-(function() {
-
   'use strict';
 
     // Pass the documentsDestroyCtrl to the app
@@ -5345,6 +5551,65 @@
                 console.log('Result form API with ERROR', data);
 
             });
+        }
+    }
+
+})();
+
+(function() {
+
+    'use strict';
+
+    // Pass the validatorHelperProvider to the app
+    angular
+        .module('core.validator')
+        .provider('validatorHelper', validatorHelperProvider);
+
+
+    // Define the validatorHelperProvider
+    function validatorHelperProvider(valdrProvider, valdrMessageProvider) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Holds the service factory function
+        this.$get = validatorHelper;
+
+
+        // Define the validatorHelperProvider
+        function validatorHelper() {
+
+
+            valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
+
+            // Define the object to return
+            var service = {
+
+                configureValidators: configureValidators, // Configure all models to validate
+            };
+
+
+            // Return the object
+            return service;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Functions
+            |--------------------------------------------------------------------------
+            |
+            | Declaring all functions used in the ValidatorHelper
+            |
+            */
+
+
+            // Configure all the validators for the models
+            function configureValidators(validator) {
+
+                valdrProvider.addConstraints(validator);
+            }
         }
     }
 
@@ -5519,78 +5784,65 @@
 
 })();
 
-(function() {
-
+(function(){
   'use strict';
 
-    // Pass the documentsStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('documentsStoreCtrl', documentsStoreCtrl);
+	// Pass the documentsStoreCtrl to the app
+	angular
+		.module('y')
+		.controller('documentsStoreCtrl', documentsStoreCtrl);
 
 
-    // Define the documentsStoreCtrl
-    function documentsStoreCtrl(documentsFactory) {
+	// Define the documentsStoreCtrl
+	function documentsStoreCtrl(documentsFactory){
+		// Inject with ng-annotate
+		"ngInject";
+
+		// Define documentsStore as this for ControllerAs and auto-$scope
+		var documentsStore = this;
+
+		documentsStore.form = {};
+
+		// Define the documentsStore functions and objects that will be passed to the view
+		documentsStore.store = store;                                           // Store a resource
+
+		/*
+		|--------------------------------------------------------------------------
+		| Contrsucts function
+		|--------------------------------------------------------------------------
+		|
+		| All functions that should be init when the controller start
+		|
+		*/
+
+		initLog();
 
 
-        // Inject with ng-annotate
-        "ngInject";
+		/*
+		|--------------------------------------------------------------------------
+		| Functions
+		|--------------------------------------------------------------------------
+		|
+		| Declaring all functions used in the documentsStoreCtrl
+		|
+		*/
 
+		// Sample for init function
+		function initLog(){
+			console.log('documentsStoreCtrl init');
+		}
 
-        // Define documentsStore as this for ControllerAs and auto-$scope
-        var documentsStore = this;
-
-
-        // Define the documentsStore functions and objects that will be passed to the view
-        documentsStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the documentsStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('documentsStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return documentsFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
+		// Delete a resource
+		function store(data) {
+			return documentsFactory.store(data).then(function(data) {
+				// Custom function for success handling
+				console.log('Result form API with SUCCESS', data);
+			}, function(data) {
+				// Custom function for error handling
+				console.log('Result form API with ERROR', data);
+			});
+		}
+	}
 
 })();
 
@@ -6011,6 +6263,81 @@
 
   'use strict';
 
+    // Pass the responsesStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('responsesStoreCtrl', responsesStoreCtrl);
+
+
+    // Define the responsesStoreCtrl
+    function responsesStoreCtrl(responsesFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define responsesStore as this for ControllerAs and auto-$scope
+        var responsesStore = this;
+
+
+        // Define the responsesStore functions and objects that will be passed to the view
+        responsesStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the responsesStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('responsesStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+
+            return responsesFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the responsesShowCtrl to the app
     angular
         .module('y')
@@ -6080,81 +6407,6 @@
             	// Assign data to array and return them
 	            responsesShow.response = data;
 	            return responsesShow.response;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the responsesStoreCtrl to the app
-    angular
-        .module('y')
-        .controller('responsesStoreCtrl', responsesStoreCtrl);
-
-
-    // Define the responsesStoreCtrl
-    function responsesStoreCtrl(responsesFactory) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define responsesStore as this for ControllerAs and auto-$scope
-        var responsesStore = this;
-
-
-        // Define the responsesStore functions and objects that will be passed to the view
-        responsesStore.store = store;                                           // Store a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the responsesStoreCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('responsesStoreCtrl init');
-        }
-
-
-        // Delete a resource
-        function store(data) {
-
-            return responsesFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
 
             }, function(data) {
 
@@ -6364,77 +6616,6 @@
         }
     }
 
-})();
-
-(function() {
-  'use strict';
-
-    // Pass the staticsHomeCtrl to the app
-    angular
-        .module('y')
-        .controller('staticsHomeCtrl', staticsHomeCtrl);
-
-    // Define the staticsHomeCtrl
-    function staticsHomeCtrl(userService, $scope){
-
-        // Inject with ng-annotate
-        "ngInject";
-
-        // Define staticsHome as this for ControllerAs and auto-$scope
-        var staticsHome = this;
-            staticsHome.title =    "Tree app";
-            staticsHome.sideMenu = false;
-
-            $scope.$on("user.login", function(ev, success, data){
-                if(data){
-                    staticsHome.sideMenu = (data.role == "admin");
-                }
-            });
-
-            staticsHome.nodes = [
-                {data: {id: "a", name:"1"}},
-                {data: {id: "b", name:"2"}},
-                {data: {id: "c", name:"3"}},
-                {data: {id: "d", name:"4"}},
-                {data: {id: "e", name:"5"}},
-                {data: {id: "f", name:"6"}},
-                {data: {id: "g", name:"7"}}
-            ];
-
-            staticsHome.relations = [
-                {
-                    data: {
-                        source: "a",
-                        target: "b"
-                    }
-                },{
-                    data: {
-                        source: "a",
-                        target: "c"
-                    }
-                },{
-                    data: {
-                        source: "b",
-                        target: "d"
-                    }
-                },{
-                    data: {
-                        source: "b",
-                        target: "e"
-                    }
-                },{
-                    data: {
-                        source: "c",
-                        target: "f"
-                    }
-                },{
-                    data: {
-                        source: "c",
-                        target: "g"
-                    }
-                }
-            ];
-    }
 })();
 
 (function() {
@@ -7230,6 +7411,436 @@
 
   'use strict';
 
+    // Pass the treesDestroyCtrl to the app
+    angular
+        .module('y')
+        .controller('treesDestroyCtrl', treesDestroyCtrl);
+
+
+    // Define the treesDestroyCtrl
+    function treesDestroyCtrl(treesFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define treesDestroy as this for ControllerAs and auto-$scope
+        var treesDestroy = this;
+
+
+        // Define the treesDestroy functions and objects that will be passed to the view
+        treesDestroy.tree = {};                                                 // Object for show the tree
+        treesDestroy.destroy = destroy;                                         // Delete a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the treesDestroyCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('treesDestroyCtrl init');
+        }
+
+
+        // Delete a resource
+        function destroy(id) {
+
+            return treesFactory.destroy(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+            	// Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the tree
+        function show(id) {
+
+            return treesFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                treesDestroy.tree = data;
+                return treesDestroy.tree;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the treesIndexCtrl to the app
+    angular
+        .module('y')
+        .controller('treesIndexCtrl', treesIndexCtrl);
+
+
+    // Define the treesIndexCtrl
+    function treesIndexCtrl(treesFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define treesIndex as this for ControllerAs and auto-$scope
+        var treesIndex = this;
+
+
+        // Define the treesIndex functions and objects that will be passed to the view
+        treesIndex.trees = [];                                              // Array for list of trees
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        index();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the treesIndexCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('treesIndexCtrl init');
+        }
+
+
+        // Get all trees.
+        function index() {
+
+            return treesFactory.index().then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            treesIndex.trees = data.data;
+	            return treesIndex.trees;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the treesShowCtrl to the app
+    angular
+        .module('y')
+        .controller('treesShowCtrl', treesShowCtrl);
+
+
+    // Define the treesShowCtrl
+    function treesShowCtrl(treesFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define treesShow as this for ControllerAs and auto-$scope
+        var treesShow = this;
+
+
+        // Define the treesShow functions and objects that will be passed to the view
+        treesShow.tree = {};                                                // Object for show the tree
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the treesShowCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('treesShowCtrl init');
+        }
+
+
+        // Get the tree
+        function show(id) {
+
+            return treesFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            	// Assign data to array and return them
+	            treesShow.tree = data;
+	            return treesShow.tree;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the treesStoreCtrl to the app
+    angular
+        .module('y')
+        .controller('treesStoreCtrl', treesStoreCtrl);
+
+
+    // Define the treesStoreCtrl
+    function treesStoreCtrl(treesFactory) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define treesStore as this for ControllerAs and auto-$scope
+        var treesStore = this;
+
+
+        // Define the treesStore functions and objects that will be passed to the view
+        treesStore.store = store;                                           // Store a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the treesStoreCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('treesStoreCtrl init');
+        }
+
+
+        // Delete a resource
+        function store(data) {
+
+            return treesFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the treesUpdateCtrl to the app
+    angular
+        .module('y')
+        .controller('treesUpdateCtrl', treesUpdateCtrl);
+
+
+    // Define the treesUpdateCtrl
+    function treesUpdateCtrl(treesFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define treesUpdate as this for ControllerAs and auto-$scope
+        var treesUpdate = this;
+
+
+        // Define the treesUpdate functions and objects that will be passed to the view
+        treesUpdate.tree = {};                                                  // Object for show the tree
+        treesUpdate.update = update;                                            // Update a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the treesUpdateCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('treesUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+
+            return treesFactory.update(id, data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the tree
+        function show(id) {
+
+            return treesFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                treesUpdate.tree = data;
+                return treesUpdate.tree;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the usersDestroyCtrl to the app
     angular
         .module('y')
@@ -7670,6 +8281,38 @@
         }
     }
 
+})();
+
+(function() {
+  'use strict';
+
+	// Pass the fileDirective to the app
+	angular
+		.module('y')
+		.directive('fileModel', fileDirective);
+
+	// Define the fileDirective
+	function fileDirective(){
+		// Define directive
+		var directive = {
+			restrict: 'A',
+			scope: {
+				fileModel: '=',
+			},
+			link: linkFunc
+		};
+
+		// Return directive
+		return directive;
+
+		function linkFunc(scope, el){
+			el.bind("change", function(){
+				scope.$apply(function(){
+					scope.fileModel = el[0].files[0];
+				});
+			});
+		}
+	}
 })();
 
 (function() {

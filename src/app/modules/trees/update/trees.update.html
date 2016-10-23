@@ -5,23 +5,29 @@
 	<div layout="column" layout-padding layout-margin layout-fill>
 		<md-toolbar>
 	  		<div class="md-toolbar-tools">
-				<h1>Registrar Anuncio</h1>
+				<h1>Actualizar Arbol</h1>
 	  		</div>
 	  	</md-toolbar>
 		<div>
 			<md-input-container class="md-block">
-				<label>Name </label>
-				<input type="text">
+				<label>Username </label>
+				<input ng-model="treesUpdate.tree.username">
 			</md-input-container>
 		</div>
 		<div>
 			<md-input-container class="md-block">
-				<label>Content</label>
-				<input type="text">
+				<label>Password</label>
+				<input ng-model="treesUpdate.tree.password">
 			</md-input-container>
 		</div>
 		<div>
-			<md-button class="md-raised md-warn" ui-sref="advertisements-index">Cancel</md-button>
+			<md-input-container class="md-block">
+				<label>Re-Password</label>
+				<input ng-model="treesUpdate.tree.password">
+			</md-input-container>
+		</div>
+		<div>
+			<md-button class="md-raised md-warn" ui-sref="trees-index">Cancel</md-button>
 			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
 		</div>
 	</div>

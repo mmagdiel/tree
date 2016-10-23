@@ -2,29 +2,28 @@
 
 <div layout="row" layout-aling="center">
 <sidenav-directive></sidenav-directive>
-	<div layout="column" layout-padding layout-margin layout-fill>
+	<form layout="column" layout-padding layout-margin layout-fill ng-submit="documentsStore.store(documentsStore.form)">
 		<md-toolbar>
 	  		<div class="md-toolbar-tools">
 				<h1>Registrar Documento</h1>
 	  		</div>
 	  	</md-toolbar>
 		<div>
-			<md-input-container>
+			<md-input-container class="md-block">
 				<label>Name </label>
-				<input type="text">
+				<input type="text" ng-model="documentsStore.form.name">
 			</md-input-container>
 		</div>
 		<div>
-			<md-input-container>
-				<label>Path</label>
-				<input type="text">
+			<md-input-container class="md-block">
+				<input type="file" file-model="documentsStore.form.file" accept=".pdf, .docx">
 			</md-input-container>
 		</div>
 		<div>
 			<md-button class="md-raised md-warn" ui-sref="documents-index">Cancel</md-button>
 			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
 		</div>
-	</div>
+	</form>
 </div>
 
 <footer-directive></footer-directive>

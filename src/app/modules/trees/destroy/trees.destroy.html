@@ -1,0 +1,30 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Eliminar Arbol</h1>
+	  		</div>
+	  	</md-toolbar>	
+		<md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{treesDestroy.tree.username}}</span>
+            <p><span class="md-subhead">Role:</span>  {{treesDestroy.tree.role}}</p>
+			<p><span class="md-subhead">Create at:</span> {{treesDestroy.tree.create_at}}</p>
+			<p><span class="md-subhead">Update at:</span> {{treesDestroy.tree.update_at}}</p>
+			<p><span class="md-subhead">User id:</span> {{treesDestroy.tree.user_id}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="treesDestroy.goo()">Cancel</md-button> 
+          <md-button class="md-raised md-warn" ng-click="">Confirm</md-button>
+        </md-card-actions>
+        </md-card>
+	</div>
+</div>
+
+<footer-directive></footer-directive>
