@@ -1,0 +1,29 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+  <div layout="column" layout-padding layout-margin layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+        <h1>Eliminar Anuncio</h1>
+        </div>
+      </md-toolbar>
+		<md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{advertisementsDestroy.advertisement.name}}</span>
+            <p><span class="md-subhead">Contenido:</span> {{advertisementsDestroy.advertisement.content}}</p>
+      <p><span class="md-subhead">Fecha de Creación:</span> {{advertisementsDestroy.advertisement.create_at}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="advertisementsDestroy.goo()">Cancel</md-button>
+          <md-button class="md-raised md-warn" ng-click="Confirm">Confirm</md-button>
+        </md-card-actions>
+        
+      </md-card>					
+	</div>
+</div>
+
+<footer-directive></footer-directive>

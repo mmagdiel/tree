@@ -1,0 +1,30 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Registrar Informe</h1>
+	  		</div>
+	  	</md-toolbar>
+		<div>
+			<md-input-container class="md-block">
+				<label>Name </label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>Content</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-button class="md-raised md-warn" ui-sref="statics-index">Cancel</md-button>
+			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
+		</div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

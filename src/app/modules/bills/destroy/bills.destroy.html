@@ -1,0 +1,29 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Eliminar Pago</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{billsDestroy.bill.account_id}}</span>
+            <p><span class="md-subhead">Role:</span> {{billsDestroy.bill.tickets_id}}</p>
+			<p><span class="md-subhead">Monto:</span> {{billsDestroy.bill.amount_id}}</p>
+			<p><span class="md-subhead">Fecha de Creación:</span>{{billsDestroy.bill.create_at}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="billsDestroy.goo()">Cancel</md-button>
+          <md-button class="md-raised md-warn" ng-click="">Confirm</md-button>
+        </md-card-actions>
+      </md-card>					
+	</div>
+</div>
+
+<footer-directive></footer-directive>

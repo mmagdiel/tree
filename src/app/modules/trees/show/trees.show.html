@@ -1,0 +1,34 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Detalle del Arbol</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-title">{{treesShow.tree.username}}</span>
+            <p><span class="md-subhead">Role:</span>  {{treesShow.tree.role}}</p>
+			<p><span class="md-subhead">Create at:</span> {{treesShow.tree.create_at}}</p>
+			<p><span class="md-subhead">Update at:</span> {{treesShow.tree.update_at}}</p>
+			<p><span class="md-subhead">User id:</span> {{treesShow.tree.user_id}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="treesShow.go('trees-update',treesShow.tree.id)">Update</md-button>
+          <md-button class="md-raised md-warn" ng-click="treesShow.go('trees-destroy',treesShow.tree.id)">Destroy</md-button>
+        </md-card-actions>
+        
+      </md-card>					
+					
+
+
+	</div>
+</div>
+
+<footer-directive></footer-directive>

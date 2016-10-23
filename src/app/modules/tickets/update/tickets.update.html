@@ -1,0 +1,47 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Actulizar Ticket</h1>
+	  		</div>
+	  	</md-toolbar>
+		<div>
+			<md-input-container class="md-block">
+				<label>No. Targeta </label>
+				<input ng-model="ticketsUpdate.tickets.description">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>Cod. Seguridad </label>
+				<input ng-model="ticketsUpdate.ticket.amount">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>Nombre targeta</label>
+				<md-select ng-model="ticketsUpdate.ticket.targetaSeleciona">
+              		<md-option ng-repeat="item in ticketsUpdate.ticket.targeta" value="{{$index}}">
+                	{{item}}
+              		</md-option>
+            	</md-select>
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>Cedula o Rif</label>
+				<input ng-model="ticketsUpdate.tickets.ip">
+			</md-input-container>
+		</div>
+		<div>
+			<md-button class="md-raised md-warn" ui-sref="ticket-index">
+			Cancel</md-button>
+			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
+		</div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

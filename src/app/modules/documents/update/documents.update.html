@@ -1,0 +1,30 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Actualizar Documento</h1>
+	  		</div>
+	  	</md-toolbar>
+		<div>
+			<md-input-container class="md-block">
+				<label>Name</label>
+				<input ng-model="documentsUpdate.document.name">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>Path</label>
+				<input ng-model="documentsUpdate.document.Path">
+			</md-input-container>
+		</div>
+		<div>
+			<md-button class="md-raised md-warn" ui-sref="documents-index">Cancel</md-button>
+			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
+		</div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

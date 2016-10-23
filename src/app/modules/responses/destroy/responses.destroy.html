@@ -1,0 +1,39 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Eliminar Respuesta</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{responsesDestroy.response.success}}</span>
+            <p><span class="md-subhead">Mensaje:</span> {{responsesDestroy.response.message}}</p>
+			<p><span class="md-subhead">Codigo:</span> {{responsesDestroy.response.code}}</p>
+			<p><span class="md-subhead">Referencia:</span> {{responsesDestroy.response.reference}}</p>
+			<p><span class="md-subhead">Boucher:</span> {{responsesDestroy.response.voucher}}</p>
+			<p><span class="md-subhead">Numero de Orden:</span> {{responsesDestroy.response.ordernumber}}</p>
+			<p><span class="md-subhead">Secuencia:</span> {{responsesDestroy.response.sequence}}</p>
+			<p><span class="md-subhead">Aprovación:</span> {{responsesDestroy.response.approval}}</p>
+			<p><span class="md-subhead">Lote:</span> {{responsesDestroy.response.lote}}</p>
+			<p><span class="md-subhead">Diferido:</span> {{responsesDestroy.response.deferred}}</p>
+			<p><span class="md-subhead">Fecha y Hora:</span> {{responsesDestroy.response.datetime}}</p>
+			<p><span class="md-subhead">Monto:</span> {{responsesDestroy.response.amount}}</p>
+			<p><span class="md-subhead">Respuesta:</span> {{responsesDestroy.response.responsecode_id}}</p>
+            <p><span class="md-subhead">Numero Ticket:</span> {{responsesDestroy.response.ticket_id}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="responsesDestroy.goo()">Cancel</md-button>
+          <md-button class="md-raised md-warn" ng-click="">Confirm</md-button>
+        </md-card-actions>
+      </md-card>					
+	</div>
+</div>
+
+<footer-directive></footer-directive>

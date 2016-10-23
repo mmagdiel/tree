@@ -1,0 +1,68 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Registrar Usuario</h1>
+	  		</div>
+	  	</md-toolbar>
+		<div>
+			<md-input-container class="md-block">
+				<label>First_Name </label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>Last_Name</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>Biography</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>Email </label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>Birthday</label>
+				<md-datepicker ng-model="usersUpdate.user.birthday"></md-datepicker>
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>State</label>
+				<md-select ng-model="usersUpdate.user.stateSelect">
+              		<md-option ng-repeat="item in usersUpdate.user.state" value="{{$index}}">
+                	{{item}}
+              		</md-option>
+            	</md-select>
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container class="md-block">
+				<label>City</label>
+				<md-select ng-model="usersUpdate.user.citySelect">
+              		<md-option ng-repeat="item in usersUpdate.user.city" value="{{$index}}">
+                	{{item}}
+              		</md-option>
+            	</md-select>
+			</md-input-container>
+		</div>
+		<div>
+			<md-button class="md-raised md-warn" ui-sref="users-index">Cancel</md-button>
+			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
+		</div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

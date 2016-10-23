@@ -1,0 +1,39 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Detalle de Respuesta</h1>
+	  		</div>
+	  	</md-toolbar>
+		<md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-title">{{responsesShow.response.success}}</span>
+            <p><span class="md-subhead">Mensaje:</span> {{responsesShow.response.message}}</p>
+			<p><span class="md-subhead">Codigo:</span> {{responsesShow.response.code}}</p>
+			<p><span class="md-subhead">Referencia:</span> {{responsesShow.response.reference}}</p>
+			<p><span class="md-subhead">Boucher:</span> {{responsesShow.response.voucher}}</p>
+			<p><span class="md-subhead">Numero de Orden:</span> {{responsesShow.response.ordernumber}}</p>
+			<p><span class="md-subhead">Secuencia:</span> {{responsesShow.response.sequence}}</p>
+			<p><span class="md-subhead">Aprovación:</span> {{responsesShow.response.approval}}</p>
+			<p><span class="md-subhead">Lote:</span> {{responsesShow.response.lote}}</p>
+			<p><span class="md-subhead">Diferido:</span> {{responsesShow.response.deferred}}</p>
+			<p><span class="md-subhead">Fecha y Hora:</span> {{responsesShow.response.datetime}}</p>
+			<p><span class="md-subhead">Monto:</span> {{responsesShow.response.amount}}</p>
+			<p><span class="md-subhead">Respuesta:</span> {{responsesShow.response.responsecode_id}}</p>
+            <p><span class="md-subhead">Numero Ticket:</span> {{responsesShow.response.ticket_id}}</p>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-accent" ng-click="responsesShow.go('responses-update',responsesShow.response.id)">Update</md-button>
+          <md-button class="md-raised md-warn" ng-click="responsesShow.go('responses-destroy',responsesShow.response.id)">Destroy</md-button>
+        </md-card-actions>
+      </md-card>					
+	</div>
+</div>
+
+<footer-directive></footer-directive>

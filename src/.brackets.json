@@ -1,0 +1,16 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/home/ldvt/tree/src/assets/bower_components/cytoscape/snippets/animated-bfs.js",
+        "underscore.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/test/test.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/test/saucelabs.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/test/remove.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/test/test-fp.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/file.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/util.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/uglify.options.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/mapping.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/lib/common/minify.js",
+        "/home/ldvt/tree/src/assets/bower_components/lodash/vendor/backbone/test/view.js"
+    ]
+}

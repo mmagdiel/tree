@@ -1,0 +1,24 @@
+<navbar-directive></navbar-directive>
+
+<div flex layout="row">
+	<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+	  <md-toolbar>
+	  	<div class="md-toolbar-tools">
+			<h1>Índice de Montos</h1>
+	  	</div>
+	  </md-toolbar>
+		<md-content>
+			<md-list flex>
+				<md-list-item class="md-2-line" ng-repeat="item in amountsIndex.amounts" ng-click="amountsIndex.go('amounts-show',item.id)">
+				<div class="md-list-item-text">
+					<p><span class="md-subhead">Numero:</span> {{item.id}}</p>
+					<p><span class="md-subhead">Monto:</span> {{item.name}}</p>
+				</div>
+				</md-list-item>
+			</md-list>
+		</md-content>
+	</div>
+</div>
+
+<footer-directive></footer-directive>

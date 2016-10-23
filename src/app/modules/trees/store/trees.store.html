@@ -1,0 +1,42 @@
+<navbar-directive></navbar-directive>
+
+<div layout="row" layout-aling="center">
+	<sidenav-directive></sidenav-directive>
+	<div layout="column" layout-padding layout-margin layout-fill>
+		<md-toolbar>
+	  		<div class="md-toolbar-tools">
+				<h1>Registrar Arbol</h1>
+	  		</div>
+	  	</md-toolbar>
+		<div>
+			<md-input-container>
+				<label>Username</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<label>Password</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<label>Re-Password</label>
+				<input type="text">
+			</md-input-container>
+		</div>
+		<div>
+			He leido todos los terminos y consiciones
+			<md-input-container>
+				<md-switch ng-model="bandera">Conforme: {{bandera ? "No": "Si"}}</md-switch>
+			</md-input-container>
+		</div>
+		<div>
+			<md-button class="md-raised md-warn" ui-sref="biodynamics-home">Cancel</md-button>
+			<md-button class="md-raised md-accent" type="submit">Submit</md-button>
+		</div>
+	</div>
+</div>
+
+<footer-directive></footer-directive>
