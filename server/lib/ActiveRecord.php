@@ -437,9 +437,9 @@ Class ActiveRecord
 	 * @param  String $query The SQL query to execute
 	 * @return Array         The result of the executed SQL query
 	 */
-	public function query(String $query)
+	public function query(String $query, String $func = "fetch")
 	{
-		return $this->_database->query($query)->fetch();
+		return $this->_database->query($query)->$func();
 	}
 
 	/**

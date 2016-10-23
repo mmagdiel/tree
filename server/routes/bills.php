@@ -16,20 +16,15 @@ $app->get("/bills", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
+	$filter["ORDER"] = [
+		"id" => "ASC"
+	];
+
 	$model = Bill::model()->findAll($filter, "batch");
 
 	$response = $response->withJson($model);
 
 	return $response;
-});
-
-$app->get("/billsRelations", function($request, $response)
-{
-	$model = Bill_has_bill::model()->findAll();
-
-	$response = $response->withJson($model);
-
-	return $response;	
 });
 
 /*
@@ -63,6 +58,24 @@ $app->get("/bills/{id}", function($request, $response, $args)
 		$response = $response->withStatus(404);
 
 		$model = (Object) [];
+	}
+
+	else
+	{
+		$parent = $args["id"];
+		$childs = Bill::model()->query("SELECT bill_has_bill.ancestor, bill_has_bill.descendant, account.username FROM bill_has_bill JOIN bill ON (bill.id = bill_has_bill.descendant) JOIN account ON (account.id = bill.account_id)  WHERE length = 1 AND descendant IN (SELECT descendant FROM bill_has_bill WHERE ancestor = $parent AND length > 0)", "fetchAll");
+
+		if(count($childs) > 0)
+		{
+			foreach ($childs as $key => $value)
+			{
+				unset($childs[$key][0]);
+				unset($childs[$key][1]);
+				unset($childs[$key][2]);
+			}
+		}
+
+		$model["childs"] = $childs;
 	}
 
 	$response = $response->withJson($model);
