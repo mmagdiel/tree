@@ -100,11 +100,7 @@
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document": ".docx"
             }
 
-            console.log(btoa(data));
-
-            // var file = new Blob(_base64ToArrayBuffer(data), {type: header});
-
-            // FileSaver.saveAs(file, documentsShow.document.name + extensions[header]);
+            FileSaver.saveAs(data, documentsShow.document.name + extensions[header]);
         }
     }
 

@@ -9,7 +9,7 @@
 
 
     // Define the documentsFactory
-    function documentsFactory($resource, userService) {
+    function documentsFactory($resource, userService, $http) {
 
 
         // Inject with ng-annotate
@@ -88,7 +88,14 @@
         }
 
         function download(id){
-            return resource.fetch(id + "/download");
+            return $http({
+                method: "GET",
+                url: `http://api.unn.com.ve/documents/${id}/download`,
+                headers: {
+                    "X-Access-Token": userService.getToken()
+                },
+                responseType: "blob"
+            });
         }
 
     }
