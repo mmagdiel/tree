@@ -37,6 +37,15 @@
 			</md-input-container>
 		</div>
 		<div>
+			<md-input-container>
+				<md-select ng-model="ticketsUpdate.ticket.amount" arial-label="Seleccionar">
+					<md-option ng-repeat="item in ticketsUpdate.tickets" value={{$index}}>
+						{{item.number}}
+					</md-option>
+				</md-select>
+			</md-input-container>	
+		</div>
+		<div>
 			<md-button class="md-raised md-warn" ui-sref="ticket-index">
 			Cancel</md-button>
 			<md-button class="md-raised md-accent" type="submit">Submit</md-button>

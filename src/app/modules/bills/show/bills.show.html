@@ -3,26 +3,10 @@
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
 	<div layout="column" layout-padding layout-margin layout-fill>
-		<md-toolbar>
-	  		<div class="md-toolbar-tools">
-				<h1>Detalle de Pago</h1>
-	  		</div>
-	  	</md-toolbar>
-		<md-card>
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-title">{{billsShow.bill.account_id}}</span>
-            <p><span class="md-subhead">Role:</span> {{billsShow.bill.tickets_id}}</p>
-			<p><span class="md-subhead">Monto:</span> {{billsShow.bill.amount_id}}</p>
-			<p><span class="md-subhead">Fecha de Creación:</span>{{billsShow.bill.create_at}}</p>
-          </md-card-title-text>
-        </md-card-title>
-        
-        <md-card-actions layout="row" layout-align="end center">
+		<tree-directive flex nodes="billsShow.bill.nodes" relations="billsShow.bill.relations">
           <md-button class="md-raised md-accent" ng-click="billsShow.go('bills-update',billsShow.bill.id)">Update</md-button>
           <md-button class="md-raised md-warn" ng-click="billsShow.go('bills-destroy',billsShow.bill.id)">Destroy</md-button>
-        </md-card-actions>
-      </md-card>					
+		</tree-directive>			
 	</div>
 </div>
 

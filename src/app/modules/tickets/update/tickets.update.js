@@ -23,7 +23,7 @@
         // Define the ticketsUpdate functions and objects that will be passed to the view
         ticketsUpdate.ticket = {};                                                // Object for show the ticket
         ticketsUpdate.update = update;                                            // Update a resource
-
+        ticketsUpdate.tickets = [];
 
         /*
         |--------------------------------------------------------------------------
@@ -56,6 +56,14 @@
         function initLog() {
 
             console.log('ticketsUpdateCtrl init');
+
+            ticketsFactory.indexes()
+            .then(function(data){
+                ticketsUpdate.tickets = data.data;
+            })
+            .catch(function(err){
+                console.log('err');
+            })
         }
 
 

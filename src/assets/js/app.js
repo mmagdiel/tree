@@ -5047,6 +5047,27 @@
 
             	// Assign data to array and return them
 	            billsShow.bill = data;
+                billsShow.bill.nodes = [];
+                billsShow.bill.relations = [];
+
+                for(var child in billsShow.bill.childs){
+                  billsShow.bill.nodes.push({
+                    data: {
+                        id: billsShow.bill.childs[child].ancestor,
+                        name: billsShow.bill.childs[child].username
+                    }
+                  });
+
+                  billsShow.bill.relations.push({
+                    data:{   
+                        source: billsShow.bill.childs[child].ancestor,
+                        target: billsShow.bill.childs[child].descendant
+                    }
+                  });
+                }
+
+                console.log(billsShow);
+
 	            return billsShow.bill;
 
             }, function(data) {
@@ -7389,7 +7410,7 @@
         // Define the ticketsUpdate functions and objects that will be passed to the view
         ticketsUpdate.ticket = {};                                                // Object for show the ticket
         ticketsUpdate.update = update;                                            // Update a resource
-
+        ticketsUpdate.tickets = [];
 
         /*
         |--------------------------------------------------------------------------
@@ -7422,6 +7443,14 @@
         function initLog() {
 
             console.log('ticketsUpdateCtrl init');
+
+            ticketsFactory.indexes()
+            .then(function(data){
+                ticketsUpdate.tickets = data.data;
+            })
+            .catch(function(err){
+                console.log('err');
+            })
         }
 
 
