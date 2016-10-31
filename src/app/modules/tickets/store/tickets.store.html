@@ -21,10 +21,16 @@
 			</md-input-container>
 		</div>
 		<div>
+			<md-input-container>
+				<label>Ingrese la fecha</label>
+				<md-datepicker ng-model="ticketsStore.store.fecha"></md-datepicker>			
+			</md-input-container>
+		</div>
+		<div>
 			<md-input-container class="md-block">
 				<label>Nombre targeta</label>
-				<md-select ng-model="ticketsUpdate.ticket.targetaSeleciona">
-              		<md-option ng-repeat="item in ticketsUpdate.ticket.targeta" value="{{$index}}">
+				<md-select ng-model="ticketsStore.ticket.targetaSeleciona" arial-label="Seleccionar">
+              		<md-option ng-repeat="item in ticketsStore.ticket.targeta" value="{{$index}}">
                 	{{item}}
               		</md-option>
             	</md-select>
@@ -35,6 +41,15 @@
 				<label>Cedula o Rif</label>
 				<input type="text">
 			</md-input-container>
+		</div>
+		<div>
+			<md-input-container>
+				<md-select ng-model="ticketsStore.ticket.amount" arial-label="Seleccionar">
+					<md-option ng-repeat="item in ticketsStore.tickets" value={{$index}}>
+						{{item.name}}
+					</md-option>
+				</md-select>
+			</md-input-container>	
 		</div>
 		<div>
 			<md-button class="md-raised md-warn" ui-sref="ticket-index">

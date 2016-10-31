@@ -2005,16 +2005,24 @@
             }
         });
 
+                // Define resource instance
+        var resources = new $resource("amounts", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
+
         // Define the ticket factory object to return
         var ticketsFactory = {
 
+            indexes: indexes,
             index: index,
             show: show,
             store: store,
             update: update,
             destroy: destroy,
 
-        };
+        }; 
 
 
         // Return the ticket factory
@@ -2038,6 +2046,12 @@
                         .then(function(data){ return data; });
         }
 
+        // Display a listing of amounts.
+        function indexes() {
+
+            return resources.fetch()
+                        .then(function(data){ return data; });
+        }
 
         // Display a specified ticket.
         function show(id) {
@@ -3795,6 +3809,104 @@
 
   'use strict';
 
+    // Pass the advertisementsUpdateCtrl to the app
+    angular
+        .module('y')
+        .controller('advertisementsUpdateCtrl', advertisementsUpdateCtrl);
+
+
+    // Define the advertisementsUpdateCtrl
+    function advertisementsUpdateCtrl(advertisementsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define advertisementsUpdate as this for ControllerAs and auto-$scope
+        var advertisementsUpdate = this;
+
+
+        // Define the advertisementsUpdate functions and objects that will be passed to the view
+        advertisementsUpdate.advertisement = {};                                                  // Object for show the advertisement
+        advertisementsUpdate.update = update;                                            // Update a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementsUpdateCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('advertisementsUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+
+            return advertisementsFactory.update(id, data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the advertisement
+        function show(id) {
+
+            return advertisementsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                advertisementsUpdate.advertisement = data;
+                return advertisementsUpdate.advertisement;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the amountsDestroyCtrl to the app
     angular
         .module('y')
@@ -5533,104 +5645,6 @@
 
   'use strict';
 
-    // Pass the advertisementsUpdateCtrl to the app
-    angular
-        .module('y')
-        .controller('advertisementsUpdateCtrl', advertisementsUpdateCtrl);
-
-
-    // Define the advertisementsUpdateCtrl
-    function advertisementsUpdateCtrl(advertisementsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define advertisementsUpdate as this for ControllerAs and auto-$scope
-        var advertisementsUpdate = this;
-
-
-        // Define the advertisementsUpdate functions and objects that will be passed to the view
-        advertisementsUpdate.advertisement = {};                                                  // Object for show the advertisement
-        advertisementsUpdate.update = update;                                            // Update a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementsUpdateCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('advertisementsUpdateCtrl init');
-        }
-
-
-        // Delete a resource
-        function update(id, data) {
-
-            return advertisementsFactory.update(id, data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the advertisement
-        function show(id) {
-
-            return advertisementsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                advertisementsUpdate.advertisement = data;
-                return advertisementsUpdate.advertisement;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
     // Pass the documentsIndexCtrl to the app
     angular
         .module('y')
@@ -7286,10 +7300,11 @@
         // Define ticketsStore as this for ControllerAs and auto-$scope
         var ticketsStore = this;
 
-
         // Define the ticketsStore functions and objects that will be passed to the view
         ticketsStore.store = store;                                           // Store a resource
-
+        ticketsStore.ticket = {}; 
+        ticketsStore.tickets = [];
+        ticketsStore.ticket.targeta = ['VISA','MASTERCARD'];        
 
         /*
         |--------------------------------------------------------------------------
@@ -7318,6 +7333,14 @@
         function initLog() {
 
             console.log('ticketsStoreCtrl init');
+
+            ticketsFactory.indexes()
+            .then(function(data){
+                ticketsStore.tickets = data.data;
+            })
+            .catch(function(err){
+                console.log('err');
+            })
         }
 
 
@@ -7336,6 +7359,7 @@
 
             });
         }
+
     }
 
 })();

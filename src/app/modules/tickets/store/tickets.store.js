@@ -19,10 +19,11 @@
         // Define ticketsStore as this for ControllerAs and auto-$scope
         var ticketsStore = this;
 
-
         // Define the ticketsStore functions and objects that will be passed to the view
         ticketsStore.store = store;                                           // Store a resource
-
+        ticketsStore.ticket = {}; 
+        ticketsStore.tickets = [];
+        ticketsStore.ticket.targeta = ['VISA','MASTERCARD'];        
 
         /*
         |--------------------------------------------------------------------------
@@ -51,6 +52,14 @@
         function initLog() {
 
             console.log('ticketsStoreCtrl init');
+
+            ticketsFactory.indexes()
+            .then(function(data){
+                ticketsStore.tickets = data.data;
+            })
+            .catch(function(err){
+                console.log('err');
+            })
         }
 
 
@@ -69,6 +78,7 @@
 
             });
         }
+
     }
 
 })();
