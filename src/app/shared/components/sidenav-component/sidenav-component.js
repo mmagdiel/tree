@@ -37,18 +37,18 @@
     }
 
     // Define directive controller
-    function sidenavDirectiveController(userService, $state) {
-		
+    function sidenavDirectiveController(userService, $state, $mdSidenav) {
+
 		this.home = function(){
 			var self = this;
         	self.guest = userService.isGuest;
         	self.role = userService.getRole();
-			if(self.guest = "false"){
-				if(self.role = "admin"){
+			if(self.guest == false){
+				if(self.role == "admin"){
 					$state.go('biodynamics-home');
 				}else{
-					$state.go('dynamics-home');
-				}
+                    $state.go('dynamics-home');
+                }
 			}else{
 				$state.go('estatico-home');
 			}
@@ -56,6 +56,9 @@
 		
         this.logout = function(){
             userService.logout()
+        }
+        this.fan = function(){
+            $mdSidenav("fff").close();
         }
     }
 })();
