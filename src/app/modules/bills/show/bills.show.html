@@ -3,7 +3,7 @@
 <div layout="row" layout-aling="center">
 	<sidenav-directive></sidenav-directive>
 	<div layout="column" layout-padding layout-margin layout-fill>
-		<tree-directive flex nodes="billsShow.bill.nodes" relations="billsShow.bill.relations">
+		<tree-directive ng-if="billsShow.tree" flex nodes="billsShow.bill.nodes" relations="billsShow.bill.relations">
           <md-button class="md-raised md-accent" ng-click="billsShow.go('bills-update',billsShow.bill.id)">Update</md-button>
           <md-button class="md-raised md-warn" ng-click="billsShow.go('bills-destroy',billsShow.bill.id)">Destroy</md-button>
 		</tree-directive>			
