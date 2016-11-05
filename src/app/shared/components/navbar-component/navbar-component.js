@@ -36,7 +36,7 @@
     }
 
     // Define directive controller
-    function navbarDirectiveController(userService, $scope) {
+    function navbarDirectiveController(userService, $scope, $mdSidenav) {
         var self = this;
         self.title = "Tree";
         self.guest = userService.isGuest;
@@ -59,6 +59,11 @@
                     self.role = userService.getRole();
                 }
             });
+        };
+
+        this.fun = function(){
+            $mdSidenav("fff").open();
+            console.log($mdSidenav);
         };
 
         $scope.$on("user.login", function(ev, success, data){

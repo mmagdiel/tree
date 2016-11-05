@@ -8,23 +8,24 @@
 			
 		<div ng-if="navbarDirective.role">
 			{{navbarDirective.role}}
+			<md-button class="md-raised md-warn" ng-click="navbarDirective.fun()" arial-hidden="true">Menu</md-button>
 		</div>
 		 
 		<div ng-show="navbarDirective.guest">
 			<md-input-container md-no-float>
 				<md-icon class="fa fa-user"></md-icon>
-				<input ng-disabled="navbarDirective.disable" ng-model="navbarDirective.form.username" type="text" placeholder="Username">
+				<input ng-disabled="navbarDirective.disable" ng-model="navbarDirective.form.username" type="text" placeholder="Cuenta">
 			</md-input-container>
 			
 			<md-input-container md-no-float>
 				<md-icon class="fa fa-key"></md-icon>
-				<input ng-disabled="navbarDirective.disable" ng-model="navbarDirective.form.password" type="text" placeholder="Password">
+				<input ng-disabled="navbarDirective.disable" ng-model="navbarDirective.form.password" type="text" placeholder="Clave">
 			</md-input-container>
 
 			<md-checkbox ng-model="navbarDirective.form.cookie" aria-label="do not sign out"></md-checkbox>
 
-			<md-button class="md-raised md-accent" ng-click="navbarDirective.login()">Login</md-button>
-			<md-button class="md-raised md-warn" ui-sref="accounts-store">Register</md-button>
+			<md-button class="md-raised md-accent" ng-click="navbarDirective.login()">Iniciar</md-button>
+			<md-button class="md-raised md-warn" ui-sref="accounts-store">Registrarse</md-button>
 		</div>
 	</div>
 </md-toolbar>

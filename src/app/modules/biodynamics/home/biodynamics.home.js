@@ -7,7 +7,7 @@
         .controller('biodynamicsHomeCtrl', biodynamicsHomeCtrl);
 
     // Define the staticsHomeCtrl
-    function biodynamicsHomeCtrl() {
+    function biodynamicsHomeCtrl($scope) {
         // Inject with ng-annotate
         "ngInject";
 

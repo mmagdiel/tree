@@ -23,16 +23,24 @@
             }
         });
 
+                // Define resource instance
+        var resources = new $resource("amounts", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
+
         // Define the ticket factory object to return
         var ticketsFactory = {
 
+            indexes: indexes,
             index: index,
             show: show,
             store: store,
             update: update,
             destroy: destroy,
 
-        };
+        }; 
 
 
         // Return the ticket factory
@@ -56,6 +64,12 @@
                         .then(function(data){ return data; });
         }
 
+        // Display a listing of amounts.
+        function indexes() {
+
+            return resources.fetch()
+                        .then(function(data){ return data; });
+        }
 
         // Display a specified ticket.
         function show(id) {
@@ -68,7 +82,7 @@
         // Store a newly created ticket in storage.
         function store(data) {
 
-            return resource.save(data)
+            return resource.save(null, data)
                         .then(function(data){ return data.data; });
         }
 

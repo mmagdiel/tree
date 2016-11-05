@@ -2005,16 +2005,24 @@
             }
         });
 
+                // Define resource instance
+        var resources = new $resource("amounts", {
+            headers: {
+                "X-Access-Token": userService.getToken()
+            }
+        });
+
         // Define the ticket factory object to return
         var ticketsFactory = {
 
+            indexes: indexes,
             index: index,
             show: show,
             store: store,
             update: update,
             destroy: destroy,
 
-        };
+        }; 
 
 
         // Return the ticket factory
@@ -2038,6 +2046,12 @@
                         .then(function(data){ return data; });
         }
 
+        // Display a listing of amounts.
+        function indexes() {
+
+            return resources.fetch()
+                        .then(function(data){ return data; });
+        }
 
         // Display a specified ticket.
         function show(id) {
@@ -2813,107 +2827,6 @@
             $rootScope.$broadcast("user.logout");
         }
     }
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the accountsDestroyCtrl to the app
-    angular
-        .module('y')
-        .controller('accountsDestroyCtrl', accountsDestroyCtrl);
-
-
-    // Define the accountsDestroyCtrl
-    function accountsDestroyCtrl(accountsFactory, $stateParams, $state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define accountsDestroy as this for ControllerAs and auto-$scope
-        var accountsDestroy = this;
-
-
-        // Define the accountsDestroy functions and objects that will be passed to the view
-        accountsDestroy.account = {};                                                 // Object for show the account
-        accountsDestroy.destroy = destroy;                                         // Delete a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the accountsDestroyCtrl
-        |
-        */
-
-        accountsDestroy.goo = function(){
-            $state.go('accounts-index');
-        }
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('accountsDestroyCtrl init');
-        }
-
-
-        // Delete a resource
-        function destroy(id) {
-
-            return accountsFactory.destroy(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-            	// Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the account
-        function show(id) {
-
-            return accountsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                accountsDestroy.account = data;
-                return accountsDestroy.account;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
 })();
 
 (function() {
@@ -3720,6 +3633,107 @@
 
   'use strict';
 
+    // Pass the accountsDestroyCtrl to the app
+    angular
+        .module('y')
+        .controller('accountsDestroyCtrl', accountsDestroyCtrl);
+
+
+    // Define the accountsDestroyCtrl
+    function accountsDestroyCtrl(accountsFactory, $stateParams, $state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define accountsDestroy as this for ControllerAs and auto-$scope
+        var accountsDestroy = this;
+
+
+        // Define the accountsDestroy functions and objects that will be passed to the view
+        accountsDestroy.account = {};                                                 // Object for show the account
+        accountsDestroy.destroy = destroy;                                         // Delete a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the accountsDestroyCtrl
+        |
+        */
+
+        accountsDestroy.goo = function(){
+            $state.go('accounts-index');
+        }
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('accountsDestroyCtrl init');
+        }
+
+
+        // Delete a resource
+        function destroy(id) {
+
+            return accountsFactory.destroy(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+            	// Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the account
+        function show(id) {
+
+            return accountsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                accountsDestroy.account = data;
+                return accountsDestroy.account;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the advertisementsStoreCtrl to the app
     angular
         .module('y')
@@ -3779,6 +3793,104 @@
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the advertisementsUpdateCtrl to the app
+    angular
+        .module('y')
+        .controller('advertisementsUpdateCtrl', advertisementsUpdateCtrl);
+
+
+    // Define the advertisementsUpdateCtrl
+    function advertisementsUpdateCtrl(advertisementsFactory, $stateParams) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define advertisementsUpdate as this for ControllerAs and auto-$scope
+        var advertisementsUpdate = this;
+
+
+        // Define the advertisementsUpdate functions and objects that will be passed to the view
+        advertisementsUpdate.advertisement = {};                                                  // Object for show the advertisement
+        advertisementsUpdate.update = update;                                            // Update a resource
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+        initLog();
+        show($stateParams.id);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Functions
+        |--------------------------------------------------------------------------
+        |
+        | Declaring all functions used in the advertisementsUpdateCtrl
+        |
+        */
+
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('advertisementsUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+
+            return advertisementsFactory.update(id, data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the advertisement
+        function show(id) {
+
+            return advertisementsFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                advertisementsUpdate.advertisement = data;
+                return advertisementsUpdate.advertisement;
 
             }, function(data) {
 
@@ -4887,7 +4999,7 @@
 
         // Define the billsShow functions and objects that will be passed to the view
         billsShow.bill = {};                                                // Object for show the bill
-
+        billsShow.tree = false;
 
         /*
         |--------------------------------------------------------------------------
@@ -4935,6 +5047,27 @@
 
             	// Assign data to array and return them
 	            billsShow.bill = data;
+                billsShow.bill.nodes = [];
+                billsShow.bill.relations = [];
+
+                for(var child in billsShow.bill.childs){
+                  billsShow.bill.nodes.push({
+                    data: {
+                        id: billsShow.bill.childs[child].ancestor,
+                        name: billsShow.bill.childs[child].username
+                    }
+                  });
+
+                  billsShow.bill.relations.push({
+                    data:{   
+                        source: billsShow.bill.childs[child].ancestor,
+                        target: billsShow.bill.childs[child].descendant
+                    }
+                  });
+                }
+
+                billsShow.tree = true;
+
 	            return billsShow.bill;
 
             }, function(data) {
@@ -5130,7 +5263,7 @@
         .controller('biodynamicsHomeCtrl', biodynamicsHomeCtrl);
 
     // Define the staticsHomeCtrl
-    function biodynamicsHomeCtrl() {
+    function biodynamicsHomeCtrl($scope) {
         // Inject with ng-annotate
         "ngInject";
 
@@ -5517,104 +5650,6 @@
                 // Assign data to array and return them
                 documentsDestroy.document = data;
                 return documentsDestroy.document;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the advertisementsUpdateCtrl to the app
-    angular
-        .module('y')
-        .controller('advertisementsUpdateCtrl', advertisementsUpdateCtrl);
-
-
-    // Define the advertisementsUpdateCtrl
-    function advertisementsUpdateCtrl(advertisementsFactory, $stateParams) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define advertisementsUpdate as this for ControllerAs and auto-$scope
-        var advertisementsUpdate = this;
-
-
-        // Define the advertisementsUpdate functions and objects that will be passed to the view
-        advertisementsUpdate.advertisement = {};                                                  // Object for show the advertisement
-        advertisementsUpdate.update = update;                                            // Update a resource
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-        initLog();
-        show($stateParams.id);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Functions
-        |--------------------------------------------------------------------------
-        |
-        | Declaring all functions used in the advertisementsUpdateCtrl
-        |
-        */
-
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('advertisementsUpdateCtrl init');
-        }
-
-
-        // Delete a resource
-        function update(id, data) {
-
-            return advertisementsFactory.update(id, data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the advertisement
-        function show(id) {
-
-            return advertisementsFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                advertisementsUpdate.advertisement = data;
-                return advertisementsUpdate.advertisement;
 
             }, function(data) {
 
@@ -7286,10 +7321,11 @@
         // Define ticketsStore as this for ControllerAs and auto-$scope
         var ticketsStore = this;
 
-
         // Define the ticketsStore functions and objects that will be passed to the view
         ticketsStore.store = store;                                           // Store a resource
-
+        ticketsStore.ticket = {}; 
+        ticketsStore.tickets = [];
+        ticketsStore.ticket.targeta = ['VISA','MASTERCARD'];        
 
         /*
         |--------------------------------------------------------------------------
@@ -7318,6 +7354,14 @@
         function initLog() {
 
             console.log('ticketsStoreCtrl init');
+
+            ticketsFactory.indexes()
+            .then(function(data){
+                ticketsStore.tickets = data.data;
+            })
+            .catch(function(err){
+                console.log('err');
+            })
         }
 
 
@@ -7336,6 +7380,7 @@
 
             });
         }
+
     }
 
 })();
@@ -7365,7 +7410,7 @@
         // Define the ticketsUpdate functions and objects that will be passed to the view
         ticketsUpdate.ticket = {};                                                // Object for show the ticket
         ticketsUpdate.update = update;                                            // Update a resource
-
+        ticketsUpdate.tickets = [];
 
         /*
         |--------------------------------------------------------------------------
@@ -7398,6 +7443,14 @@
         function initLog() {
 
             console.log('ticketsUpdateCtrl init');
+
+            ticketsFactory.indexes()
+            .then(function(data){
+                ticketsUpdate.tickets = data.data;
+            })
+            .catch(function(err){
+                console.log('err');
+            })
         }
 
 
@@ -8401,6 +8454,54 @@
 
   'use strict';
 
+    // Pass the identifierDirective to the app
+    angular
+        .module('y')
+        .directive('identifierDirective', identifierDirective);
+
+
+    // Define the identifierDirective
+    function identifierDirective() {
+
+        // Define directive
+        var directive = {
+
+                restrict: 'EA',
+                templateUrl: 'app/shared/components/identifier-component/identifier-component.html',
+                scope: {
+                    identifierString: '@',                      // Isolated scope string
+                    identifierAttribute: '=',                   // Isolated scope two-way data binding
+                    identifierAction: '&'                       // Isolated scope action
+                },
+                link: linkFunc,
+                controller: identifierDirectiveController,
+                controllerAs: 'identifierDirective'
+        };
+
+        // Return directive
+        return directive;
+
+        // Define link function
+        function linkFunc(scope, el, attr, ctrl) {
+
+            // Do stuff...
+        }
+    }
+
+    // Define directive controller
+    function identifierDirectiveController(userService) {
+
+        this.home ={ 
+            user: userService.$user.username
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
     // Pass the navbarDirective to the app
     angular
         .module('y')
@@ -8435,7 +8536,7 @@
     }
 
     // Define directive controller
-    function navbarDirectiveController(userService, $scope) {
+    function navbarDirectiveController(userService, $scope, $mdSidenav) {
         var self = this;
         self.title = "Tree";
         self.guest = userService.isGuest;
@@ -8458,6 +8559,11 @@
                     self.role = userService.getRole();
                 }
             });
+        };
+
+        this.fun = function(){
+            $mdSidenav("fff").open();
+            console.log($mdSidenav);
         };
 
         $scope.$on("user.login", function(ev, success, data){
@@ -8508,18 +8614,18 @@
     }
 
     // Define directive controller
-    function sidenavDirectiveController(userService, $state) {
-		
+    function sidenavDirectiveController(userService, $state, $mdSidenav) {
+
 		this.home = function(){
 			var self = this;
         	self.guest = userService.isGuest;
         	self.role = userService.getRole();
-			if(self.guest = "false"){
-				if(self.role = "admin"){
+			if(self.guest == false){
+				if(self.role == "admin"){
 					$state.go('biodynamics-home');
 				}else{
-					$state.go('dynamics-home');
-				}
+                    $state.go('dynamics-home');
+                }
 			}else{
 				$state.go('estatico-home');
 			}
@@ -8527,6 +8633,9 @@
 		
         this.logout = function(){
             userService.logout()
+        }
+        this.fan = function(){
+            $mdSidenav("fff").close();
         }
     }
 })();

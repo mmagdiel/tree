@@ -22,7 +22,7 @@
 
         // Define the billsShow functions and objects that will be passed to the view
         billsShow.bill = {};                                                // Object for show the bill
-
+        billsShow.tree = false;
 
         /*
         |--------------------------------------------------------------------------
@@ -70,6 +70,27 @@
 
             	// Assign data to array and return them
 	            billsShow.bill = data;
+                billsShow.bill.nodes = [];
+                billsShow.bill.relations = [];
+
+                for(var child in billsShow.bill.childs){
+                  billsShow.bill.nodes.push({
+                    data: {
+                        id: billsShow.bill.childs[child].ancestor,
+                        name: billsShow.bill.childs[child].username
+                    }
+                  });
+
+                  billsShow.bill.relations.push({
+                    data:{   
+                        source: billsShow.bill.childs[child].ancestor,
+                        target: billsShow.bill.childs[child].descendant
+                    }
+                  });
+                }
+
+                billsShow.tree = true;
+
 	            return billsShow.bill;
 
             }, function(data) {
