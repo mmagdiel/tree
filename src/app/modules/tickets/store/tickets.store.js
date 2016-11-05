@@ -9,7 +9,7 @@
 
 
     // Define the ticketsStoreCtrl
-    function ticketsStoreCtrl(ticketsFactory) {
+    function ticketsStoreCtrl(ticketsFactory, userService, $state) {
 
 
         // Inject with ng-annotate
@@ -22,8 +22,9 @@
         // Define the ticketsStore functions and objects that will be passed to the view
         ticketsStore.store = store;                                           // Store a resource
         ticketsStore.ticket = {}; 
-        ticketsStore.tickets = [];
-        ticketsStore.ticket.targeta = ['VISA','MASTERCARD'];        
+        ticketsStore.data = {
+            amount: []
+        };
 
         /*
         |--------------------------------------------------------------------------
@@ -55,11 +56,14 @@
 
             ticketsFactory.indexes()
             .then(function(data){
-                ticketsStore.tickets = data.data;
+                ticketsStore.data.amount = data.data;
             })
             .catch(function(err){
                 console.log('err');
-            })
+            });
+
+            ticketsStore.ticket.account_id = userService.getId();
+            console.log(ticketsStore, userService);
         }
 
 
@@ -70,6 +74,12 @@
 
                 // Custom function for success handling
                 console.log('Result form API with SUCCESS', data);
+
+                if(data.passed){
+                    $state.go("tickets-show", {
+                        id: data.data.id
+                    })
+                }
 
             }, function(data) {
 

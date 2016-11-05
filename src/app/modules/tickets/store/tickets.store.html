@@ -8,54 +8,83 @@
 				<h1>Registrar un ticket</h1>
 	  		</div>
 	  	</md-toolbar>
-		<div>
+
+	  	<form ng-submit="ticketsStore.store(ticketsStore.ticket)">
 			<md-input-container class="md-block">
 				<label>No. Targeta </label>
-				<input type="text">
-			</md-input-container class="md-block">
-		</div>
-		<div>
+				<input type="text" minlength="16" maxlength="16" required>
+				<span class="fa fa-cc-mastercard"></span>
+				<span class="fa fa-cc-visa"></span>
+			</md-input-container>
+
 			<md-input-container class="md-block">
 				<label>Cod. Seguridad </label>
-				<input type="text">
+				<input type="text" required>
 			</md-input-container>
-		</div>
-		<div>
-			<md-input-container>
-				<label>Ingrese la fecha</label>
-				<md-datepicker ng-model="ticketsStore.store.fecha"></md-datepicker>			
-			</md-input-container>
-		</div>
-		<div>
+
+			<div layout>
+				<md-input-container flex>
+					<label>Mes de vencimiento</label>
+					<md-select ng-model="ticketsStore.ticket.month" arial-label="Seleccionar" required>
+						<md-option value="1">Enero</md-option>
+						<md-option value="2">Febrero</md-option>
+						<md-option value="3">Marzo</md-option>
+						<md-option value="4">Abril</md-option>
+						<md-option value="5">Mayo</md-option>
+						<md-option value="6">Junio</md-option>
+						<md-option value="7">Julio</md-option>
+						<md-option value="8">Agosto</md-option>
+						<md-option value="9">Septiempre</md-option>
+						<md-option value="10">Octubre</md-option>
+						<md-option value="11">Noviembre</md-option>
+						<md-option value="12">Diciembre</md-option>
+					</md-select>
+				</md-input-container>
+
+				<md-input-container flex>
+					<label>Año de vencimiento</label>
+					<input type="text" name="" minlength="4" maxlength="4">
+				</md-input-container>
+			</div>
+
 			<md-input-container class="md-block">
-				<label>Nombre targeta</label>
-				<md-select ng-model="ticketsStore.ticket.targetaSeleciona" arial-label="Seleccionar">
-              		<md-option ng-repeat="item in ticketsStore.ticket.targeta" value="{{$index}}">
-                	{{item}}
-              		</md-option>
-            	</md-select>
+				<label>Nombre dueno de la tarjeta</label>
+				<input type="text" name="">
 			</md-input-container>
-		</div>
-		<div>
+
 			<md-input-container class="md-block">
 				<label>Cedula o Rif</label>
-				<input type="text">
+				<input type="text" required>
 			</md-input-container>
-		</div>
-		<div>
-			<md-input-container>
-				<md-select ng-model="ticketsStore.ticket.amount" arial-label="Seleccionar">
-					<md-option ng-repeat="item in ticketsStore.tickets" value={{$index}}>
+
+			<md-input-container class="md-block">
+				<label>Monto</label>
+				<md-select ng-model="ticketsStore.ticket.amount_id" arial-label="Seleccionar" required>
+					<md-option ng-repeat="item in ticketsStore.data.amount" value={{item.id}}>
 						{{item.number}}
 					</md-option>
 				</md-select>
-			</md-input-container>	
-		</div>
-		<div>
-			<md-button class="md-raised md-warn" ui-sref="ticket-index">
-			Cancelar</md-button>
-			<md-button class="md-raised md-accent" type="submit">Enviar</md-button>
-		</div>
+			</md-input-container>
+
+			<md-input-container class="md-block">
+				<label>Tipo de transaccion</label>
+				<md-select ng-model="ticketsStore.ticket.status_id" arial-label="Seleccionar" required>
+					<md-option value="1">Retener</md-option>
+					<md-option value="2">Pagar</md-option>
+				</md-select>
+			</md-input-container>
+
+			<md-input-container class="md-block">
+				<label>Descripcion</label>
+				<input type="text" ng-model="ticketsStore.ticket.description" required>
+			</md-input-container>
+
+			<div>
+				<md-button class="md-raised md-warn" ui-sref="ticket-index">
+				Cancelar</md-button>
+				<md-button class="md-raised md-accent" type="submit">Enviar</md-button>
+			</div>
+	  	</form>
 	</div>
 </div>
 

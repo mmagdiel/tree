@@ -82,7 +82,7 @@
         // Store a newly created ticket in storage.
         function store(data) {
 
-            return resource.save(data)
+            return resource.save(null, data)
                         .then(function(data){ return data.data; });
         }
 
