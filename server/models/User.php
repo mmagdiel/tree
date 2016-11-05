@@ -20,7 +20,9 @@ Class User extends ActiveRecord
 		"create_at",
 		"update_at",
 		"state_id",
-		"city_id"
+		"city_id",
+		"name_photo",
+		"path_photo"
 	];
 
 	public function rules()

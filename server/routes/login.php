@@ -34,6 +34,7 @@ $app->post("/login", function($request, $response)
 		$result->passed = true;
 
 		$result->data = (Object) [
+			"id" => $model[0]["id"],
 			"username" => $model[0]["username"],
 			"user_id" => $model[0]["user_id"],
 			"access_token" => $model[0]["access_token"],

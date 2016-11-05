@@ -36,7 +36,8 @@ Class Amount extends ActiveRecord
 		return [
 			"batch" => [
 				"id",
-				"name"
+				"name",
+				"number"
 			]
 		];
 	}

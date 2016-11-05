@@ -16,8 +16,6 @@ Class Account extends ActiveRecord
 		"password",
 		"password_token",
 		"role",
-		"name_photo",
-		"path_photo",
 		"create_at",
 		"update_at",
 		"user_id"
@@ -35,7 +33,7 @@ Class Account extends ActiveRecord
 				"message" => "password field is required"
 			],
 			"user_id" => [
-				"required" => true,
+				"required" => false,
 				"message" => "user_id field is required"
 			]
 		];
