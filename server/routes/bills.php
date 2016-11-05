@@ -16,6 +16,11 @@ $app->get("/bills", function($request, $response)
 		"LIMIT" => isset($query["limit"]) ? $query["limit"] : 10
 	];
 
+	if(isset($query["id"]))
+	{
+		$filter["account_id"] = $query["id"];
+	}
+
 	$filter["ORDER"] = [
 		"id" => "ASC"
 	];
