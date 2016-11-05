@@ -22,7 +22,7 @@
 
         // Define the billsShow functions and objects that will be passed to the view
         billsShow.bill = {};                                                // Object for show the bill
-
+        billsShow.tree = false;
 
         /*
         |--------------------------------------------------------------------------
@@ -89,7 +89,7 @@
                   });
                 }
 
-                console.log(billsShow);
+                billsShow.tree = true;
 
 	            return billsShow.bill;
 
