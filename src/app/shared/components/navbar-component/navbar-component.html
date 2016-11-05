@@ -8,7 +8,7 @@
 			
 		<div ng-if="navbarDirective.role">
 			{{navbarDirective.role}}
-			<md-button class="md-raised" ng-click="navbarDirective.fun()">Menu</md-button>
+			<md-button class="md-raised md-warn" ng-click="navbarDirective.fun()" arial-hidden="true">Menu</md-button>
 		</div>
 		 
 		<div ng-show="navbarDirective.guest">
@@ -24,8 +24,8 @@
 
 			<md-checkbox ng-model="navbarDirective.form.cookie" aria-label="do not sign out"></md-checkbox>
 
-			<md-button class="md-raised md-accent" ng-click="navbarDirective.login()">Login</md-button>
-			<md-button class="md-raised md-warn" ui-sref="accounts-store">Register</md-button>
+			<md-button class="md-raised md-accent" ng-click="navbarDirective.login()">Iniciar</md-button>
+			<md-button class="md-raised md-warn" ui-sref="accounts-store">Registrarse</md-button>
 		</div>
 	</div>
 </md-toolbar>
